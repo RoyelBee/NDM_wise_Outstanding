@@ -8,6 +8,7 @@ def totalOutstanding(branch):
 
                     from  [ARCOUT].dbo.[CUST_OUT]
                     where AUDTORG like ? AND [INVDATE] <= convert(varchar(8),DATEADD(D,0,GETDATE()),112)
+                                           
                                             """, lib.conn, params={branch})
 
     cash = int(outstanding_df['TotalOutStandingOnCash'])
