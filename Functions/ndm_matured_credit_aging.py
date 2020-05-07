@@ -342,3 +342,46 @@ hafizur_16_30 = int(hafizur_df.Amount.loc[3])
 hafizur_31_90 = int(hafizur_df.Amount.loc[4])
 hafizur_91_201 = int(hafizur_df.Amount.loc[5])
 hafizur_202_more = int(hafizur_df.Amount.loc[6])
+
+# all_0_3 = [anwar_0_3, kamrul_0_3, atik_0_3, nurul_0_3, hafizur_0_3]
+# all_4_10 = [anwar_4_10, kamrul_4_10, atik_4_10, nurul_4_10, hafizur_4_10]
+# all_11_15 = [anwar_11_15, kamrul_11_15, atik_11_15, nurul_11_15, hafizur_11_15]
+# all_16_30 = [anwar_16_30, kamrul_16_30, atik_16_30, nurul_16_30, hafizur_16_30]
+# all_31_90 = [anwar_31_90, kamrul_31_90, atik_31_90, nurul_31_90, hafizur_31_90]
+# all_91_201 = [anwar_91_201, kamrul_91_201, atik_91_201, nurul_91_201, hafizur_91_201]
+# all_202_more = [anwar_202_more, kamrul_202_more, atik_202_more, nurul_202_more, hafizur_202_more]
+
+
+data = {'all_0_3': [anwar_0_3, kamrul_0_3, atik_0_3, nurul_0_3, hafizur_0_3],
+        'all_4_10': [anwar_4_10, kamrul_4_10, atik_4_10, nurul_4_10, hafizur_4_10],
+        'all_11_15': [anwar_11_15, kamrul_11_15, atik_11_15, nurul_11_15, hafizur_11_15],
+        'all_16_30': [anwar_16_30, kamrul_16_30, atik_16_30, nurul_16_30, hafizur_16_30],
+        'all_31_90': [anwar_31_90, kamrul_31_90, atik_31_90, nurul_31_90, hafizur_31_90],
+        'all_91_201': [anwar_91_201, kamrul_91_201, atik_91_201, nurul_91_201, hafizur_91_201],
+        'all_202_more': [anwar_202_more, kamrul_202_more, atik_202_more, nurul_202_more, hafizur_202_more]}
+
+df = lib.pd.DataFrame(data)
+df.to_csv('ndm_matured_aging.csv', Index=False)
+# print(df)
+
+serial = [0, 1, 2, 3, 4, 5, 5]
+name = ['0 to 3 Days', '4 to 10 Days', '11 to 15 Days', '16 to 30 Days', '31 to 90 Days', '91 to 201 Days', '202 to More']
+
+totals = [i + j + k + l + m + n + o for i, j, k, l, m, n, o in
+          zip(df['all_0_3'], df['all_4_10'], df['all_11_15'], df['all_16_30'], df['all_31_90'],
+              df['all_91_201'], df['all_202_more'])]
+
+all_0_3 = [i / j * 100 for i, j in zip(df['all_0_3'], totals)]
+# all_4_10 = [i / j * 100 for i, j in zip(df['all_4_10'], totals)]
+# all_11_15 = [i / j * 100 for i, j in zip(df['all_11_15'], totals)]
+# all_16_30 = [i / j * 100 for i, j in zip(df['all_16_30'], totals)]
+# all_31_90 = [i / j * 100 for i, j in zip(df['all_31_90'], totals)]
+# all_91_201 = [i / j * 100 for i, j in zip(df['all_91_201'], totals)]
+# all_202_more = [i / j * 100 for i, j in zip(df['all_202_more'], totals)]
+
+barWidth = 0.80
+bar1 = lib.plt.bar(serial, all_0_3, color='red', label='Matured', edgecolor='white', width=barWidth)
+# Create orange Bars
+# bar2 = lib.plt.bar(serial, all_4_10, bottom=all_0_3, color='blue', label='Non-Matured', edgecolor='white', width=barWidth)
+
+lib.plt.show()
