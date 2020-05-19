@@ -9,7 +9,7 @@ def totalOutstanding(branch):
                     from  [ARCOUT].dbo.[CUST_OUT]
                     where AUDTORG like ? AND [INVDATE] <= convert(varchar(8),DATEADD(D,0,GETDATE()),112)
                                            
-                                            """, lib.conn, params={branch})
+                                            """, fn.conn, params={branch})
 
     cash = int(outstanding_df['TotalOutStandingOnCash'])
     credit = int(outstanding_df['TotalOutStandingOnCredit'])
@@ -38,5 +38,5 @@ def totalOutstanding(branch):
     lib.plt.legend(handles=legend_element, loc='lower left',fontsize=11)
     lib.plt.tight_layout()
     lib.plt.savefig('./Images/terms_wise_outstanding.png')
-    print('1. Terms wise Outstanding Generated')
+    print('1.Total Outstanding Generated')
 

@@ -13,7 +13,7 @@ def creditOutstanding(branch):
                             where [ARCOUT].dbo.[CUST_OUT].AUDTORG like ? and TERMS<>'Cash') as TblCredit
                             group by case when Days_Diff>0 then 'Matured Credit' else 'Regular Credit' end
                                                                
-                                                                """, lib.conn, params={branch})
+                                                                """, fn.conn, params={branch})
 
 
     matured = int(credit_category_df.Amount.iloc[0])
