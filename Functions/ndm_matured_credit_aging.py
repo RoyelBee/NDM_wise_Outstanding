@@ -1,6 +1,7 @@
 import Functions.all_library as lib
 import Functions.all_function as fn
 
+
 def ndm_matured_credit_aging():
     anwar_df = lib.pd.read_sql_query("""
             SELECT  AgingDays, sum(Amount)/1000 as Amount FROM
@@ -60,7 +61,7 @@ def ndm_matured_credit_aging():
             group by T1.AgingDays, SERIAL
             order by SERIAL
                      """, fn.conn)
-
+    # print(anwar_df)
     anwar_0_3 = int(anwar_df.Amount.loc[0])
     anwar_4_10 = int(anwar_df.Amount.loc[1])
     anwar_11_15 = int(anwar_df.Amount.loc[2])
@@ -344,33 +345,28 @@ def ndm_matured_credit_aging():
     hafizur_91_201 = int(hafizur_df.Amount.loc[5])
     hafizur_202_more = int(hafizur_df.Amount.loc[6])
 
-    all_0_3 = [anwar_0_3, kamrul_0_3, atik_0_3, nurul_0_3, hafizur_0_3]
-    all_4_10 = [anwar_4_10, kamrul_4_10, atik_4_10, nurul_4_10, hafizur_4_10]
-    all_11_15 = [anwar_11_15, kamrul_11_15, atik_11_15, nurul_11_15, hafizur_11_15]
-    all_16_30 = [anwar_16_30, kamrul_16_30, atik_16_30, nurul_16_30, hafizur_16_30]
-    all_31_90 = [anwar_31_90, kamrul_31_90, atik_31_90, nurul_31_90, hafizur_31_90]
-    all_91_201 = [anwar_91_201, kamrul_91_201, atik_91_201, nurul_91_201, hafizur_91_201]
-    all_202_more = [anwar_202_more, kamrul_202_more, atik_202_more, nurul_202_more, hafizur_202_more]
+
 
     # # Convert data into percentage
+    anwar = [anwar_0_3, anwar_4_10, anwar_11_15, anwar_16_30, anwar_31_90, anwar_91_201, anwar_202_more]
+    anwar = [i * 100 / sum(anwar) for i, j, in zip(anwar, anwar)]
 
-    all_0_3 = [i * 100 / sum(all_0_3) for i, j, in zip(all_0_3, all_0_3)]
-    all_4_10 = [i * 100 / sum(all_4_10) for i, j, in zip(all_4_10, all_4_10)]
-    all_11_15 = [i * 100 / sum(all_11_15) for i, j, in zip(all_11_15, all_11_15)]
-    all_16_30 = [i * 100 / sum(all_16_30) for i, j, in zip(all_16_30, all_16_30)]
-    all_31_90 = [i * 100 / sum(all_31_90) for i, j, in zip(all_31_90, all_31_90)]
-    all_91_201 = [i * 100 / sum(all_91_201) for i, j, in zip(all_91_201, all_91_201)]
-    all_202_more = [i * 100 / sum(all_202_more) for i, j, in zip(all_202_more, all_202_more)]
+    kamrul = [kamrul_0_3, kamrul_4_10, kamrul_11_15, kamrul_16_30, kamrul_31_90, kamrul_91_201, kamrul_202_more]
+    kamrul = [i * 100 / sum(kamrul) for i, j, in zip(kamrul, kamrul)]
+
+    atik = [atik_0_3, atik_4_10, atik_11_15, atik_16_30, atik_31_90, atik_91_201, atik_202_more]
+    atik = [i * 100 / sum(atik) for i, j, in zip(atik, atik)]
+
+    nurul = [nurul_0_3, nurul_4_10, nurul_11_15, nurul_16_30, nurul_31_90, nurul_91_201, nurul_202_more]
+    nurul = [i * 100 / sum(nurul) for i, j, in zip(nurul, nurul)]
+
+    hafizur = [hafizur_0_3, hafizur_4_10, hafizur_11_15, hafizur_16_30, hafizur_31_90, hafizur_91_201, hafizur_202_more]
+    hafizur = [i * 100 / sum(hafizur) for i, j, in zip(hafizur, hafizur)]
 
     fig, ax = lib.plt.subplots(figsize=(12.81, 4.8))
     barWidth = .12
     x = lib.np.arange(7)
 
-    anwar = [all_0_3[0], all_4_10[0], all_11_15[0], all_16_30[0], all_31_90[0], all_91_201[0], all_202_more[0]]
-    kamrul = [all_0_3[1], all_4_10[1], all_11_15[1], all_16_30[1], all_31_90[1], all_91_201[1], all_202_more[1]]
-    atik = [all_0_3[2], all_4_10[2], all_11_15[2], all_16_30[2], all_31_90[2], all_91_201[2], all_202_more[2]]
-    nurul = [all_0_3[3], all_4_10[3], all_11_15[3], all_16_30[3], all_31_90[3], all_91_201[3], all_202_more[3]]
-    hafizur = [all_0_3[4], all_4_10[4], all_11_15[4], all_16_30[4], all_31_90[4], all_91_201[4], all_202_more[4]]
 
     legend_element = [lib.Patch(facecolor='#0093e6', label='Mr. Anwar'),
                       lib.Patch(facecolor='#e6a700', label='Mr. Kamrul'),
@@ -399,18 +395,18 @@ def ndm_matured_credit_aging():
         height = bar.get_height()
         ax.text(bar.get_x() + bar.get_width() / 2, height, str(int(height)) + '%',
                 ha='center', va='bottom', fontweight='bold', rotation=90)
-
+    #
     for bar, nurul in zip(nurul_bar, nurul):
         height = bar.get_height()
         ax.text(bar.get_x() + bar.get_width() / 2, height, str(int(height)) + '%',
                 ha='center', va='bottom', fontweight='bold', rotation=90)
-
+    #
     for bar, hafizur in zip(hafizur_bar, hafizur):
         height = bar.get_height()
         ax.text(bar.get_x() + bar.get_width() / 2, height, str(int(height)) + '%',
                 ha='center', va='bottom', fontweight='bold', rotation=90)
 
-    # # ------ Add legend elements -------------------
+    # ------ Add legend elements -------------------
 
     category = ['0 to 3 Days', '4 to 10 Days', '11 to 15 Days', '16 to 30 Days', '31 to 90 Days', '91 to 201 Days',
                 '202 to More']
@@ -418,10 +414,8 @@ def ndm_matured_credit_aging():
 
     lib.plt.title('NDM wise Matured Credit Aging', fontweight='bold', fontsize=12)
     lib.plt.legend(handles=legend_element, loc='best', fontsize=11)
-    # lib.plt.show()
+    # return lib.plt.show()
     print('5. NDM matured credit Aging')
     return lib.plt.savefig('./Images/ndm_matured_credit_aging.png')
-
-
 
 
