@@ -31,6 +31,7 @@ totals = [i + j + k + l + m + n + o
                                          data['31 - 90 days'],
                                          data['91 - 201 days'],
                                          data['202+ days'])]
+
 all_zero_three = [i / j * 100 for i, j in zip(data['0 - 3 days'], totals)]
 all_four_ten = [i / j * 100 for i, j in zip(data['4 - 10 days'], totals)]
 all_eleven_fifteen = [i / j * 100 for i, j in zip(data['11 - 15 days'], totals)]
@@ -90,7 +91,8 @@ lib.plt.xticks(r, names, rotation=90)
 lib.plt.xlabel("NDM Name", fontweight='bold', fontsize=12)
 lib.plt.ylabel("Percentage %", fontweight='bold', fontsize=12)
 lib.plt.title('NDM wise Credit', fontweight='bold', fontsize=12)
-lib.plt.legend()
+lib.plt.legend(loc='upper center', bbox_to_anchor=(0.5, -0.09),
+          fancybox=True, shadow=True, ncol=7)
 print(' ')
 # lib.plt.savefig('./Images/aa.png')
 lib.plt.show()
