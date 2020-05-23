@@ -4,14 +4,15 @@ import Functions.all_function as fn
 
 def ndm_non_matured_credit_aging():
     anwar_df = lib.pd.read_sql_query("""
+    
             SELECT  
             isnull(SUM(case when TblCredit.Days_Diff between '-3' and '0'  THEN OUT_NET end), 0.1)  as '0 - 3 days',
             isnull(sum(case when TblCredit.Days_Diff between '-10' and '-4'  THEN OUT_NET end), 0.1) as  '4 - 10 days', 
             isnull(sum( case when TblCredit.Days_Diff between '-15' and '-11'  THEN OUT_NET end), 0.1) as '11 - 15 days', 
-            isnull(sum(case when TblCredit.Days_Diff between '-16' and '-30'  THEN OUT_NET end), 0.1) as '16 - 30 days', 
-            isnull(sum(case when TblCredit.Days_Diff between '-31' and '-90'  THEN OUT_NET end), 0.1) as '31 - 90 days', 
-            isnull(sum( case when TblCredit.Days_Diff between '-91' and '-201'  THEN OUT_NET end), 0.1) as '90 - 201 days', 
-            isnull(sum( case when TblCredit.Days_Diff >= '-202'  THEN OUT_NET end), 0.1) as '202+ days'
+            isnull(sum(case when TblCredit.Days_Diff between '-30' and '-16'  THEN OUT_NET end), 0.1) as '16 - 30 days', 
+            isnull(sum(case when TblCredit.Days_Diff between '-90' and '-31'  THEN OUT_NET end), .1) as '31 - 90 days', 
+            isnull(sum( case when TblCredit.Days_Diff between '-201' and '-91'  THEN OUT_NET end), 0.1) as '90 - 201 days', 
+            isnull(sum( case when TblCredit.Days_Diff >= '-202'  THEN OUT_NET end), 0) as '202+ days'
             from
             (select CUSTNAME, INVNUMBER,INVDATE,
             CUSTOMER,TERMS,MAINCUSTYPE,
@@ -23,6 +24,8 @@ def ndm_non_matured_credit_aging():
             where [ARCOUT].dbo.[CUST_OUT].AUDTORG IN ('BOGSKF','MYMSKF', 'FRDSKF', 'TGLSKF', 'RAJSKF', 'SAVSKF') and 
             TERMS<>'Cash' and (datediff([dd] , CONVERT (DATETIME , LTRIM(cust_out.INVDATE) , 102) , GETDATE())+1-CREDIT_LIMIT_DAYS)<=0
             ) as TblCredit
+            
+            
                          """, fn.conn)
 
     anwar_0_3 = int(anwar_df['0 - 3 days'])
@@ -36,12 +39,12 @@ def ndm_non_matured_credit_aging():
     # # -------------------------------------------------
     kamrul_df = lib.pd.read_sql_query("""
             SELECT  
-            isnull(SUM(case when TblCredit.Days_Diff between '-3' and '0'  THEN OUT_NET end), 0)  as '0 - 3 days',
-            isnull(sum(case when TblCredit.Days_Diff between '-10' and '-4'  THEN OUT_NET end), 0) as  '4 - 10 days', 
-            isnull(sum( case when TblCredit.Days_Diff between '-15' and '-11'  THEN OUT_NET end), 0) as '11 - 15 days', 
-            isnull(sum(case when TblCredit.Days_Diff between '-16' and '-30'  THEN OUT_NET end), 0) as '16 - 30 days', 
-            isnull(sum(case when TblCredit.Days_Diff between '-31' and '-90'  THEN OUT_NET end), 0) as '31 - 90 days', 
-            isnull(sum( case when TblCredit.Days_Diff between '-91' and '-201'  THEN OUT_NET end), 0) as '90 - 201 days', 
+            isnull(SUM(case when TblCredit.Days_Diff between '-3' and '0'  THEN OUT_NET end), 0.1)  as '0 - 3 days',
+            isnull(sum(case when TblCredit.Days_Diff between '-10' and '-4'  THEN OUT_NET end), 0.1) as  '4 - 10 days', 
+            isnull(sum( case when TblCredit.Days_Diff between '-15' and '-11'  THEN OUT_NET end), 0.1) as '11 - 15 days', 
+            isnull(sum(case when TblCredit.Days_Diff between '-30' and '-16'  THEN OUT_NET end), 0.1) as '16 - 30 days', 
+            isnull(sum(case when TblCredit.Days_Diff between '-90' and '-31'  THEN OUT_NET end), .1) as '31 - 90 days', 
+            isnull(sum( case when TblCredit.Days_Diff between '-201' and '-91'  THEN OUT_NET end), 0.1) as '90 - 201 days', 
             isnull(sum( case when TblCredit.Days_Diff >= '-202'  THEN OUT_NET end), 0) as '202+ days'
             from
             (select CUSTNAME, INVNUMBER,INVDATE,
@@ -54,7 +57,7 @@ def ndm_non_matured_credit_aging():
             where [ARCOUT].dbo.[CUST_OUT].AUDTORG IN ('BSLSKF','COMSKF','JESSKF','KHLSKF','MIRSKF','PATSKF') and 
             TERMS<>'Cash' and (datediff([dd] , CONVERT (DATETIME , LTRIM(cust_out.INVDATE) , 102) , GETDATE())+1-CREDIT_LIMIT_DAYS)<=0
             ) as TblCredit
-
+            
                     """, fn.conn)
 
     kamrul_0_3 = int(kamrul_df['0 - 3 days'])
@@ -67,26 +70,25 @@ def ndm_non_matured_credit_aging():
 
     # # --------------------------------------------------
     atik_df = lib.pd.read_sql_query(""" 
-           SELECT  
-        isnull(SUM(case when TblCredit.Days_Diff between '-3' and '0'  THEN OUT_NET end), 0.1)  as '0 - 3 days',
-        isnull(sum(case when TblCredit.Days_Diff between '-10' and '-4'  THEN OUT_NET end), 0.1) as  '4 - 10 days', 
-        isnull(sum( case when TblCredit.Days_Diff between '-15' and '-11'  THEN OUT_NET end), 0.1) as '11 - 15 days', 
-        isnull(sum(case when TblCredit.Days_Diff between '-16' and '-30'  THEN OUT_NET end), 0.1) as '16 - 30 days', 
-        isnull(sum(case when TblCredit.Days_Diff between '-31' and '-90'  THEN OUT_NET end), 0.1) as '31 - 90 days', 
-        isnull(sum( case when TblCredit.Days_Diff between '-91' and '-201'  THEN OUT_NET end), 0.1) as '90 - 201 days', 
-        isnull(sum( case when TblCredit.Days_Diff >= '-202'  THEN OUT_NET end), 0.1) as '202+ days'
-        from
-        (select CUSTNAME, INVNUMBER,INVDATE,
-        CUSTOMER,TERMS,MAINCUSTYPE,
-        CustomerInformation.CREDIT_LIMIT_DAYS,
-        (datediff([dd] , CONVERT (DATETIME , LTRIM(cust_out.INVDATE) , 102) , GETDATE())+1-CREDIT_LIMIT_DAYS) as Days_Diff,
-        OUT_NET from [ARCOUT].dbo.[CUST_OUT]
-        join ARCHIVESKF.dbo.CustomerInformation
-        on [CUST_OUT].CUSTOMER = CustomerInformation.IDCUST
-        where [ARCOUT].dbo.[CUST_OUT].AUDTORG IN ('DNJSKF','GZPSKF','HZJSKF','KRNSKF','KSGSKF','MOTSKF','RNGSKF') and 
-        TERMS<>'Cash' and (datediff([dd] , CONVERT (DATETIME , LTRIM(cust_out.INVDATE) , 102) , GETDATE())+1-CREDIT_LIMIT_DAYS)<=0
-        ) as TblCredit
-
+        SELECT  
+            isnull(SUM(case when TblCredit.Days_Diff between '-3' and '0'  THEN OUT_NET end), 0.1)  as '0 - 3 days',
+            isnull(sum(case when TblCredit.Days_Diff between '-10' and '-4'  THEN OUT_NET end), 0.1) as  '4 - 10 days', 
+            isnull(sum( case when TblCredit.Days_Diff between '-15' and '-11'  THEN OUT_NET end), 0.1) as '11 - 15 days', 
+            isnull(sum(case when TblCredit.Days_Diff between '-30' and '-16'  THEN OUT_NET end), 0.1) as '16 - 30 days', 
+            isnull(sum(case when TblCredit.Days_Diff between '-90' and '-31'  THEN OUT_NET end), .1) as '31 - 90 days', 
+            isnull(sum( case when TblCredit.Days_Diff between '-201' and '-91'  THEN OUT_NET end), 0.1) as '90 - 201 days', 
+            isnull(sum( case when TblCredit.Days_Diff >= '-202'  THEN OUT_NET end), 0) as '202+ days'
+            from
+            (select CUSTNAME, INVNUMBER,INVDATE,
+            CUSTOMER,TERMS,MAINCUSTYPE,
+            CustomerInformation.CREDIT_LIMIT_DAYS,
+            (datediff([dd] , CONVERT (DATETIME , LTRIM(cust_out.INVDATE) , 102) , GETDATE())+1-CREDIT_LIMIT_DAYS) as Days_Diff,
+            OUT_NET from [ARCOUT].dbo.[CUST_OUT]
+            join ARCHIVESKF.dbo.CustomerInformation
+            on [CUST_OUT].CUSTOMER = CustomerInformation.IDCUST
+            where [ARCOUT].dbo.[CUST_OUT].AUDTORG IN ('DNJSKF','GZPSKF','HZJSKF','KRNSKF','KSGSKF','MOTSKF','RNGSKF') and 
+            TERMS<>'Cash' and (datediff([dd] , CONVERT (DATETIME , LTRIM(cust_out.INVDATE) , 102) , GETDATE())+1-CREDIT_LIMIT_DAYS)<=0
+            ) as TblCredit    
                 """, fn.conn)
 
     atik_0_3 = int(atik_df['0 - 3 days'])
@@ -102,10 +104,10 @@ def ndm_non_matured_credit_aging():
             isnull(SUM(case when TblCredit.Days_Diff between '-3' and '0'  THEN OUT_NET end), 0.1)  as '0 - 3 days',
             isnull(sum(case when TblCredit.Days_Diff between '-10' and '-4'  THEN OUT_NET end), 0.1) as  '4 - 10 days', 
             isnull(sum( case when TblCredit.Days_Diff between '-15' and '-11'  THEN OUT_NET end), 0.1) as '11 - 15 days', 
-            isnull(sum(case when TblCredit.Days_Diff between '-16' and '-30'  THEN OUT_NET end), 0.1) as '16 - 30 days', 
-            isnull(sum(case when TblCredit.Days_Diff between '-31' and '-90'  THEN OUT_NET end), 0.1) as '31 - 90 days', 
-            isnull(sum( case when TblCredit.Days_Diff between '-91' and '-201'  THEN OUT_NET end), 0.1) as '90 - 201 days', 
-            isnull(sum( case when TblCredit.Days_Diff >= '-202'  THEN OUT_NET end), 0.1) as '202+ days'
+            isnull(sum(case when TblCredit.Days_Diff between '-30' and '-16'  THEN OUT_NET end), 0.1) as '16 - 30 days', 
+            isnull(sum(case when TblCredit.Days_Diff between '-90' and '-31'  THEN OUT_NET end), .1) as '31 - 90 days', 
+            isnull(sum( case when TblCredit.Days_Diff between '-201' and '-91'  THEN OUT_NET end), 0.1) as '90 - 201 days', 
+            isnull(sum( case when TblCredit.Days_Diff >= '-202'  THEN OUT_NET end), 0) as '202+ days'
             from
             (select CUSTNAME, INVNUMBER,INVDATE,
             CUSTOMER,TERMS,MAINCUSTYPE,
@@ -117,7 +119,6 @@ def ndm_non_matured_credit_aging():
             where [ARCOUT].dbo.[CUST_OUT].AUDTORG IN ('FENSKF','MHKSKF','MLVSKF','NOKSKF','SYLSKF','VRBSKF') and 
             TERMS<>'Cash' and (datediff([dd] , CONVERT (DATETIME , LTRIM(cust_out.INVDATE) , 102) , GETDATE())+1-CREDIT_LIMIT_DAYS)<=0
             ) as TblCredit
-
                             """, fn.conn)
 
     nurul_0_3 = int(nurul_df['0 - 3 days'])
@@ -134,10 +135,10 @@ def ndm_non_matured_credit_aging():
             isnull(SUM(case when TblCredit.Days_Diff between '-3' and '0'  THEN OUT_NET end), 0.1)  as '0 - 3 days',
             isnull(sum(case when TblCredit.Days_Diff between '-10' and '-4'  THEN OUT_NET end), 0.1) as  '4 - 10 days', 
             isnull(sum( case when TblCredit.Days_Diff between '-15' and '-11'  THEN OUT_NET end), 0.1) as '11 - 15 days', 
-            isnull(sum(case when TblCredit.Days_Diff between '-16' and '-30'  THEN OUT_NET end), 0.1) as '16 - 30 days', 
-            isnull(sum(case when TblCredit.Days_Diff between '-31' and '-90'  THEN OUT_NET end), 0.1) as '31 - 90 days', 
-            isnull(sum( case when TblCredit.Days_Diff between '-91' and '-201'  THEN OUT_NET end), 0.1) as '90 - 201 days', 
-            isnull(sum( case when TblCredit.Days_Diff >= '-202'  THEN OUT_NET end), 0.1) as '202+ days'
+            isnull(sum(case when TblCredit.Days_Diff between '-30' and '-16'  THEN OUT_NET end), 0.1) as '16 - 30 days', 
+            isnull(sum(case when TblCredit.Days_Diff between '-90' and '-31'  THEN OUT_NET end), .1) as '31 - 90 days', 
+            isnull(sum( case when TblCredit.Days_Diff between '-201' and '-91'  THEN OUT_NET end), 0.1) as '90 - 201 days', 
+            isnull(sum( case when TblCredit.Days_Diff >= '-202'  THEN OUT_NET end), 0) as '202+ days'
             from
             (select CUSTNAME, INVNUMBER,INVDATE,
             CUSTOMER,TERMS,MAINCUSTYPE,
@@ -149,7 +150,7 @@ def ndm_non_matured_credit_aging():
             where [ARCOUT].dbo.[CUST_OUT].AUDTORG IN ('COXSKF','CTGSKF','CTNSKF','KUSSKF','NAJSKF','PBNSKF') and 
             TERMS<>'Cash' and (datediff([dd] , CONVERT (DATETIME , LTRIM(cust_out.INVDATE) , 102) , GETDATE())+1-CREDIT_LIMIT_DAYS)<=0
             ) as TblCredit
-
+           
                                     """, fn.conn)
 
     hafizur_0_3 = int(hafizur_df['0 - 3 days'])
