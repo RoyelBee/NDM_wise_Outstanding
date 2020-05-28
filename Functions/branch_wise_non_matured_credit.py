@@ -28,20 +28,19 @@ def branch_wise_non_matured_credit():
     join ARCHIVESKF.dbo.CustomerInformation
     on [CUST_OUT].CUSTOMER = CustomerInformation.IDCUST 
     join ARCHIVESKF.dbo.OESalesDetails on  OesalesDetails.CUSTOMER = CustomerInformation.IDCUST
-    
+
     where [CUST_OUT].TERMS<>'Cash' 
-    
+
     and OUT_NET>0 
     and datediff([dd] , CONVERT (DATETIME , LTRIM(cust_out.INVDATE) , 102) 
     , GETDATE())+1-CREDIT_LIMIT_DAYS<0
     group by [CUST_OUT].INVNUMBER,[CUST_OUT].INVDATE,[CUST_OUT].CUSTOMER, [CUST_OUT].TERMS,MAINCUSTYPE, OesalesDetails.AUDTORG,
     CustomerInformation.CREDIT_LIMIT_DAYS, OUT_NET 
     ) as TblCredit
-    
+
     group by  TblCredit.AUDTORG
     order by TblCredit.AUDTORG
             """, fn.conn)
-
 
     branch = valuess['Branch']
     zero_three = valuess['0 - 3 days']
@@ -85,11 +84,9 @@ def branch_wise_non_matured_credit():
     # labels = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30]
     labels = names.tolist()
 
-
     def plot_stacked_bar(data, series_labels, category_labels=None,
                          show_values=False, value_format="{}", y_label=None,
                          colors=None, grid=False, reverse=False):
-
 
         ny = len(data[0])
         ind = list(range(ny))
@@ -127,7 +124,6 @@ def branch_wise_non_matured_credit():
                     lib.plt.text(bar.get_x() + w / 2, bar.get_y() + h / 2,
                                  value_format.format(h), ha="center",
                                  va="center", rotation=90)
-
 
     lib.plt.figure(figsize=(12.81, 9))
 
