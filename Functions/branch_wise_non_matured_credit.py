@@ -6,9 +6,8 @@ import Functions.all_function as fn
 
 
 def branch_wise_non_matured_credit():
-    valuess = pd.read_sql_query(""" 
-            SELECT left(TblCredit.AUDTORG, 3) as Branch, 
-
+    data = pd.read_sql_query(""" 
+    SELECT left(TblCredit.AUDTORG, 3) as Branch, 
     isnull(SUM(case when TblCredit.Days_Diff between '-3' and '0'  THEN OUT_NET end), 0.1)  as '0 - 3 days',
     isnull(sum(case when TblCredit.Days_Diff between '-10' and '-4'  THEN OUT_NET end), 0.1) as  '4 - 10 days', 
     isnull(sum( case when TblCredit.Days_Diff between '-15' and '-11'  THEN OUT_NET end), 0.1) as '11 - 15 days', 
@@ -42,45 +41,44 @@ def branch_wise_non_matured_credit():
     order by TblCredit.AUDTORG
             """, fn.conn)
 
-    branch = valuess['Branch']
-    zero_three = valuess['0 - 3 days']
-    four_ten = valuess['4 - 10 days']
-    eleven_fifteen = valuess['11 - 15 days']
-    sixteen_therty = valuess['16 - 30 days']
-    thrtyone_ninety = valuess['31 - 90 days']
-    ninetyone_twohundredone = valuess['91 - 201 days']
-    twohundredtwo_more = valuess['202+ days']
+    # branch = data['Branch']
+    # zero_three = data['0 - 3 days']
+    # four_ten = data['4 - 10 days']
+    # eleven_fifteen = data['11 - 15 days']
+    # sixteen_therty = data['16 - 30 days']
+    # thrtyone_ninety = data['31 - 90 days']
+    # ninetyone_twohundredone = data['91 - 201 days']
+    # twohundredtwo_more = data['202+ days']
 
     # # --------------------- Creating fig-----------------------------------------
 
     # Data
     r = np.arange(0, 31, 1)
-    print(r)
 
     # # From raw value to percentage
     totals = [i + j + k + l + m + n + o
-              for i, j, k, l, m, n, o in zip(valuess['0 - 3 days'],
-                                             valuess['4 - 10 days'],
-                                             valuess['11 - 15 days'],
-                                             valuess['16 - 30 days'],
-                                             valuess['31 - 90 days'],
-                                             valuess['91 - 201 days'],
-                                             valuess['202+ days'])]
+              for i, j, k, l, m, n, o in zip(data['0 - 3 days'],
+                                             data['4 - 10 days'],
+                                             data['11 - 15 days'],
+                                             data['16 - 30 days'],
+                                             data['31 - 90 days'],
+                                             data['91 - 201 days'],
+                                             data['202+ days'])]
 
-    all_zero_three = [i / j * 100 for i, j in zip(valuess['0 - 3 days'], totals)]
-    all_four_ten = [i / j * 100 for i, j in zip(valuess['4 - 10 days'], totals)]
-    all_eleven_fifteen = [i / j * 100 for i, j in zip(valuess['11 - 15 days'], totals)]
-    all_sixteen_therty = [i / j * 100 for i, j in zip(valuess['16 - 30 days'], totals)]
-    all_thrtyone_ninety = [i / j * 100 for i, j in zip(valuess['31 - 90 days'], totals)]
-    all_ninetyone_twohundredone = [i / j * 100 for i, j in zip(valuess['91 - 201 days'], totals)]
-    all_twohundredtwo_more = [i / j * 100 for i, j in zip(valuess['202+ days'], totals)]
+    all_zero_three = [i / j * 100 for i, j in zip(data['0 - 3 days'], totals)]
+    all_four_ten = [i / j * 100 for i, j in zip(data['4 - 10 days'], totals)]
+    all_eleven_fifteen = [i / j * 100 for i, j in zip(data['11 - 15 days'], totals)]
+    all_sixteen_therty = [i / j * 100 for i, j in zip(data['16 - 30 days'], totals)]
+    all_thrtyone_ninety = [i / j * 100 for i, j in zip(data['31 - 90 days'], totals)]
+    all_ninetyone_twohundredone = [i / j * 100 for i, j in zip(data['91 - 201 days'], totals)]
+    all_twohundredtwo_more = [i / j * 100 for i, j in zip(data['202+ days'], totals)]
 
     # #
     # plot
     barWidth = 0.85
-    names = valuess['Branch']
+    names = data['Branch']
     fig, ax = lib.plt.subplots(figsize=(12.81, 9))
-    print(names)
+    # print(names)
     # labels = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30]
     labels = names.tolist()
 
@@ -155,10 +153,8 @@ def branch_wise_non_matured_credit():
     lib.plt.title('Branch Wise Non-Matured Credit', fontweight='bold', fontsize=12)
     lib.plt.legend(loc='upper center', bbox_to_anchor=(0.5, -0.085),
                    fancybox=True, shadow=True, ncol=7)
-    print(' ')
-    lib.plt.show()
-    # plt.close()
-    # lib.plt.savefig('E:/NDM_wise_Outstanding/Images/non_matured_credit.png')
-    print('done')
+
+    lib.plt.savefig('./Images/9.branch_non_matured.png')
+    print('9. Branch wise non-matured credit')
 
 

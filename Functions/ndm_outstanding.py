@@ -139,5 +139,5 @@ def ndm_wise_outstanding():
     lib.plt.title('NDM wise Credit', fontweight='bold', fontsize=12)
     lib.plt.legend()
     print('3. NDM wise Credit Outstanding')
-    return lib.plt.savefig('./Images/ndm_credit.png')
+    return lib.plt.savefig('./Images/3.ndm_credit_outstanding.png')
     # lib.plt.show()

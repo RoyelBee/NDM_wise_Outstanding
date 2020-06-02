@@ -4,93 +4,160 @@ import numpy as np
 import Functions.all_library as lib
 import Functions.all_function as fn
 
-data = pd.read_csv('E:/NDM_wise_Outstanding/Functions/branchIwise_outstanding.csv', index_col=False)
-print(data.columns)
 
-branch = data['Branch']
-zero_three = data['0 - 3 days']
-four_ten = data['4 - 10 days']
-eleven_fifteen = data['11 - 15 days']
-sixteen_therty = data['16 - 30 days']
-thrtyone_ninety = data['31 - 90 days']
-ninetyone_twohundredone = data['91 - 201 days']
-twohundredtwo_more = data['202+ days']
+def branch_wise_matured_credit():
+    # valuess = pd.read_csv('D:/Python Code/NDM_wise_Outstanding/Functions/branchIwise_outstanding.csv', index_col=False)
+    # print(valuess.columns)
+    valuess = pd.read_sql_query(""" 
+    SELECT left(TblCredit.AUDTORG, 3) as Branch, 
+    isnull(SUM(case when Days_Diff between '0' and '3'  then OUT_NET end),0.1)  as '0 - 3 days',
+    isnull(SUM(case when Days_Diff between '4' and '10' then OUT_NET end),0.1)  as '4 - 10 days',
+    isnull(SUM(case when Days_Diff between '11' and '15' then OUT_NET end),0.1)  as '11 - 15 days',
+    isnull(SUM(case when Days_Diff between '16' and '30'  then OUT_NET end),0.1)  as '16 - 30 days',
+    isnull(SUM(case when Days_Diff between '31' and '90' then OUT_NET end),0.1)  as '31 - 90 days',
+    isnull(SUM(case when Days_Diff between '91' and '201' then OUT_NET end),0.1)  as '91 - 201 days',
+    isnull(SUM(case when Days_Diff>=202 then OUT_NET end),0.1)  as '202+ days'
 
-# # --------------------- Creating fig-----------------------------------------
+    from
+    (
+    select [CUST_OUT].INVNUMBER,
+    [CUST_OUT].INVDATE, 
+    [CUST_OUT].CUSTOMER,
+    [CUST_OUT].TERMS,MAINCUSTYPE, 
+    OesalesDetails.AUDTORG,
+    CustomerInformation.CREDIT_LIMIT_DAYS,
+    datediff([dd] , CONVERT (DATETIME , LTRIM(cust_out.INVDATE) , 102) , GETDATE())+1-CREDIT_LIMIT_DAYS as Days_Diff,
+    OUT_NET from [ARCOUT].dbo.[CUST_OUT]
+    join ARCHIVESKF.dbo.CustomerInformation
+    on [CUST_OUT].CUSTOMER = CustomerInformation.IDCUST 
+    join ARCHIVESKF.dbo.OESalesDetails on  OesalesDetails.CUSTOMER = CustomerInformation.IDCUST
 
-# Data
-r = np.arange(0, 31, 1)
-print(r)
+    where [CUST_OUT].TERMS<>'Cash' and OUT_NET>0 and datediff([dd] , CONVERT (DATETIME , LTRIM(cust_out.INVDATE) , 102) , GETDATE())+1-CREDIT_LIMIT_DAYS>0
+    group by [CUST_OUT].INVNUMBER,[CUST_OUT].INVDATE,[CUST_OUT].CUSTOMER, [CUST_OUT].TERMS,MAINCUSTYPE, OesalesDetails.AUDTORG,
+    CustomerInformation.CREDIT_LIMIT_DAYS, OUT_NET 
+    ) as TblCredit
 
-# # From raw value to percentage
-totals = [i + j + k + l + m + n + o
-          for i, j, k, l, m, n, o in zip(data['0 - 3 days'],
-                                         data['4 - 10 days'],
-                                         data['11 - 15 days'],
-                                         data['16 - 30 days'],
-                                         data['31 - 90 days'],
-                                         data['91 - 201 days'],
-                                         data['202+ days'])]
-all_zero_three = [i / j * 100 for i, j in zip(data['0 - 3 days'], totals)]
-all_four_ten = [i / j * 100 for i, j in zip(data['4 - 10 days'], totals)]
-all_eleven_fifteen = [i / j * 100 for i, j in zip(data['11 - 15 days'], totals)]
-all_sixteen_therty = [i / j * 100 for i, j in zip(data['16 - 30 days'], totals)]
-all_thrtyone_ninety = [i / j * 100 for i, j in zip(data['31 - 90 days'], totals)]
-all_ninetyone_twohundredone = [i / j * 100 for i, j in zip(data['91 - 201 days'], totals)]
-all_twohundredtwo_more = [i / j * 100 for i, j in zip(data['202+ days'], totals)]
+    group by  TblCredit.AUDTORG
+    order by TblCredit.AUDTORG
+        """, fn.conn)
 
-# #
-# plot
-barWidth = 0.85
-names = data['Branch']
-fig, ax = lib.plt.subplots(figsize=(12.81, 9))
-# Create green Bars
-bar1 = lib.plt.bar(r, all_zero_three, color='#31c377', label='Matured', edgecolor='white', width=barWidth)
-# Create orange Bars
-bar2 = lib.plt.bar(r, all_four_ten, bottom=all_zero_three, color='#f4b300', label='Non-Matured', edgecolor='white',
-                   width=barWidth)
+    branch = valuess['Branch']
+    zero_three = valuess['0 - 3 days']
+    four_ten = valuess['4 - 10 days']
+    eleven_fifteen = valuess['11 - 15 days']
+    sixteen_therty = valuess['16 - 30 days']
+    thrtyone_ninety = valuess['31 - 90 days']
+    ninetyone_twohundredone = valuess['91 - 201 days']
+    twohundredtwo_more = valuess['202+ days']
 
-two_bars = np.add(all_zero_three, all_four_ten).tolist()
-bar3 = lib.plt.bar(r, all_eleven_fifteen, bottom=two_bars, color='red', label='Non-Matured', edgecolor='white',
-                   width=barWidth)
+    # # --------------------- Creating fig-----------------------------------------
 
-three_bars = np.add(two_bars, all_eleven_fifteen).tolist()
-bar4 = lib.plt.bar(r, all_sixteen_therty, bottom=three_bars, color='#96ff00', label='Non-Matured', edgecolor='white',
-                   width=barWidth)
+    # Data
+    r = np.arange(0, 31, 1)
+    # print(r)
 
-four_bars = np.add(three_bars, all_sixteen_therty).tolist()
-bar5 = lib.plt.bar(r, all_thrtyone_ninety, bottom=four_bars, color='#0089ff', label='Non-Matured', edgecolor='white',
-                   width=barWidth)
+    # # From raw value to percentage
+    totals = [i + j + k + l + m + n + o
+              for i, j, k, l, m, n, o in zip(valuess['0 - 3 days'],
+                                             valuess['4 - 10 days'],
+                                             valuess['11 - 15 days'],
+                                             valuess['16 - 30 days'],
+                                             valuess['31 - 90 days'],
+                                             valuess['91 - 201 days'],
+                                             valuess['202+ days'])]
 
-five_bars = np.add(four_bars, all_thrtyone_ninety).tolist()
-bar6 = lib.plt.bar(r, all_ninetyone_twohundredone, bottom=five_bars, color='#e500ff', label='Non-Matured', edgecolor='white',
-                   width=barWidth)
+    all_zero_three = [i / j * 100 for i, j in zip(valuess['0 - 3 days'], totals)]
+    all_four_ten = [i / j * 100 for i, j in zip(valuess['4 - 10 days'], totals)]
+    all_eleven_fifteen = [i / j * 100 for i, j in zip(valuess['11 - 15 days'], totals)]
+    all_sixteen_therty = [i / j * 100 for i, j in zip(valuess['16 - 30 days'], totals)]
+    all_thrtyone_ninety = [i / j * 100 for i, j in zip(valuess['31 - 90 days'], totals)]
+    all_ninetyone_twohundredone = [i / j * 100 for i, j in zip(valuess['91 - 201 days'], totals)]
+    all_twohundredtwo_more = [i / j * 100 for i, j in zip(valuess['202+ days'], totals)]
 
-six_bars = np.add(five_bars, all_ninetyone_twohundredone).tolist()
-bar6 = lib.plt.bar(r, all_twohundredtwo_more, bottom=six_bars, color='#00ffd8', label='Non-Matured', edgecolor='white',
-                   width=barWidth)
+    # #
+    # plot
+    barWidth = 0.85
+    names = valuess['Branch']
+    fig, ax = lib.plt.subplots(figsize=(12.81, 9))
+    # print(names)
+    # labels = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30]
+    labels = names.tolist()
 
-for bar, zero_three in zip(bar1, zero_three):
-    height = bar.get_height()
-    ax.text(bar.get_x() + bar.get_width() / 2, height * .4, str(int(height)) + '%',
-            ha='center', va='bottom', fontweight='bold', rotation=90)
+    def plot_stacked_bar(data, series_labels, category_labels=None,
+                         show_values=False, value_format="{}", y_label=None,
+                         colors=None, grid=False, reverse=False):
 
-for bar, four_ten in zip(bar2, four_ten):
-    height = bar.get_height()
-    ax.text(bar.get_x() + bar.get_width() / 2, height, str(int(height)) + '%',
-            ha='center', va='bottom', fontweight='bold', rotation=90)
+        ny = len(data[0])
+        ind = list(range(ny))
 
-for bar, eleven_fifteen in zip(bar3, eleven_fifteen):
-    height = bar.get_height()
-    ax.text(bar.get_x() + bar.get_width() / 2, height, str(int(height)) + '%',
-            ha='center', va='bottom', fontweight='bold', rotation=90)
+        axes = []
+        cum_size = np.zeros(ny)
 
-# Custom x axis
-lib.plt.xticks(r, names, rotation=90)
-lib.plt.xlabel("NDM Name", fontweight='bold', fontsize=12)
-lib.plt.ylabel("Percentage %", fontweight='bold', fontsize=12)
-lib.plt.title('NDM wise Credit', fontweight='bold', fontsize=12)
-lib.plt.legend()
-print(' ')
-# lib.plt.savefig('./Images/aa.png')
-lib.plt.show()
+        data = np.array(data)
+
+        if reverse:
+            data = np.flip(data, axis=1)
+            category_labels = reversed(category_labels)
+
+        for i, row_data in enumerate(data):
+            color = colors[i] if colors is not None else None
+            axes.append(lib.plt.bar(ind, row_data, bottom=cum_size,
+                                    label=series_labels[i], color=color))
+            cum_size += row_data
+
+        if category_labels:
+            lib.plt.xticks(ind, category_labels, rotation=90)
+
+        if y_label:
+            lib.plt.ylabel(y_label)
+
+        lib.plt.legend()
+
+        if grid:
+            lib.plt.grid()
+
+        if show_values:
+            for axis in axes:
+                for bar in axis:
+                    w, h = bar.get_width(), bar.get_height()
+                    lib.plt.text(bar.get_x() + w / 2, bar.get_y() + h / 2,
+                                 value_format.format(h), ha="center",
+                                 va="center", rotation=90)
+
+    lib.plt.figure(figsize=(12.81, 9))
+
+    series_labels = ['0 - 3 days', '4 - 10 days', '11 - 15 days', '16 - 30 days', '31 - 90 days', '91 - 201 days', '202+ days']
+
+    data = [
+        all_zero_three,
+        all_four_ten,
+        all_eleven_fifteen,
+        all_sixteen_therty,
+        all_thrtyone_ninety,
+        all_ninetyone_twohundredone,
+        all_twohundredtwo_more
+    ]
+
+    # category_labels = ['Cat A', 'Cat B', 'Cat C', 'Cat D']
+
+    plot_stacked_bar(
+        data,
+        series_labels,
+        category_labels=labels,
+        show_values=True,
+        value_format='{:.0f}% ',
+        colors=['#31c377', '#f4b300', 'red', '#96ff00', '#0089ff', '#e500ff', '#00ffd8']
+    )
+
+    lib.plt.xlabel("Branch Name", fontweight='bold', fontsize=12)
+    lib.plt.ylabel("Percentage %", fontweight='bold', fontsize=12)
+    lib.plt.title('Branch Wise Matured Credit', fontweight='bold', fontsize=12)
+    lib.plt.legend(loc='upper center', bbox_to_anchor=(0.5, -0.085),
+                   fancybox=True, shadow=True, ncol=7)
+
+    # lib.plt.show()
+    # plt.close()
+    lib.plt.savefig('./Images/6.Branch_wise_matured_credit_aging.png')
+    print('6. Branch wise matured credit aging')
+
+

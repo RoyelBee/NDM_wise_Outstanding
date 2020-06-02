@@ -84,4 +84,4 @@ def cashdrop_aging():
     lib.plt.tight_layout()
     # lib.plt.show()
     print('10. Total Cash Drop Aging')
-    return lib.plt.savefig('./Images/cashdrop_aging.png')
+    return lib.plt.savefig('./Images/10.cashdrop_aging.png')

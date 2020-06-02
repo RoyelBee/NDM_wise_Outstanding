@@ -4,7 +4,7 @@ import Functions.all_function as fn
 # # --- Aging Matured Credit ---------------------------------
 def matured_credit():
     aging_mature_df = lib.pd.read_sql_query("""
-                         SELECT  AgingDays, sum(Amount)/1000 as Amount FROM
+            SELECT  AgingDays, sum(Amount)/1000 as Amount FROM
             (Select
             case
             when TblCredit.Days_Diff between '0' and '3'  THEN '0 - 3 days'
@@ -70,8 +70,7 @@ def matured_credit():
     # plot
     barWidth = 0.80
     names = ('A- 0 to 3 Days', 'B- 4 to 10 Days', 'C- 11 to 15 Days', 'D- 16 to 30 Days', 'E- 31 to 90 Days',
-             'F- 91 to 201 Days',
-             'G- 202+ Days')
+             'F- 91 to 201 Days', 'G- 202+ Days')
     fig, ax = lib.plt.subplots(figsize=(12.81, 4.8))
     # Create green Bars
     bar1 = lib.plt.bar(serial, Amount, color='#31c377', label='Matured', edgecolor='white', width=barWidth)
@@ -91,5 +90,5 @@ def matured_credit():
     lib.plt.tight_layout()
     # lib.plt.show()
     print('4. Matured Credit Aging Created')
-    return lib.plt.savefig('./Images/matured_credit_aging.png')
+    return lib.plt.savefig('./Images/4.matured_credit_aging.png')
 
