@@ -10,12 +10,12 @@
 # # ---. 3. NDM wise credit outstanding -----------------------------
 # import Functions.ndm_outstanding as ndm_out
 # ndm_out.ndm_wise_outstanding()
-
-# # # ---- 4. matured credit aging ------------------------------------
+#
+# # # ---- 4. matured credit aging ----------------------------------
 import Functions.matured_credit_aging as ndm_matured
 ndm_matured.matured_credit()
 # #
-# # # # ----- 5. NDM matured credit aging -----------------------------
+# # # # ----- 5. NDM matured credit aging ---------------------------
 # import Functions.ndm_matured_credit_aging as ndm_aging
 # ndm_aging.ndm_matured_credit_aging()
 # #
