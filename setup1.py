@@ -36,15 +36,15 @@ print('Image joined ')
 # ------------ Group email ---------------------------------------
 msgRoot = MIMEMultipart('related')
 me = 'erp-bi.service@transcombd.com'
-to = ['rejaul.islam@transcombd.com', '']
-cc = ['', '']
+to = ['rejaul.islam@transcombd.com', 'yakub@transcombd.com']
+cc = ['fazle.rabby@transcombd.com', '']
 bcc = ['', '']
 
 recipient = to + cc + bcc
 
 date = lib.datetime.today()
 today = str(date.day) + '/' + str(date.month) + '/' + str(date.year) + ' ' + date.strftime("%I:%M %p")
-subject = "SK+F Formulation Outstanding Reports" + today
+subject = "SK+F Formulation Outstanding Reports " + today
 
 email_server_host = 'mail.transcombd.com'
 port = 25
@@ -64,14 +64,14 @@ msgAlternative.attach(msgText)
 
 msgText = MIMEText("""
                        <img src="cid:img1_2" height='481', width='1281'><br>
-                       <img src="cid:ndm_credit_outstanding" height='481', width='1281'><br>
-                       <img src="cid:matured_credit_aging" height='481', width='1281'><br>
-                       <img src="cid:ndm_matured_credit_aging" height='481', width='1281'><br>
-                       <img src="cid:Branch_wise_matured_credit_aging" height='550', width='1281'><br>
-                       <img src="cid:non_matured_credit_aging" height='550', width='1281'><br>
-                       <img src="cid:ndm_non_matured_credit_aging" height='700', width='1281'><br>
-                       <img src="cid:branch_non_matured" height='700', width='1281'><br>
-                       <img src="cid:cashdrop_aging" height='481', width='1281'><br>
+                       <img src="cid:ndm_credit_outstanding" height='480', width='1280'><br>
+                       <img src="cid:matured_credit_aging" height='480', width='1280'><br>
+                       <img src="cid:ndm_matured_credit_aging" height='480', width='1280'><br>
+                       <img src="cid:Branch_wise_matured_credit_aging" height='550', width='1280'><br>
+                       <img src="cid:non_matured_credit_aging" height='550', width='1280'><br>
+                       <img src="cid:ndm_non_matured_credit_aging" height='480', width='1280'><br>
+                       <img src="cid:branch_non_matured" height='700', width='1280'><br>
+                       <img src="cid:cashdrop_aging" height='480', width='1280'><br>
                        <img src="cid:ndm_cash_drop_aging" height='481', width='1281'><br>
                        <img src="cid:branch_wise_cash_drop_aging" height='481', width='1281'><br>
                        <img src="cid:img13_14" height='300', width='1281'><br>
@@ -79,10 +79,7 @@ msgText = MIMEText("""
                        <img src="cid:top5_delivery_persons_return" height='481', width='1281'><br>
 
                         <br>
-                       If there is any inconvenience, you are requested to communicate with the ERP BI Service:
-                       <br><b>(Mobile: 01713-389972, 01713-380499)</b><br><br>
-                       Regards<br><b>ERP BI Service</b><br>Information System Automation (ISA)<br><br>
-                       <i><font color="blue">****This is a system generated stock report ****</i></font>""", 'html')
+                       """, 'html')
 
 msgAlternative.attach(msgText)
 # --------- Set Credit image in mail   -----------------------

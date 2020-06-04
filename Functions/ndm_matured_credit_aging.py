@@ -383,27 +383,27 @@ def ndm_matured_credit_aging():
     # # ------------ Add label in the top of the bar --------------------------
     for bar, anwar in zip(anwar_bar, anwar):
         height = bar.get_height()
-        ax.text(bar.get_x() + bar.get_width() / 2, height, str(int(height)) + '%',
+        ax.text(bar.get_x() + bar.get_width() / 2, height*.9, str('%.1f' % height) + '%',
                 ha='center', va='bottom', fontweight='bold', rotation=90)
 
     for bar, kamrul in zip(kamrul_bar, kamrul):
         height = bar.get_height()
-        ax.text(bar.get_x() + bar.get_width() / 2, height, str(int(height)) + '%',
+        ax.text(bar.get_x() + bar.get_width() / 2, height*.9,  str('%.1f' % height) + '%',
                 ha='center', va='bottom', fontweight='bold', rotation=90)
 
     for bar, atik in zip(atik_bar, atik):
         height = bar.get_height()
-        ax.text(bar.get_x() + bar.get_width() / 2, height, str(int(height)) + '%',
+        ax.text(bar.get_x() + bar.get_width() / 2, height*.9,  str('%.1f' % height) + '%',
                 ha='center', va='bottom', fontweight='bold', rotation=90)
     #
     for bar, nurul in zip(nurul_bar, nurul):
         height = bar.get_height()
-        ax.text(bar.get_x() + bar.get_width() / 2, height, str(int(height)) + '%',
+        ax.text(bar.get_x() + bar.get_width() / 2, height*.9,  str('%.1f' % height) + '%',
                 ha='center', va='bottom', fontweight='bold', rotation=90)
     #
     for bar, hafizur in zip(hafizur_bar, hafizur):
         height = bar.get_height()
-        ax.text(bar.get_x() + bar.get_width() / 2, height, str(int(height)) + '%',
+        ax.text(bar.get_x() + bar.get_width() / 2, height*.9,  str('%.1f' % height) + '%',
                 ha='center', va='bottom', fontweight='bold', rotation=90)
 
     # ------ Add legend elements -------------------

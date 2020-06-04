@@ -11,7 +11,7 @@ def ndm_non_matured_credit_aging():
             isnull(sum(case when TblCredit.Days_Diff between '-30' and '-16'  THEN OUT_NET end), 0.1) as '16 - 30 days', 
             isnull(sum(case when TblCredit.Days_Diff between '-90' and '-31'  THEN OUT_NET end), 0.1) as '31 - 90 days', 
             isnull(sum( case when TblCredit.Days_Diff between '-201' and '-91'  THEN OUT_NET end), 0.1) as '90 - 201 days', 
-            isnull(sum( case when TblCredit.Days_Diff >= '-202'  THEN OUT_NET end), 0.1) as '202+ days'
+            isnull(sum( case when TblCredit.Days_Diff <= '-202'  THEN OUT_NET end), 0.1) as '202+ days'
             from
             (select CUSTNAME, INVNUMBER,INVDATE,
             CUSTOMER,TERMS,MAINCUSTYPE,
@@ -42,7 +42,7 @@ def ndm_non_matured_credit_aging():
             isnull(sum(case when TblCredit.Days_Diff between '-30' and '-16'  THEN OUT_NET end), 0.1) as '16 - 30 days', 
             isnull(sum(case when TblCredit.Days_Diff between '-90' and '-31'  THEN OUT_NET end), 0.1) as '31 - 90 days', 
             isnull(sum( case when TblCredit.Days_Diff between '-201' and '-91'  THEN OUT_NET end), 0.1) as '90 - 201 days', 
-            isnull(sum( case when TblCredit.Days_Diff >= '-202'  THEN OUT_NET end), 0.1) as '202+ days'
+            isnull(sum( case when TblCredit.Days_Diff <= '-202'  THEN OUT_NET end), 0.1) as '202+ days'
             from
             (select CUSTNAME, INVNUMBER,INVDATE,
             CUSTOMER,TERMS,MAINCUSTYPE,
@@ -74,7 +74,7 @@ def ndm_non_matured_credit_aging():
             isnull(sum(case when TblCredit.Days_Diff between '-30' and '-16'  THEN OUT_NET end), 0.1) as '16 - 30 days', 
             isnull(sum(case when TblCredit.Days_Diff between '-90' and '-31'  THEN OUT_NET end), 0.1) as '31 - 90 days', 
             isnull(sum( case when TblCredit.Days_Diff between '-201' and '-91'  THEN OUT_NET end), 0.1) as '90 - 201 days', 
-            isnull(sum( case when TblCredit.Days_Diff >= '-202'  THEN OUT_NET end), 0.1) as '202+ days'
+            isnull(sum( case when TblCredit.Days_Diff <= '-202'  THEN OUT_NET end), 0.1) as '202+ days'
         from
         (select CUSTNAME, INVNUMBER,INVDATE,
         CUSTOMER,TERMS,MAINCUSTYPE,
@@ -105,7 +105,7 @@ def ndm_non_matured_credit_aging():
             isnull(sum(case when TblCredit.Days_Diff between '-30' and '-16'  THEN OUT_NET end), 0.1) as '16 - 30 days', 
             isnull(sum(case when TblCredit.Days_Diff between '-90' and '-31'  THEN OUT_NET end), 0.1) as '31 - 90 days', 
             isnull(sum( case when TblCredit.Days_Diff between '-201' and '-91'  THEN OUT_NET end), 0.1) as '90 - 201 days', 
-            isnull(sum( case when TblCredit.Days_Diff >= '-202'  THEN OUT_NET end), 0.1) as '202+ days'
+            isnull(sum( case when TblCredit.Days_Diff <= '-202'  THEN OUT_NET end), 0.1) as '202+ days'
             from
             (select CUSTNAME, INVNUMBER,INVDATE,
             CUSTOMER,TERMS,MAINCUSTYPE,
@@ -137,7 +137,7 @@ def ndm_non_matured_credit_aging():
             isnull(sum(case when TblCredit.Days_Diff between '-30' and '-16'  THEN OUT_NET end), 0.1) as '16 - 30 days', 
             isnull(sum(case when TblCredit.Days_Diff between '-90' and '-31'  THEN OUT_NET end), 0.1) as '31 - 90 days', 
             isnull(sum( case when TblCredit.Days_Diff between '-201' and '-91'  THEN OUT_NET end), 0.1) as '90 - 201 days', 
-            isnull(sum( case when TblCredit.Days_Diff >= '-202'  THEN OUT_NET end), 0.1) as '202+ days'
+            isnull(sum( case when TblCredit.Days_Diff <= '-202'  THEN OUT_NET end), 0.1) as '202+ days'
             
             from
             (select CUSTNAME, INVNUMBER,INVDATE,
@@ -195,27 +195,27 @@ def ndm_non_matured_credit_aging():
     # # ------------ Add label in the top of the bar --------------------------
     for bar, anwar in zip(anwar_bar, anwar):
         height = bar.get_height()
-        ax.text(bar.get_x() + bar.get_width() / 2, height, str(int(height)) + '%',
+        ax.text(bar.get_x() + bar.get_width() / 2, height*.9, str('%.1f' % height) + '%',
                 ha='center', va='bottom', fontweight='bold', rotation=90)
 
     for bar, kamrul in zip(kamrul_bar, kamrul):
         height = bar.get_height()
-        ax.text(bar.get_x() + bar.get_width() / 2, height, str(int(height)) + '%',
+        ax.text(bar.get_x() + bar.get_width() / 2, height*.9,  str('%.1f' % height) + '%',
                 ha='center', va='bottom', fontweight='bold', rotation=90)
 
     for bar, atik in zip(atik_bar, atik):
         height = bar.get_height()
-        ax.text(bar.get_x() + bar.get_width() / 2, height, str(int(height)) + '%',
+        ax.text(bar.get_x() + bar.get_width() / 2, height*.9,  str('%.1f' % height) + '%',
                 ha='center', va='bottom', fontweight='bold', rotation=90)
     #
     for bar, nurul in zip(nurul_bar, nurul):
         height = bar.get_height()
-        ax.text(bar.get_x() + bar.get_width() / 2, height, str(int(height)) + '%',
+        ax.text(bar.get_x() + bar.get_width() / 2, height*.9, str('%.1f' % height) + '%',
                 ha='center', va='bottom', fontweight='bold', rotation=90)
     #
     for bar, hafizur in zip(hafizur_bar, hafizur):
         height = bar.get_height()
-        ax.text(bar.get_x() + bar.get_width() / 2, height, str(int(height)) + '%',
+        ax.text(bar.get_x() + bar.get_width() / 2, height*.9, str('%.1f' % height) + '%',
                 ha='center', va='bottom', fontweight='bold', rotation=90)
 
     # ------ Add legend elements -------------------

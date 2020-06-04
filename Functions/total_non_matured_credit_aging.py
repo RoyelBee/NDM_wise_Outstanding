@@ -6,10 +6,10 @@ def total_non_matured_credit_aging():
             isnull(SUM(case when TblCredit.Days_Diff between '-3' and '0'  THEN OUT_NET end), 0)  as '0 - 3 days',
             isnull(sum(case when TblCredit.Days_Diff between '-10' and '-4'  THEN OUT_NET end), 0) as  '4 - 10 days', 
             isnull(sum( case when TblCredit.Days_Diff between '-15' and '-11'  THEN OUT_NET end), 0) as '11 - 15 days', 
-            isnull(sum(case when TblCredit.Days_Diff between '-16' and '-30'  THEN OUT_NET end), 0) as '16 - 30 days', 
-            isnull(sum(case when TblCredit.Days_Diff between '-31' and '-90'  THEN OUT_NET end), 0) as '31 - 90 days', 
-            isnull(sum( case when TblCredit.Days_Diff between '-91' and '-201'  THEN OUT_NET end), 0) as '90 - 201 days', 
-            isnull(sum( case when TblCredit.Days_Diff >= '-202'  THEN OUT_NET end), 0) as '202+ days'
+            isnull(sum(case when TblCredit.Days_Diff between '-30' and '-16'  THEN OUT_NET end), 0) as '16 - 30 days', 
+            isnull(sum(case when TblCredit.Days_Diff between '-90' and '-31'  THEN OUT_NET end), 0) as '31 - 90 days', 
+            isnull(sum( case when TblCredit.Days_Diff between '-201' and '-91'  THEN OUT_NET end), 0) as '90 - 201 days', 
+            isnull(sum( case when TblCredit.Days_Diff <= '-202'  THEN OUT_NET end), 0) as '202+ days'
             from
             (select CUSTNAME, INVNUMBER,INVDATE,
             CUSTOMER,TERMS,MAINCUSTYPE,
@@ -51,19 +51,26 @@ def total_non_matured_credit_aging():
              'F- 91 to 201 Days', 'G- 202+ Days')
     fig, ax = lib.plt.subplots(figsize=(12.81, 4.8))
     # Create green Bars
-    bar1 = lib.plt.bar(serial, data_point, color='#31c377', label='Matured', edgecolor='white', width=barWidth)
+    bar1 = lib.plt.bar(serial, data, color='#ffa800', label='Matured', edgecolor='white', width=barWidth)
 
     # Create orange Bars
     for bar in bar1:
         height = bar.get_height()
-        ax.text(bar.get_x() + bar.get_width() / 2, height * .99, str(int(height)) + '%', ha='center', va='bottom',
+        ax.text(bar.get_x() + bar.get_width() / 2, height, str(fn.numberInThousands(height)),
+                ha='center',
+                va='bottom',
                 fontweight='bold')
+
+    for bar, percentage in zip(bar1, data_point):
+        height = bar.get_height()
+        ax.text(bar.get_x() + bar.get_width() / 2, height * .4, str('%.2f' % percentage) + '%', ha='center',
+                va='bottom')
 
     # Custom x axis
     lib.plt.xticks(serial, names)
-    lib.plt.yticks(lib.np.arange(0, 101, 10))
+    # lib.plt.yticks(lib.np.arange(0, 101, 10))
     lib.plt.xlabel('Aging Days', color='black', fontsize=14, fontweight='bold')
-    lib.plt.ylabel('Percentage %', color='black', fontsize=14, fontweight='bold')
+    lib.plt.ylabel('Amount & Percentage %', color='black', fontsize=14, fontweight='bold')
     lib.plt.title('7. Non-Matured Credit Ageing', color='#3e0a75', fontweight='bold', fontsize=16)
     lib.plt.tight_layout()
     # lib.plt.show()

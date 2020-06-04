@@ -12,7 +12,7 @@ def branch_wise_non_matured_credit():
             isnull(sum(case when TblCredit.Days_Diff between '-30' and '-16'  THEN OUT_NET end), 0.1) as '16 - 30 days', 
             isnull(sum(case when TblCredit.Days_Diff between '-90' and '-31'  THEN OUT_NET end), .1) as '31 - 90 days', 
             isnull(sum( case when TblCredit.Days_Diff between '-201' and '-91'  THEN OUT_NET end), 0.1) as '91 - 201 days', 
-            isnull(sum( case when TblCredit.Days_Diff >= '-202'  THEN OUT_NET end), 0) as '202+ days'
+            isnull(sum( case when TblCredit.Days_Diff <= '-202'  THEN OUT_NET end), 0) as '202+ days'
             from (
             select [CUST_OUT].INVNUMBER,
             [CUST_OUT].INVDATE, 
@@ -25,16 +25,16 @@ def branch_wise_non_matured_credit():
             join ARCHIVESKF.dbo.CustomerInformation
             on [CUST_OUT].CUSTOMER = CustomerInformation.IDCUST 
             join ARCHIVESKF.dbo.OESalesDetails on  OesalesDetails.CUSTOMER = CustomerInformation.IDCUST
-        
+                    
             where [CUST_OUT].TERMS<>'Cash' 
-        
+                    
             and OUT_NET>0 
             and datediff([dd] , CONVERT (DATETIME , LTRIM(cust_out.INVDATE) , 102) 
             , GETDATE())+1-CREDIT_LIMIT_DAYS<0
             group by [CUST_OUT].INVNUMBER,[CUST_OUT].INVDATE,[CUST_OUT].CUSTOMER, [CUST_OUT].TERMS,MAINCUSTYPE, OesalesDetails.AUDTORG,
             CustomerInformation.CREDIT_LIMIT_DAYS, OUT_NET 
             ) as TblCredit
-        
+                    
             group by  TblCredit.AUDTORG
             order by TblCredit.AUDTORG
                     """, fn.conn)

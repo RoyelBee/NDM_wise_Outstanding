@@ -107,7 +107,7 @@ def ndm_wise_outstanding():
     totals = [i + j for i, j in zip(df['all_matured'], df['all_regular'])]
     all_matured = [i / j * 100 for i, j in zip(df['all_matured'], totals)]
     all_regular = [i / j * 100 for i, j in zip(df['all_regular'], totals)]
-    print('all matured = ', all_matured)
+    # print('all matured = ', all_matured)
 
     # plot
     barWidth = 0.85
