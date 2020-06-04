@@ -1,17 +1,17 @@
-#
-# # #--------- 1. Total Outstanding ---------------------------------
-# import Functions.outstanding as out
+
+# #--------- 1. Total Outstanding ----------------------------------
+import Functions.outstanding as out
 # out.totalOutstanding()
-#
-# # # # ------- 2. Credit Outstanding ---------------------------------
-# import Functions.credit_outstanding as credit
+
+# # # ------- 2. Credit Outstanding ---------------------------------
+import Functions.credit_outstanding as credit
 # credit.creditOutstanding()
-#
-# # # ---. 3. NDM wise credit outstanding ---------------------------
+
+# # ---. 3. NDM wise credit outstanding -----------------------------
 import Functions.ndm_outstanding as ndm_out
 ndm_out.ndm_wise_outstanding()
 #
-# # # ---- 4. matured credit aging ----------------------------------
+# # # ---- 4. matured credit aging ------------------------------------
 # import Functions.matured_credit_aging as ndm_matured
 # ndm_matured.matured_credit()
 # #
@@ -20,8 +20,8 @@ ndm_out.ndm_wise_outstanding()
 # ndm_aging.ndm_matured_credit_aging()
 # #
 # # # -------- 6. Branch wise matured  credit aging  -------------------
-import Functions.branch_wise_matured_crdit as branch_matured
-branch_matured.branch_wise_matured_credit()
+# import Functions.branch_wise_matured_crdit as branch_matured
+# branch_matured.branch_wise_matured_credit()
 # #
 # # # # -- 7. Total Non-matured credit aging ---------------------------
 # import Functions.total_non_matured_credit_aging as non_matured_credit

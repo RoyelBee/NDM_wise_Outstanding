@@ -19,24 +19,24 @@ def totalOutstanding():
     total = cash + credit
     total = 'Total \n' + fn.numberInThousands(total)
 
-    colors = ['#0093ff', '#ff9700']
-    legend_element = [lib.Patch(facecolor='#0093ff', label='Cash'),
-                      lib.Patch(facecolor='#ff9700', label='Credit')]
+    colors = ['#fffd00', '#50ff00']
+    legend_element = [lib.Patch(facecolor='#fffd00', label='Cash'),
+                      lib.Patch(facecolor='#50ff00', label='Credit')]
 
-    # data_label = [fn.numberInThousands(cash), fn.numberInThousands(credit)]
+    data_label = [fn.numberInThousands(cash), fn.numberInThousands(credit)]
 
     fig1, ax = lib.plt.subplots()
     # Add this next line to show data
-    wedges, labels, autopct = ax.pie(data, colors=colors,  autopct='%.1f%%', startangle=90,
+    wedges, labels, autopct = ax.pie(data, labels=data_label, colors=colors,  autopct='%.1f%%', startangle=90,
                                      pctdistance=.7)
     lib.plt.setp(autopct, fontsize=14, color='black', fontweight='bold')
     lib.plt.setp(labels, fontsize=14, fontweight='bold')
 
    # To make a Donate chart uncomment next 4 lines ------------
-    # ax.text(0, -.1, total, ha='center', fontsize=14, fontweight='bold', backgroundcolor='#00daff')
-    # centre_circle = lib.plt.Circle((0, 0), 0.50, fc='white')
-    # fig = lib.plt.gcf()
-    # fig.gca().add_artist(centre_circle)
+    ax.text(0, -.1, total, ha='center', fontsize=14, fontweight='bold')
+    centre_circle = lib.plt.Circle((0, 0), 0.50, fc='white')
+    fig = lib.plt.gcf()
+    fig.gca().add_artist(centre_circle)
     lib.plt.title('1. Total Outstanding', fontsize=16, fontweight='bold', color='#3e0a75')
     ax.axis('equal')
     lib.plt.legend(handles=legend_element, loc='lower left', fontsize=11)
