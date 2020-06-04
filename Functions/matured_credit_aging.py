@@ -1,6 +1,7 @@
 import Functions.all_library as lib
 import Functions.all_function as fn
 
+
 # # --- Aging Matured Credit ---------------------------------
 def matured_credit():
     aging_mature_df = lib.pd.read_sql_query("""
@@ -86,9 +87,8 @@ def matured_credit():
     lib.plt.yticks(lib.np.arange(0, 101, 10))
     lib.plt.xlabel('Aging Days', color='black', fontsize=14, fontweight='bold')
     lib.plt.ylabel('Percentage %', color='black', fontsize=14, fontweight='bold')
-    lib.plt.title('Matured Credit Age', color='#3e0a75', fontweight='bold', fontsize=16)
+    lib.plt.title('4. Matured Credit Age',fontsize=16, fontweight='bold', color='#3e0a75')
     lib.plt.tight_layout()
     # lib.plt.show()
     print('4. Matured Credit Aging Created')
     return lib.plt.savefig('./Images/4.matured_credit_aging.png')
-

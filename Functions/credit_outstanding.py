@@ -22,9 +22,9 @@ def creditOutstanding():
 
     values = [matured, not_mature]
 
-    colors = ['#ffb667', '#b35e00']
-    legend_element = [lib.Patch(facecolor='#ffb667', label='Matured'),
-                      lib.Patch(facecolor='#b35e00', label='Not Mature')]
+    colors = ['#ff9700', '#0093ff']
+    legend_element = [lib.Patch(facecolor='#ff9700', label='Matured'),
+                      lib.Patch(facecolor='#0093ff', label='Not Mature')]
 
     total_credit = matured + not_mature
     total_credit = 'Total \n' + fn.numberInThousands(total_credit)

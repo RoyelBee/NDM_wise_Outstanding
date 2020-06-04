@@ -111,7 +111,8 @@ def ndm_wise_outstanding():
     # plot
     barWidth = 0.85
     names = ('Anwar', 'Kamrul', 'Atik', 'Nurul', 'Hafizur')
-    fig, ax = lib.plt.subplots()
+
+    fig, ax = lib.plt.subplots(figsize=(12.8, 4.8))
     # Create green Bars
     bar1 = lib.plt.bar(r, all_matured, color='#31c377', label='Matured', edgecolor='white', width=barWidth)
     # Create orange Bars
@@ -136,8 +137,8 @@ def ndm_wise_outstanding():
     lib.plt.xticks(r, names)
     lib.plt.xlabel("NDM Name", fontweight='bold', fontsize=12)
     lib.plt.ylabel("Percentage %", fontweight='bold', fontsize=12)
-    lib.plt.title('NDM wise Credit', fontweight='bold', fontsize=12)
+    lib.plt.title('3. NDM wise Credit', fontsize=16, fontweight='bold', color='#3e0a75')
     lib.plt.legend()
     print('3. NDM wise Credit Outstanding')
-    return lib.plt.savefig('./Images/3.ndm_credit_outstanding.png')
+    lib.plt.savefig('./Images/3.ndm_credit_outstanding.png')
     # lib.plt.show()

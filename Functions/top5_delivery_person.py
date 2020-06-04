@@ -68,7 +68,7 @@ def top5_delivery_persons_return():
     autolabel(rects1)
     lib.plt.xticks(y_pos, branch_final_name + DPNAME, rotation='horizontal', fontsize='12')
     lib.plt.yticks(lib.np.arange(0, round(max_amount) + (.6 * round(max_amount)), max_amount / 6), fontsize='12')
-    lib.plt.title("16. Top 5 DP Return % - MTD", color='#3e0a75', fontsize='16', fontweight='bold')
+    lib.plt.title("16. Top 5 DP Return % - MTD", fontsize=16, fontweight='bold', color='#3e0a75')
     lib.plt.legend(['National Return %', 'DP Return %'], loc='upper center', bbox_to_anchor=(0.5, -0.085),
                    fancybox=True, shadow=True, ncol=4)
     lib.plt.tight_layout()

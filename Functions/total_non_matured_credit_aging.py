@@ -64,7 +64,7 @@ def total_non_matured_credit_aging():
     lib.plt.yticks(lib.np.arange(0, 101, 10))
     lib.plt.xlabel('Aging Days', color='black', fontsize=14, fontweight='bold')
     lib.plt.ylabel('Percentage %', color='black', fontsize=14, fontweight='bold')
-    lib.plt.title('Non-Matured Credit Ageing', color='#3e0a75', fontweight='bold', fontsize=16)
+    lib.plt.title('7. Non-Matured Credit Ageing', color='#3e0a75', fontweight='bold', fontsize=16)
     lib.plt.tight_layout()
     # lib.plt.show()
     print('7. Non-Matured Credit Aging Created')

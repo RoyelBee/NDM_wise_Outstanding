@@ -56,7 +56,7 @@ def national_vs_ndm_return():
     y_pos = lib.np.arange(len(array_of_ndm_return))
     max_amount = max(array_of_ndm_return)
     color = '#418af2'
-    fig, ax = lib.plt.subplots(figsize=(12.81, 4.8))
+    fig, ax = lib.plt.subplots(figsize=(10.81, 3))
     rects1 = lib.plt.bar(y_pos, array_of_ndm_return, align='center', alpha=0.9, color=color)
     lib.plt.plot(y_pos, average_branch_amount_list, color='orange')
 
@@ -72,7 +72,7 @@ def national_vs_ndm_return():
     autolabel(rects1)
     lib.plt.xticks(y_pos, name_of_ndms, rotation='horizontal', fontsize='12')
     lib.plt.yticks(lib.np.arange(0, round(max_amount) + (.6 * round(max_amount)), max_amount / 6), fontsize='12')
-    lib.plt.title("15. NDM Wise Return % - MTD", color='#3e0a75', fontsize='16', fontweight='bold')
+    lib.plt.title("14. NDM Wise Return % - MTD", fontsize=16, fontweight='bold', color='#3e0a75')
     lib.plt.legend(['National Return %', 'NDM Return %'], loc='upper center', bbox_to_anchor=(0.5, -0.085),
                fancybox=True, shadow=True, ncol=4)
     lib.plt.tight_layout()

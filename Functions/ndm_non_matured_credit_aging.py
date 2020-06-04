@@ -224,7 +224,7 @@ def ndm_non_matured_credit_aging():
                 '202 to More']
     lib.plt.xticks(x + .25, category)
 
-    lib.plt.title('NDM wise Non-Matured Credit Aging', fontweight='bold', fontsize=12)
+    lib.plt.title('8. NDM wise Non-Matured Credit Aging', fontsize=16, fontweight='bold', color='#3e0a75')
     lib.plt.legend(handles=legend_element, loc='best', fontsize=11)
     # return lib.plt.show()
     print('8. NDM non-matured credit Aging')
