@@ -5,6 +5,8 @@ from email.mime.image import MIMEImage
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from PIL import Image, ImageDraw, ImageFont
+import Functions.all_library as lib
+
 import generate_all_kpi
 dirpath = os.path.dirname(os.path.realpath(__file__))
 
@@ -40,7 +42,9 @@ bcc = ['', '']
 
 recipient = to + cc + bcc
 
-subject = "SK+F Formulation Outstanding Reports"
+date = lib.datetime.today()
+today = str(date.day) + '/' + str(date.month) + '/' + str(date.year) + ' ' + date.strftime("%I:%M %p")
+subject = "SK+F Formulation Outstanding Reports" + today
 
 email_server_host = 'mail.transcombd.com'
 port = 25

@@ -1,12 +1,12 @@
-
+#
 # #--------- 1. Total Outstanding ----------------------------------
-import Functions.outstanding as out
+# import Functions.outstanding as out
 # out.totalOutstanding()
-
+#
 # # # ------- 2. Credit Outstanding ---------------------------------
-import Functions.credit_outstanding as credit
+# import Functions.credit_outstanding as credit
 # credit.creditOutstanding()
-
+#
 # # ---. 3. NDM wise credit outstanding -----------------------------
 import Functions.ndm_outstanding as ndm_out
 ndm_out.ndm_wise_outstanding()

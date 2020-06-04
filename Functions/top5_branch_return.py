@@ -13,7 +13,7 @@ def top5_branch_return():
                     where
                     left(TRANSDATE,6)=convert(varchar(6),getdate(),112)
                     group by AUDTORG
-    				order by ReturnAmount DESC""", fn.conn)
+    				order by ReturnAmount DESC """, fn.conn)
 
     average_branch_return_information = average_branch_return_df['ReturnAmount'].tolist()
     Total_amount_of_return = sum(average_branch_return_information)

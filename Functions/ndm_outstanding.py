@@ -107,35 +107,36 @@ def ndm_wise_outstanding():
     totals = [i + j for i, j in zip(df['all_matured'], df['all_regular'])]
     all_matured = [i / j * 100 for i, j in zip(df['all_matured'], totals)]
     all_regular = [i / j * 100 for i, j in zip(df['all_regular'], totals)]
+    print('all matured = ', all_matured)
 
     # plot
     barWidth = 0.85
     names = ('Anwar', 'Kamrul', 'Atik', 'Nurul', 'Hafizur')
 
     fig, ax = lib.plt.subplots(figsize=(12.8, 4.8))
-    # Create green Bars
-    bar1 = lib.plt.bar(r, all_matured, color='#31c377', label='Matured', edgecolor='white', width=barWidth)
-    # Create orange Bars
-    bar2 = lib.plt.bar(r, all_regular, bottom=all_matured, color='#f4b300', label='Non-Matured', edgecolor='white',
+    bar1 = lib.plt.bar(r, all_matured, color='#ffa800', label='Matured', width=barWidth)
+    bar2 = lib.plt.bar(r, all_regular, bottom=all_matured, color='#50ff00', label='Non-Matured',
                        width=barWidth)
 
     # # Set Matured Data Point
     matured = [anwar_matured, kamrul_matured, atik_matured, nurul_matured, hafizur_matured]
-    for bar, matured in zip(bar1, matured):
+    for bar, matured, all_matured in zip(bar1, matured, all_matured):
         height = bar.get_height()
-        ax.text(bar.get_x() + bar.get_width() / 2, height * .5, fn.numberInThousands(matured),
+        ax.text(bar.get_x() + bar.get_width() / 2, height * .4,
+                str(fn.numberInThousands(matured))+'\n'+str("%.2f" % all_matured)+'%',
                 ha='center', va='bottom', fontweight='bold')
 
     # # Set Non Mature Data Point
     regular = [anwar_regular, kamrul_regular, atik_regular, nurul_regular, hafizur_regular]
-    for bar, regular in zip(bar2, regular):
+    for bar, regular, all_regular in zip(bar2, regular, all_regular):
         height = bar.get_height()
-        ax.text(bar.get_x() + bar.get_width() / 2, height * .8, fn.numberInThousands(regular),
+        ax.text(bar.get_x() + bar.get_width() / 2, height * .8,
+                str(fn.numberInThousands(regular)) + '\n' + str("%.2f" % all_regular) + '%',
                 ha='center', va='bottom', fontweight='bold')
 
     # Custom x axis
     lib.plt.xticks(r, names)
-    lib.plt.xlabel("NDM Name", fontweight='bold', fontsize=12)
+    # lib.plt.xlabel("NDM Name", fontweight='bold', fontsize=12)
     lib.plt.ylabel("Percentage %", fontweight='bold', fontsize=12)
     lib.plt.title('3. NDM wise Credit', fontsize=16, fontweight='bold', color='#3e0a75')
     lib.plt.legend()
