@@ -1,45 +1,43 @@
-import pandas as pd
-import numpy as np
 
 import Functions.all_library as lib
 import Functions.all_function as fn
 
 
 def branch_wise_non_matured_credit():
-    data = pd.read_sql_query(""" 
-    SELECT left(TblCredit.AUDTORG, 3) as Branch, 
-    isnull(SUM(case when TblCredit.Days_Diff between '-3' and '0'  THEN OUT_NET end), 0.1)  as '0 - 3 days',
-    isnull(sum(case when TblCredit.Days_Diff between '-10' and '-4'  THEN OUT_NET end), 0.1) as  '4 - 10 days', 
-    isnull(sum( case when TblCredit.Days_Diff between '-15' and '-11'  THEN OUT_NET end), 0.1) as '11 - 15 days', 
-    isnull(sum(case when TblCredit.Days_Diff between '-30' and '-16'  THEN OUT_NET end), 0.1) as '16 - 30 days', 
-    isnull(sum(case when TblCredit.Days_Diff between '-90' and '-31'  THEN OUT_NET end), .1) as '31 - 90 days', 
-    isnull(sum( case when TblCredit.Days_Diff between '-201' and '-91'  THEN OUT_NET end), 0.1) as '91 - 201 days', 
-    isnull(sum( case when TblCredit.Days_Diff >= '-202'  THEN OUT_NET end), 0) as '202+ days'
-    from (
-    select [CUST_OUT].INVNUMBER,
-    [CUST_OUT].INVDATE, 
-    [CUST_OUT].CUSTOMER,
-    [CUST_OUT].TERMS,MAINCUSTYPE, 
-    OesalesDetails.AUDTORG,
-    CustomerInformation.CREDIT_LIMIT_DAYS,
-    datediff([dd] , CONVERT (DATETIME , LTRIM(cust_out.INVDATE) , 102) , GETDATE())+1-CREDIT_LIMIT_DAYS as Days_Diff,
-    OUT_NET from [ARCOUT].dbo.[CUST_OUT]
-    join ARCHIVESKF.dbo.CustomerInformation
-    on [CUST_OUT].CUSTOMER = CustomerInformation.IDCUST 
-    join ARCHIVESKF.dbo.OESalesDetails on  OesalesDetails.CUSTOMER = CustomerInformation.IDCUST
-
-    where [CUST_OUT].TERMS<>'Cash' 
-
-    and OUT_NET>0 
-    and datediff([dd] , CONVERT (DATETIME , LTRIM(cust_out.INVDATE) , 102) 
-    , GETDATE())+1-CREDIT_LIMIT_DAYS<0
-    group by [CUST_OUT].INVNUMBER,[CUST_OUT].INVDATE,[CUST_OUT].CUSTOMER, [CUST_OUT].TERMS,MAINCUSTYPE, OesalesDetails.AUDTORG,
-    CustomerInformation.CREDIT_LIMIT_DAYS, OUT_NET 
-    ) as TblCredit
-
-    group by  TblCredit.AUDTORG
-    order by TblCredit.AUDTORG
-            """, fn.conn)
+    data = lib.pd.read_sql_query(""" 
+            SELECT left(TblCredit.AUDTORG, 3) as Branch, 
+            isnull(SUM(case when TblCredit.Days_Diff between '-3' and '0'  THEN OUT_NET end), 0.1)  as '0 - 3 days',
+            isnull(sum(case when TblCredit.Days_Diff between '-10' and '-4'  THEN OUT_NET end), 0.1) as  '4 - 10 days', 
+            isnull(sum( case when TblCredit.Days_Diff between '-15' and '-11'  THEN OUT_NET end), 0.1) as '11 - 15 days', 
+            isnull(sum(case when TblCredit.Days_Diff between '-30' and '-16'  THEN OUT_NET end), 0.1) as '16 - 30 days', 
+            isnull(sum(case when TblCredit.Days_Diff between '-90' and '-31'  THEN OUT_NET end), .1) as '31 - 90 days', 
+            isnull(sum( case when TblCredit.Days_Diff between '-201' and '-91'  THEN OUT_NET end), 0.1) as '91 - 201 days', 
+            isnull(sum( case when TblCredit.Days_Diff <= '-202'  THEN OUT_NET end), 0) as '202+ days'
+            from (
+            select [CUST_OUT].INVNUMBER,
+            [CUST_OUT].INVDATE, 
+            [CUST_OUT].CUSTOMER,
+            [CUST_OUT].TERMS,MAINCUSTYPE, 
+            OesalesDetails.AUDTORG,
+            CustomerInformation.CREDIT_LIMIT_DAYS,
+            datediff([dd] , CONVERT (DATETIME , LTRIM(cust_out.INVDATE) , 102) , GETDATE())+1-CREDIT_LIMIT_DAYS as Days_Diff,
+            OUT_NET from [ARCOUT].dbo.[CUST_OUT]
+            join ARCHIVESKF.dbo.CustomerInformation
+            on [CUST_OUT].CUSTOMER = CustomerInformation.IDCUST 
+            join ARCHIVESKF.dbo.OESalesDetails on  OesalesDetails.CUSTOMER = CustomerInformation.IDCUST
+                    
+            where [CUST_OUT].TERMS<>'Cash' 
+                    
+            and OUT_NET>0 
+            and datediff([dd] , CONVERT (DATETIME , LTRIM(cust_out.INVDATE) , 102) 
+            , GETDATE())+1-CREDIT_LIMIT_DAYS<0
+            group by [CUST_OUT].INVNUMBER,[CUST_OUT].INVDATE,[CUST_OUT].CUSTOMER, [CUST_OUT].TERMS,MAINCUSTYPE, OesalesDetails.AUDTORG,
+            CustomerInformation.CREDIT_LIMIT_DAYS, OUT_NET 
+            ) as TblCredit
+                    
+            group by  TblCredit.AUDTORG
+            order by TblCredit.AUDTORG
+                    """, fn.conn)
 
     # branch = data['Branch']
     # zero_three = data['0 - 3 days']
@@ -53,7 +51,7 @@ def branch_wise_non_matured_credit():
     # # --------------------- Creating fig-----------------------------------------
 
     # Data
-    r = np.arange(0, 31, 1)
+    r = lib.np.arange(0, 31, 1)
 
     # # From raw value to percentage
     totals = [i + j + k + l + m + n + o
@@ -77,9 +75,7 @@ def branch_wise_non_matured_credit():
     # plot
     barWidth = 0.85
     names = data['Branch']
-    fig, ax = lib.plt.subplots(figsize=(12.81, 9))
-    # print(names)
-    # labels = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30]
+    fig, ax = lib.plt.subplots(figsize=(12.8, 9))
     labels = names.tolist()
 
     def plot_stacked_bar(data, series_labels, category_labels=None,
@@ -90,12 +86,12 @@ def branch_wise_non_matured_credit():
         ind = list(range(ny))
 
         axes = []
-        cum_size = np.zeros(ny)
+        cum_size = lib.np.zeros(ny)
 
-        data = np.array(data)
+        data = lib.np.array(data)
 
         if reverse:
-            data = np.flip(data, axis=1)
+            data = lib.np.flip(data, axis=1)
             category_labels = reversed(category_labels)
 
         for i, row_data in enumerate(data):
@@ -123,21 +119,11 @@ def branch_wise_non_matured_credit():
                                  value_format.format(h), ha="center",
                                  va="center", rotation=90)
 
-    lib.plt.figure(figsize=(12.81, 9))
+    series_labels = ['0 - 3 days', '4 - 10 days', '11 - 15 days', '16 - 30 days', '31 - 90 days', '91 - 201 days',
+                     '202+ days']
 
-    series_labels = ['0 - 3 days', '4 - 10 days', '11 - 15 days', '16 - 30 days', '31 - 90 days', '91 - 201 days', '202+ days']
-
-    data = [
-        all_zero_three,
-        all_four_ten,
-        all_eleven_fifteen,
-        all_sixteen_therty,
-        all_thrtyone_ninety,
-        all_ninetyone_twohundredone,
-        all_twohundredtwo_more
-    ]
-
-    # category_labels = ['Cat A', 'Cat B', 'Cat C', 'Cat D']
+    data = [all_zero_three, all_four_ten, all_eleven_fifteen, all_sixteen_therty, all_thrtyone_ninety,
+            all_ninetyone_twohundredone, all_twohundredtwo_more]
 
     plot_stacked_bar(
         data,
@@ -150,11 +136,9 @@ def branch_wise_non_matured_credit():
 
     lib.plt.xlabel("Branch Name", fontweight='bold', fontsize=12)
     lib.plt.ylabel("Percentage %", fontweight='bold', fontsize=12)
-    lib.plt.title('Branch Wise Non-Matured Credit', fontweight='bold', fontsize=12)
+    lib.plt.title('9. Branch Wise Non-Matured Credit', fontsize=16, fontweight='bold', color='#3e0a75')
     lib.plt.legend(loc='upper center', bbox_to_anchor=(0.5, -0.085),
                    fancybox=True, shadow=True, ncol=7)
 
     lib.plt.savefig('./Images/9.branch_non_matured.png')
     print('9. Branch wise non-matured credit')
-
-

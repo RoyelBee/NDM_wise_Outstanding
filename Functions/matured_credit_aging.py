@@ -1,6 +1,7 @@
 import Functions.all_library as lib
 import Functions.all_function as fn
 
+
 # # --- Aging Matured Credit ---------------------------------
 def matured_credit():
     aging_mature_df = lib.pd.read_sql_query("""
@@ -65,7 +66,7 @@ def matured_credit():
     serial = [0, 1, 2, 3, 4, 5, 6]
     all = [i for i in aging_mature_df['Amount']]
     total = sum(all)
-    Amount = [i * 100 / total for i, j, in zip(aging_mature_df['Amount'], all)]
+    percent = [i * 100 / total for i, j, in zip(aging_mature_df['Amount'], all)]
 
     # plot
     barWidth = 0.80
@@ -73,22 +74,23 @@ def matured_credit():
              'F- 91 to 201 Days', 'G- 202+ Days')
     fig, ax = lib.plt.subplots(figsize=(12.81, 4.8))
     # Create green Bars
-    bar1 = lib.plt.bar(serial, Amount, color='#31c377', label='Matured', edgecolor='white', width=barWidth)
+    bar1 = lib.plt.bar(serial, all, color='#ffa800', label='Matured', edgecolor='white', width=barWidth)
 
     # Create orange Bars
-    for bar in bar1:
+    for bar, percent in zip(bar1, percent):
         height = bar.get_height()
-        ax.text(bar.get_x() + bar.get_width() / 2, height * .99, str(int(height)) + '%', ha='center', va='bottom',
-                fontweight='bold')
+        ax.text(bar.get_x() + bar.get_width() / 2, height,
+                str(int(height)) + 'K', ha='center', va='bottom', fontweight='bold')
+        ax.text(bar.get_x() + bar.get_width() / 2, height * .5,
+                str('%.2f' % percent) + '%', ha='center', va='bottom', fontweight='bold')
 
     # Custom x axis
     lib.plt.xticks(serial, names)
-    lib.plt.yticks(lib.np.arange(0, 101, 10))
+    # lib.plt.yticks(lib.np.arange(0, 101, 10))
     lib.plt.xlabel('Aging Days', color='black', fontsize=14, fontweight='bold')
     lib.plt.ylabel('Percentage %', color='black', fontsize=14, fontweight='bold')
-    lib.plt.title('Matured Credit Age', color='#3e0a75', fontweight='bold', fontsize=16)
+    lib.plt.title('4. Matured Credit Age', fontsize=16, fontweight='bold', color='#3e0a75')
     lib.plt.tight_layout()
     # lib.plt.show()
     print('4. Matured Credit Aging Created')
     return lib.plt.savefig('./Images/4.matured_credit_aging.png')
-

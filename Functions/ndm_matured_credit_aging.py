@@ -383,27 +383,27 @@ def ndm_matured_credit_aging():
     # # ------------ Add label in the top of the bar --------------------------
     for bar, anwar in zip(anwar_bar, anwar):
         height = bar.get_height()
-        ax.text(bar.get_x() + bar.get_width() / 2, height, str(int(height)) + '%',
+        ax.text(bar.get_x() + bar.get_width() / 2, height*.9, str('%.1f' % height) + '%',
                 ha='center', va='bottom', fontweight='bold', rotation=90)
 
     for bar, kamrul in zip(kamrul_bar, kamrul):
         height = bar.get_height()
-        ax.text(bar.get_x() + bar.get_width() / 2, height, str(int(height)) + '%',
+        ax.text(bar.get_x() + bar.get_width() / 2, height*.9,  str('%.1f' % height) + '%',
                 ha='center', va='bottom', fontweight='bold', rotation=90)
 
     for bar, atik in zip(atik_bar, atik):
         height = bar.get_height()
-        ax.text(bar.get_x() + bar.get_width() / 2, height, str(int(height)) + '%',
+        ax.text(bar.get_x() + bar.get_width() / 2, height*.9,  str('%.1f' % height) + '%',
                 ha='center', va='bottom', fontweight='bold', rotation=90)
     #
     for bar, nurul in zip(nurul_bar, nurul):
         height = bar.get_height()
-        ax.text(bar.get_x() + bar.get_width() / 2, height, str(int(height)) + '%',
+        ax.text(bar.get_x() + bar.get_width() / 2, height*.9,  str('%.1f' % height) + '%',
                 ha='center', va='bottom', fontweight='bold', rotation=90)
     #
     for bar, hafizur in zip(hafizur_bar, hafizur):
         height = bar.get_height()
-        ax.text(bar.get_x() + bar.get_width() / 2, height, str(int(height)) + '%',
+        ax.text(bar.get_x() + bar.get_width() / 2, height*.9,  str('%.1f' % height) + '%',
                 ha='center', va='bottom', fontweight='bold', rotation=90)
 
     # ------ Add legend elements -------------------
@@ -412,7 +412,7 @@ def ndm_matured_credit_aging():
                 '202 to More']
     lib.plt.xticks(x + .25, category)
 
-    lib.plt.title('NDM wise Matured Credit Aging', fontweight='bold', fontsize=12)
+    lib.plt.title('5. NDM wise Matured Credit Aging', fontsize=16, fontweight='bold', color='#3e0a75')
     lib.plt.legend(handles=legend_element, loc='best', fontsize=11)
     # return lib.plt.show()
     print('5. NDM matured credit Aging')

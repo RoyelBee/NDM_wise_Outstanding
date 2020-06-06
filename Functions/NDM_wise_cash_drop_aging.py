@@ -335,7 +335,7 @@ def ndm_cash_drop():
 
     lib.plt.xticks(y_pos, labels, rotation='horizontal', fontsize='12')
     lib.plt.yticks(lib.np.arange(0, 101, 10), fontsize='12')
-    lib.plt.title("15. NDM Wise Cash Drop Aging", color='#3e0a75', fontsize='16', fontweight='bold')
+    lib.plt.title("11. NDM Wise Cash Drop Aging", fontsize=16, fontweight='bold', color='#3e0a75')
     lib.plt.legend(['Mr. Anwar', 'Mr. Kamrul', 'Mr. Atik', 'Mr. Nurul', 'Mr. Hafizur'])
     lib.plt.tight_layout()
     # lib.plt.show()

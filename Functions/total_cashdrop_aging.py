@@ -80,7 +80,7 @@ def cashdrop_aging():
     lib.plt.yticks(lib.np.arange(0, 101, 10))
     lib.plt.xlabel('Aging Days', color='black', fontsize=14, fontweight='bold')
     lib.plt.ylabel('Percentage %', color='black', fontsize=14, fontweight='bold')
-    lib.plt.title('Total Cash Drop', color='#3e0a75', fontweight='bold', fontsize=16)
+    lib.plt.title('10. Total Cash Drop', fontsize=16, fontweight='bold', color='#3e0a75')
     lib.plt.tight_layout()
     # lib.plt.show()
     print('10. Total Cash Drop Aging')
