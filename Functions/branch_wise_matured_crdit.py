@@ -47,7 +47,7 @@ def branch_wise_matured_credit():
               for i, j, k, l in zip(data['0 - 3 days'],
                                     data['4 - 10 days'],
                                     data['11 - 15 days'],
-                                    data['16+ days'] )]
+                                    data['16+ days'])]
 
     all_zero_seven = [i / j * 100 for i, j in zip(data['0 - 3 days'], totals)]
     all_eight_fourteen = [i / j * 100 for i, j in zip(data['4 - 10 days'], totals)]
@@ -114,7 +114,7 @@ def branch_wise_matured_credit():
         colors=['#31c377', '#f4b300', 'red', '#96ff00', '#0089ff', '#e500ff', '#00ffd8']
     )
 
-    #lib.plt.xlabel("Branch Name", fontweight='bold', fontsize=12)
+    # lib.plt.xlabel("Branch Name", fontweight='bold', fontsize=12)
     lib.plt.ylabel("Percentage %", fontweight='bold', fontsize=12)
     lib.plt.title('6. Branch Wise Matured Credit', fontsize=16, fontweight='bold', color='#3e0a75')
     lib.plt.legend(loc='upper center', bbox_to_anchor=(0.5, -0.085),

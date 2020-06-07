@@ -14,10 +14,11 @@ def nation_wide_return():
     Total_no_of_branches = len(average_branch_return_information)
     average_branch_return_amount = Total_amount_of_return / Total_no_of_branches
     lib.plt.subplots(figsize=(2, 3))
-    lib.plt.text(0.5, 0.6, str('Return % -MTD \n'), horizontalalignment='center', verticalalignment='center')
-    lib.plt.text(0.5, 0.45, str(round(average_branch_return_amount, 2)) + str('%'), fontsize=14,
+    lib.plt.text(0.5, 0.6, str('Return % -MTD \n'), horizontalalignment='center', fontsize=18,
+    verticalalignment='center')
+    lib.plt.text(0.5, 0.45, str(round(average_branch_return_amount, 2)) + str('%'), fontsize=18,
                  horizontalalignment='center',
-                 verticalalignment='center')
+                 verticalalignment='center', color='#ed4e19')
     lib.plt.axis('off')
     # lib.plt.show()
     lib.plt.savefig('./Images/13.Nation_wide_return.png')

@@ -51,7 +51,7 @@ def total_non_matured_credit_aging():
              'F- 91 to 201 Days', 'G- 202+ Days')
     fig, ax = lib.plt.subplots(figsize=(12.81, 4.8))
     # Create green Bars
-    bar1 = lib.plt.bar(serial, data, color='#ffa800', label='Matured', edgecolor='white', width=barWidth)
+    bar1 = lib.plt.bar(serial, data, color='#ffb667', label='Matured', edgecolor='white', width=barWidth)
 
     # Create orange Bars
     for bar in bar1:

@@ -111,7 +111,7 @@ def branch_wise_non_matured_credit():
         category_labels=labels,
         show_values=True,
         value_format='{:.0f}% ',
-        colors=['#31c377', '#f4b300', 'red', '#96ff00', '#0089ff', '#e500ff', '#00ffd8']
+        colors=['#e55025', '#f2ab97', '#dbed19', '#a9db11']
     )
 
     #lib.plt.xlabel("Branch Name", fontweight='bold', fontsize=12)
