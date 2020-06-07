@@ -139,7 +139,8 @@ def ndm_wise_outstanding():
     # lib.plt.xlabel("NDM Name", fontweight='bold', fontsize=12)
     lib.plt.ylabel("Percentage %", fontweight='bold', fontsize=12)
     lib.plt.title('3. NDM wise Credit', fontsize=16, fontweight='bold', color='#3e0a75')
-    lib.plt.legend()
+    lib.plt.legend(loc='upper center', bbox_to_anchor=(0.5, -0.065),
+                   fancybox=True, shadow=True, ncol=4)
     print('3. NDM wise Credit Outstanding')
     lib.plt.savefig('./Images/3.ndm_credit_outstanding.png')
     # lib.plt.show()

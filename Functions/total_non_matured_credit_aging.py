@@ -64,12 +64,12 @@ def total_non_matured_credit_aging():
     for bar, percentage in zip(bar1, data_point):
         height = bar.get_height()
         ax.text(bar.get_x() + bar.get_width() / 2, height * .4, str('%.2f' % percentage) + '%', ha='center',
-                va='bottom')
+                va='bottom', fontweight='bold')
 
     # Custom x axis
     lib.plt.xticks(serial, names)
     # lib.plt.yticks(lib.np.arange(0, 101, 10))
-    lib.plt.xlabel('Aging Days', color='black', fontsize=14, fontweight='bold')
+    #lib.plt.xlabel('Aging Days', color='black', fontsize=14, fontweight='bold')
     lib.plt.ylabel('Amount & Percentage %', color='black', fontsize=14, fontweight='bold')
     lib.plt.title('7. Non-Matured Credit Ageing', color='#3e0a75', fontweight='bold', fontsize=16)
     lib.plt.tight_layout()
