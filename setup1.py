@@ -36,8 +36,8 @@ print('Image joined ')
 # ------------ Group email ---------------------------------------
 msgRoot = MIMEMultipart('related')
 me = 'erp-bi.service@transcombd.com'
-to = ['rejaul.islam@transcombd.com', '']
-cc = ['', '']
+to = ['yakub@transcombd.com', 'rejaul.islam@transcombd.com']
+cc = ['fazle.rabby@transcombd.com', '']
 bcc = ['', '']
 
 recipient = to + cc + bcc
@@ -73,7 +73,7 @@ msgText = MIMEText("""
                        <img src="cid:branch_non_matured" height='700', width='1280'><br>
                        <img src="cid:cashdrop_aging" height='480', width='1280'><br>
                        <img src="cid:ndm_cash_drop_aging" height='481', width='1281'><br>
-                       <img src="cid:branch_wise_cash_drop_aging" height='481', width='1281'><br>
+                       <img src="cid:branch_wise_cash_drop_aging" height='550', width='1281'><br>
                        <img src="cid:img13_14" height='300', width='1281'><br>
                        <img src="cid:top5_branch_return" height='481', width='1281'><br>
                        <img src="cid:top5_delivery_persons_return" height='481', width='1281'><br>

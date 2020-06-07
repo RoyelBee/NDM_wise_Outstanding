@@ -2,30 +2,22 @@ import Functions.all_library as lib
 import Functions.all_function as fn
 
 def branch_wise_cash_drop_aging():
-    branch_cash_drop_df = lib.pd.read_sql_query("""SELECT left(TblCredit.AUDTORG, 3) as Branch, 
-        isnull(SUM(case when Days_Diff between '0' and '3'  then OUT_NET end),0)  as '0 - 3 days',
-        isnull(SUM(case when Days_Diff between '4' and '10' then OUT_NET end),0)  as '4 - 10 days',
-        isnull(SUM(case when Days_Diff between '11' and '15' then OUT_NET end),0)  as '11 - 15 days',
-        isnull(SUM(case when Days_Diff between '16' and '30'  then OUT_NET end),0)  as '16 - 30 days',
-        isnull(SUM(case when Days_Diff between '31' and '90' then OUT_NET end),0)  as '31 - 90 days',
-        isnull(SUM(case when Days_Diff between '91' and '201' then OUT_NET end),0)  as '91 - 201 days'
-
-                from
-                    (select AUDTORG,INVNUMBER,INVDATE,
-                    CUSTOMER,TERMS,MAINCUSTYPE,
-                    datediff([dd] , CONVERT (DATETIME , LTRIM(cust_out.INVDATE) , 102) , GETDATE())+1 as Days_Diff,
-                    OUT_NET from [ARCOUT].dbo.[CUST_OUT]
-                    where TERMS='Cash') as TblCredit
-                group by  TblCredit.AUDTORG
-                order by TblCredit.AUDTORG""", fn.conn)
-
-    # branch = branch_cash_drop_df['Branch']
-    # zero_three = branch_cash_drop_df['0 - 3 days']
-    # four_ten = branch_cash_drop_df['4 - 10 days']
-    # eleven_fifteen = branch_cash_drop_df['11 - 15 days']
-    # sixteen_therty = branch_cash_drop_df['16 - 30 days']
-    # thrtyone_ninety = branch_cash_drop_df['31 - 90 days']
-    # ninetyone_twohundredone = branch_cash_drop_df['91 - 201 days']
+    branch_cash_drop_df = lib.pd.read_sql_query("""
+            SELECT left(TblCredit.AUDTORG, 3) as Branch, 
+            isnull(SUM(case when Days_Diff between '0' and '3'  then OUT_NET end),0)  as '0 - 3 days',
+            isnull(SUM(case when Days_Diff between '4' and '10' then OUT_NET end),0)  as '4 - 10 days',
+            isnull(SUM(case when Days_Diff between '11' and '15' then OUT_NET end),0)  as '11 - 15 days',
+            isnull(SUM(case when Days_Diff >= '16'  then OUT_NET end),0)  as '16+ days'
+                
+            from
+            (select AUDTORG,INVNUMBER,INVDATE,
+            CUSTOMER,TERMS,MAINCUSTYPE,
+            datediff([dd] , CONVERT (DATETIME , LTRIM(cust_out.INVDATE) , 102) , GETDATE())+1 as Days_Diff,
+            OUT_NET from [ARCOUT].dbo.[CUST_OUT]
+            where TERMS='Cash') as TblCredit
+            group by  TblCredit.AUDTORG
+            order by TblCredit.AUDTORG  
+                            """, fn.conn)
 
     # # --------------------- Creating fig-----------------------------------------
 
@@ -34,20 +26,16 @@ def branch_wise_cash_drop_aging():
     # print(r)
 
     # # From raw value to percentage
-    totals = [i + j + k + l + m + n
-              for i, j, k, l, m, n in zip(branch_cash_drop_df['0 - 3 days'],
+    totals = [i + j + k + l
+              for i, j, k, l in zip(branch_cash_drop_df['0 - 3 days'],
                                           branch_cash_drop_df['4 - 10 days'],
                                           branch_cash_drop_df['11 - 15 days'],
-                                          branch_cash_drop_df['16 - 30 days'],
-                                          branch_cash_drop_df['31 - 90 days'],
-                                          branch_cash_drop_df['91 - 201 days'])]
+                                          branch_cash_drop_df['16+ days'])]
 
     all_zero_three = [i / j * 100 for i, j in zip(branch_cash_drop_df['0 - 3 days'], totals)]
     all_four_ten = [i / j * 100 for i, j in zip(branch_cash_drop_df['4 - 10 days'], totals)]
     all_eleven_fifteen = [i / j * 100 for i, j in zip(branch_cash_drop_df['11 - 15 days'], totals)]
-    all_sixteen_therty = [i / j * 100 for i, j in zip(branch_cash_drop_df['16 - 30 days'], totals)]
-    all_thrtyone_ninety = [i / j * 100 for i, j in zip(branch_cash_drop_df['31 - 90 days'], totals)]
-    all_ninetyone_twohundredone = [i / j * 100 for i, j in zip(branch_cash_drop_df['91 - 201 days'], totals)]
+    all_sixteen_therty = [i / j * 100 for i, j in zip(branch_cash_drop_df['16+ days'], totals)]
 
     # #
     # plot
@@ -100,15 +88,13 @@ def branch_wise_cash_drop_aging():
 
     # lib.plt.figure(figsize=(12.81, 9))
 
-    series_labels = ['0 - 3 days', '4 - 10 days', '11 - 15 days', '16 - 30 days', '31 - 90 days', '91 - 201 days']
+    series_labels = ['0 - 3 days', '4 - 10 days', '11 - 15 days', '16+ days']
 
     data = [
         all_zero_three,
         all_four_ten,
         all_eleven_fifteen,
-        all_sixteen_therty,
-        all_thrtyone_ninety,
-        all_ninetyone_twohundredone
+        all_sixteen_therty
     ]
 
     # category_labels = ['Cat A', 'Cat B', 'Cat C', 'Cat D']
@@ -122,7 +108,7 @@ def branch_wise_cash_drop_aging():
         colors=['#31c377', '#f4b300', 'red', '#96ff00', '#0089ff', '#e500ff', '#00ffd8']
     )
 
-    lib.plt.xlabel("Branch Name", fontweight='bold', fontsize=12)
+    #lib.plt.xlabel("Branch Name", fontweight='bold', fontsize=12)
     lib.plt.ylabel("Percentage %", fontweight='bold', fontsize=12)
     lib.plt.title('12. Branch Wise Cash Drop', fontsize=16, fontweight='bold', color='#3e0a75')
     lib.plt.legend(loc='upper center', bbox_to_anchor=(0.5, -0.085),

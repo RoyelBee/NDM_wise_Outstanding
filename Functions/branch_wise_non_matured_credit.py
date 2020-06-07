@@ -9,10 +9,7 @@ def branch_wise_non_matured_credit():
             isnull(SUM(case when TblCredit.Days_Diff between '-3' and '0'  THEN OUT_NET end), 0.1)  as '0 - 3 days',
             isnull(sum(case when TblCredit.Days_Diff between '-10' and '-4'  THEN OUT_NET end), 0.1) as  '4 - 10 days', 
             isnull(sum( case when TblCredit.Days_Diff between '-15' and '-11'  THEN OUT_NET end), 0.1) as '11 - 15 days', 
-            isnull(sum(case when TblCredit.Days_Diff between '-30' and '-16'  THEN OUT_NET end), 0.1) as '16 - 30 days', 
-            isnull(sum(case when TblCredit.Days_Diff between '-90' and '-31'  THEN OUT_NET end), .1) as '31 - 90 days', 
-            isnull(sum( case when TblCredit.Days_Diff between '-201' and '-91'  THEN OUT_NET end), 0.1) as '91 - 201 days', 
-            isnull(sum( case when TblCredit.Days_Diff <= '-202'  THEN OUT_NET end), 0) as '202+ days'
+            isnull(sum(case when TblCredit.Days_Diff <='-16' THEN OUT_NET end), 0.1) as '16+ days'
             from (
             select [CUST_OUT].INVNUMBER,
             [CUST_OUT].INVDATE, 
@@ -39,37 +36,23 @@ def branch_wise_non_matured_credit():
             order by TblCredit.AUDTORG
                     """, fn.conn)
 
-    # branch = data['Branch']
-    # zero_three = data['0 - 3 days']
-    # four_ten = data['4 - 10 days']
-    # eleven_fifteen = data['11 - 15 days']
-    # sixteen_therty = data['16 - 30 days']
-    # thrtyone_ninety = data['31 - 90 days']
-    # ninetyone_twohundredone = data['91 - 201 days']
-    # twohundredtwo_more = data['202+ days']
-
     # # --------------------- Creating fig-----------------------------------------
 
     # Data
     r = lib.np.arange(0, 31, 1)
 
     # # From raw value to percentage
-    totals = [i + j + k + l + m + n + o
-              for i, j, k, l, m, n, o in zip(data['0 - 3 days'],
-                                             data['4 - 10 days'],
-                                             data['11 - 15 days'],
-                                             data['16 - 30 days'],
-                                             data['31 - 90 days'],
-                                             data['91 - 201 days'],
-                                             data['202+ days'])]
 
-    all_zero_three = [i / j * 100 for i, j in zip(data['0 - 3 days'], totals)]
-    all_four_ten = [i / j * 100 for i, j in zip(data['4 - 10 days'], totals)]
-    all_eleven_fifteen = [i / j * 100 for i, j in zip(data['11 - 15 days'], totals)]
-    all_sixteen_therty = [i / j * 100 for i, j in zip(data['16 - 30 days'], totals)]
-    all_thrtyone_ninety = [i / j * 100 for i, j in zip(data['31 - 90 days'], totals)]
-    all_ninetyone_twohundredone = [i / j * 100 for i, j in zip(data['91 - 201 days'], totals)]
-    all_twohundredtwo_more = [i / j * 100 for i, j in zip(data['202+ days'], totals)]
+    totals = [i + j + k + l
+              for i, j, k, l in zip(data['0 - 3 days'],
+                                    data['4 - 10 days'],
+                                    data['11 - 15 days'],
+                                    data['16+ days'] )]
+
+    all_zero_seven = [i / j * 100 for i, j in zip(data['0 - 3 days'], totals)]
+    all_eight_fourteen = [i / j * 100 for i, j in zip(data['4 - 10 days'], totals)]
+    all_fifteen_twentyone = [i / j * 100 for i, j in zip(data['11 - 15 days'], totals)]
+    all_twentytwo_twentyeight = [i / j * 100 for i, j in zip(data['16+ days'], totals)]
 
     # #
     # plot
@@ -119,11 +102,8 @@ def branch_wise_non_matured_credit():
                                  value_format.format(h), ha="center",
                                  va="center", rotation=90)
 
-    series_labels = ['0 - 3 days', '4 - 10 days', '11 - 15 days', '16 - 30 days', '31 - 90 days', '91 - 201 days',
-                     '202+ days']
-
-    data = [all_zero_three, all_four_ten, all_eleven_fifteen, all_sixteen_therty, all_thrtyone_ninety,
-            all_ninetyone_twohundredone, all_twohundredtwo_more]
+    series_labels = ['0 - 3 days', '4 - 10 days', '11 - 15 days', '16+ days']
+    data = [all_zero_seven, all_eight_fourteen, all_fifteen_twentyone, all_twentytwo_twentyeight]
 
     plot_stacked_bar(
         data,
@@ -134,7 +114,7 @@ def branch_wise_non_matured_credit():
         colors=['#31c377', '#f4b300', 'red', '#96ff00', '#0089ff', '#e500ff', '#00ffd8']
     )
 
-    lib.plt.xlabel("Branch Name", fontweight='bold', fontsize=12)
+    #lib.plt.xlabel("Branch Name", fontweight='bold', fontsize=12)
     lib.plt.ylabel("Percentage %", fontweight='bold', fontsize=12)
     lib.plt.title('9. Branch Wise Non-Matured Credit', fontsize=16, fontweight='bold', color='#3e0a75')
     lib.plt.legend(loc='upper center', bbox_to_anchor=(0.5, -0.085),

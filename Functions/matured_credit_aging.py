@@ -87,7 +87,7 @@ def matured_credit():
     # Custom x axis
     lib.plt.xticks(serial, names)
     # lib.plt.yticks(lib.np.arange(0, 101, 10))
-    lib.plt.xlabel('Aging Days', color='black', fontsize=14, fontweight='bold')
+    #lib.plt.xlabel('Aging Days', color='black', fontsize=14, fontweight='bold')
     lib.plt.ylabel('Percentage %', color='black', fontsize=14, fontweight='bold')
     lib.plt.title('4. Matured Credit Age', fontsize=16, fontweight='bold', color='#3e0a75')
     lib.plt.tight_layout()
