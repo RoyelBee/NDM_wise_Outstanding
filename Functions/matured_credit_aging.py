@@ -74,7 +74,7 @@ def matured_credit():
              'F- 91 to 201 Days', 'G- 202+ Days')
     fig, ax = lib.plt.subplots(figsize=(12.81, 4.8))
     # Create green Bars
-    bar1 = lib.plt.bar(serial, all, color='#ffa800', label='Matured', edgecolor='white', width=barWidth)
+    bar1 = lib.plt.bar(serial, all, color='#b35e00', label='Matured', edgecolor='white', width=barWidth)
 
     # Create orange Bars
     for bar, percent in zip(bar1, percent):

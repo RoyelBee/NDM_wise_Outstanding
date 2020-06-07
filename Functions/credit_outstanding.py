@@ -22,9 +22,9 @@ def creditOutstanding():
 
     values = [matured, not_mature]
 
-    colors = ['#ffa800', '#50ff00']
-    legend_element = [lib.Patch(facecolor='#ffa800', label='Matured'),
-                      lib.Patch(facecolor='#50ff00', label='Not Mature')]
+    colors = ['#b35e00', '#ffb667']
+    legend_element = [lib.Patch(facecolor='#b35e00', label='Matured'),
+                      lib.Patch(facecolor='#ffb667', label='Not Mature')]
 
     total_credit = matured + not_mature
     total_credit = 'Total \n' + fn.numberInThousands(total_credit)
@@ -32,7 +32,7 @@ def creditOutstanding():
     data_label = [fn.numberInThousands(matured), fn.numberInThousands(not_mature)]
     fig1, ax = lib.plt.subplots()
     # Ad this labels=data_label, in next line to add data lebel
-    wedges, labels, autopct = ax.pie(values, colors=colors, labels=data_label, autopct='%.1f%%', startangle=120,
+    wedges, labels, autopct = ax.pie(values, colors=colors, labels=data_label, autopct='%.1f%%', startangle=90,
                                      pctdistance=.7)
     lib.plt.setp(autopct, fontsize=14, color='black', fontweight='bold')
     lib.plt.setp(labels, fontsize=14, fontweight='bold')

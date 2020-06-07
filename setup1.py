@@ -36,8 +36,8 @@ print('Image joined ')
 # ------------ Group email ---------------------------------------
 msgRoot = MIMEMultipart('related')
 me = 'erp-bi.service@transcombd.com'
-to = ['rejaul.islam@transcombd.com', 'yakub@transcombd.com']
-cc = ['fazle.rabby@transcombd.com', '']
+to = ['rejaul.islam@transcombd.com', '']
+cc = ['', '']
 bcc = ['', '']
 
 recipient = to + cc + bcc

@@ -114,8 +114,8 @@ def ndm_wise_outstanding():
     names = ('Anwar', 'Kamrul', 'Atik', 'Nurul', 'Hafizur')
 
     fig, ax = lib.plt.subplots(figsize=(12.8, 4.8))
-    bar1 = lib.plt.bar(r, all_matured, color='#ffa800', label='Matured', width=barWidth)
-    bar2 = lib.plt.bar(r, all_regular, bottom=all_matured, color='#50ff00', label='Non-Matured',
+    bar1 = lib.plt.bar(r, all_matured, color='#b35e00', label='Matured', width=barWidth)
+    bar2 = lib.plt.bar(r, all_regular, bottom=all_matured, color='#ffb667', label='Non-Matured',
                        width=barWidth)
 
     # # Set Matured Data Point
