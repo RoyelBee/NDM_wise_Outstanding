@@ -2,7 +2,8 @@ import Functions.all_library as lib
 import Functions.all_function as fn
 
 def total_non_matured_credit_aging():
-    data = lib.pd.read_sql_query("""SELECT  
+    data = lib.pd.read_sql_query("""
+            SELECT  
             isnull(SUM(case when TblCredit.Days_Diff between '-3' and '0'  THEN OUT_NET end), 0)  as '0 - 3 days',
             isnull(sum(case when TblCredit.Days_Diff between '-10' and '-4'  THEN OUT_NET end), 0) as  '4 - 10 days', 
             isnull(sum( case when TblCredit.Days_Diff between '-15' and '-11'  THEN OUT_NET end), 0) as '11 - 15 days', 

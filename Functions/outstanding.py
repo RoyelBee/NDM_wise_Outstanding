@@ -6,11 +6,10 @@ def totalOutstanding():
     outstanding_df = lib.pd.read_sql_query(""" select
                     SUM(CASE WHEN TERMS='CASH' THEN OUT_NET END) AS TotalOutStandingOnCash,
                     SUM(CASE WHEN TERMS not like '%CASH%' THEN OUT_NET END) AS TotalOutStandingOnCredit
-
                     from  [ARCOUT].dbo.[CUST_OUT]
                     where [INVDATE] <= convert(varchar(8),DATEADD(D,0,GETDATE()),112)
                                            
-                                            """, fn.conn)
+                     """, fn.conn)
 
     cash = int(outstanding_df['TotalOutStandingOnCash'])
     credit = int(outstanding_df['TotalOutStandingOnCredit'])
@@ -27,12 +26,12 @@ def totalOutstanding():
 
     fig1, ax = lib.plt.subplots()
     # Add this next line to show data
-    wedges, labels, autopct = ax.pie(data, labels=data_label, colors=colors,  autopct='%.1f%%', startangle=90,
+    wedges, labels, autopct = ax.pie(data, labels=data_label, colors=colors, autopct='%.1f%%', startangle=90,
                                      pctdistance=.7)
     lib.plt.setp(autopct, fontsize=14, color='black', fontweight='bold')
     lib.plt.setp(labels, fontsize=14, fontweight='bold')
 
-   # To make a Donate chart uncomment next 4 lines ------------
+    # To make a Donate chart uncomment next 4 lines ------------
     ax.text(0, -.1, total, ha='center', fontsize=14, fontweight='bold')
     centre_circle = lib.plt.Circle((0, 0), 0.50, fc='white')
     fig = lib.plt.gcf()
