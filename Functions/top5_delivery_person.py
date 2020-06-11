@@ -3,23 +3,23 @@ import Functions.all_library as lib
 
 def top5_delivery_persons_return():
     try:
-        delivery_man_wise_return_df = lib.pd.read_sql_query("""select top 5 TWO.ShortName as DPNAME,left(Two.AUDTORG,
+        delivery_man_wise_return_df = lib.pd.read_sql_query("""select Top 5 TWO.ShortName as DPNAME,left(Two.AUDTORG,
         3) as BranchName, Sales.ReturnAmount from
-                    (select  DPID, AUDTORG,ISNULL(sum(case when TRANSTYPE<>1 then INVNETH *-1 end), 0) /ISNULL(sum(case when TRANSTYPE=1 then INVNETH end), 0)*100 as ReturnAmount from OESalesSummery
-                    where
-                    left(TRANSDATE,6)=convert(varchar(6),getdate(),112)
-                    group by DPID,AUDTORG) as Sales
-                    left join
-                    (select   distinct AUDTORG,ShortName,DPID from DP_ShortName) as TWO
-                    on Sales.DPID = TWO.DPID
-                    and Sales.AUDTORG=TWO.AUDTORG
-                    where TWO.ShortName is not null
-                    and Sales.ReturnAmount>0
-                    order by ReturnAmount DESC  """, fn.conn)
+        (select  DPID, AUDTORG,ISNULL(sum(case when TRANSTYPE<>1 then INVNETH *-1 end), 0) as ReturnAmount from OESalesSummery
+        where
+        left(TRANSDATE,6)=convert(varchar(6),getdate(),112)
+        group by DPID,AUDTORG) as Sales
+        left join
+        (select   distinct AUDTORG,ShortName,DPID from DP_ShortName) as TWO
+        on Sales.DPID = TWO.DPID
+        and Sales.AUDTORG=TWO.AUDTORG
+        where TWO.ShortName is not null
+        and Sales.ReturnAmount>0
+        order by ReturnAmount DESC""", fn.conn)
 
         average_delivery_man_wise_return_df = lib.pd.read_sql_query("""
-                 select top 5 Sales.ReturnAmount from
-                (select DPID, AUDTORG,ISNULL(sum(case when TRANSTYPE<>1 then INVNETH *-1 end), 0) /ISNULL(sum(case when TRANSTYPE=1 then INVNETH end), 0)*100 as ReturnAmount from OESalesSummery
+                 select Sales.ReturnAmount from
+                (select DPID, AUDTORG,ISNULL(sum(case when TRANSTYPE<>1 then INVNETH *-1 end), 0) as ReturnAmount from OESalesSummery
                 where
                 left(TRANSDATE,6)=convert(varchar(6),getdate(),112)
                 group by DPID,AUDTORG) as Sales
@@ -36,31 +36,40 @@ def top5_delivery_persons_return():
         Total_amount_of_return = sum(average_delivery_information)
         Total_no_of_delivery_person = len(average_delivery_information)
         average_delivery_amount = Total_amount_of_return / Total_no_of_delivery_person
+        final_average_dp_percentage = (average_delivery_amount/Total_amount_of_return)*100
         average_amount_list = []
 
         for i in range(0, 5):
-            average_amount_list.append(average_delivery_amount)
+            average_amount_list.append(final_average_dp_percentage)
 
         DPNAME = delivery_man_wise_return_df['DPNAME']
         y_pos = lib.np.arange(len(DPNAME))
-        ReturnAmount = abs(delivery_man_wise_return_df['ReturnAmount'])
-        ReturnAmount = ReturnAmount.values.tolist()
+        ReturnAmounts = abs(delivery_man_wise_return_df['ReturnAmount'])
+        Five_dp_ReturnAmount = ReturnAmounts.values.tolist()
+
+
+        plotting_values=[(Five_dp_ReturnAmount[0]/Total_amount_of_return)*100,
+                         (Five_dp_ReturnAmount[1]/Total_amount_of_return)*100,
+                         (Five_dp_ReturnAmount[2]/Total_amount_of_return)*100,
+                         (Five_dp_ReturnAmount[3]/Total_amount_of_return)*100,
+                         (Five_dp_ReturnAmount[4]/Total_amount_of_return)*100]
+
         Branch_name = delivery_man_wise_return_df['BranchName'].values.tolist()
 
         branch_final_name = []
         for val in Branch_name:
             branch_final_name.append(val + " - ")
 
-        max_amount = max(ReturnAmount)
+        max_amount = max(plotting_values)
         color = '#418af2'
         fig, ax = lib.plt.subplots(figsize=(12.81, 4.8))
-        rects1 = lib.plt.bar(y_pos, ReturnAmount, align='center', alpha=0.9, color=color)
+        rects1 = lib.plt.bar(y_pos, plotting_values, align='center', alpha=0.9, color=color)
         lib.plt.plot(y_pos, average_amount_list, color='orange')
 
         def autolabel(bars):
             loop = 0
             for bar in bars:
-                show = ReturnAmount[loop]
+                show = plotting_values[loop]
                 height = bar.get_height()
                 ax.text(bar.get_x() + bar.get_width() / 2, (1.05 * height),
                         '%.2f' % (show) + '%', ha='center', va='bottom', fontsize=12, rotation=0, fontweight='bold')
