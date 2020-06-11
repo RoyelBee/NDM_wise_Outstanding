@@ -60,12 +60,13 @@ def cashdrop_aging():
     # Create orange Bars
     for bar in bar1:
         height = bar.get_height()
-        ax.text(bar.get_x() + bar.get_width() / 2, height, str(int(height)) + 'K', ha='center', va='bottom', fontweight='bold')
+        ax.text(bar.get_x() + bar.get_width() / 2, height, str(int(height)) + 'K',
+                ha='center', va='bottom', fontweight='bold')
 
     for bar, Amount in zip(bar1, Amount):
         height = bar.get_height()
-        ax.text(bar.get_x() + bar.get_width() / 2, height * .5, str("%.2f" % round(Amount, 2)) + '%', ha='center', va='bottom',
-                fontweight='bold')
+        ax.text(bar.get_x() + bar.get_width() / 2, height * .5, str("%.2f" % round(Amount, 2)) + '%',
+                ha='center', va='bottom')
 
     # Custom x axis
     lib.plt.xticks(serial, names)

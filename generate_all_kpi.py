@@ -16,8 +16,8 @@
 # ndm_matured.matured_credit()
 # #
 # # # # ----- 5. NDM matured credit aging ---------------------------
-# import Functions.ndm_matured_credit_aging as ndm_aging
-# ndm_aging.ndm_matured_credit_aging()
+import Functions.ndm_matured_credit_aging as ndm_aging
+ndm_aging.ndm_matured_credit_aging()
 # #
 # # # -------- 6. Branch wise matured  credit aging  -------------------
 # import Functions.branch_wise_matured_crdit as branch_matured
@@ -40,18 +40,18 @@
 # cash_drop.cashdrop_aging()
 #
 # # # ------------11. NDM wise cash drop aging ----------------------
-# import Functions.NDM_wise_cash_drop_aging as ndm_cash_drop
-# ndm_cash_drop.ndm_cash_drop()
+import Functions.NDM_wise_cash_drop_aging as ndm_cash_drop
+ndm_cash_drop.ndm_cash_drop()
 #
 # # # -- 12. Branch wise cash drop aging ----------------
 # import Functions.branch_wise_cash_drop_aging as branch_cash_drop
 # branch_cash_drop.branch_wise_cash_drop_aging()
 #
 # # # ------ 13. Nation wide return ---------------------------------
-import Functions.nation_wise_return as nation_return
-nation_return.nation_wide_return()
+# import Functions.nation_wise_return as nation_return
+# nation_return.nation_wide_return()
 # #
-# # # # -------14. Nation VS NDM Return ------------------------------
+# # # # -------14. Nation VS NDM Return ----------------------------
 # import Functions.national_vs_ndm_return as nation_vs_ndm
 # nation_vs_ndm.national_vs_ndm_return()
 #

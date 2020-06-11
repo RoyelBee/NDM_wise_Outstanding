@@ -122,17 +122,28 @@ def ndm_wise_outstanding():
     matured = [anwar_matured, kamrul_matured, atik_matured, nurul_matured, hafizur_matured]
     for bar, matured, all_matured in zip(bar1, matured, all_matured):
         height = bar.get_height()
+        # # This text is for actual matured data label
         ax.text(bar.get_x() + bar.get_width() / 2, height * .4,
-                str(fn.numberInThousands(matured))+'\n'+str("%.2f" % all_matured)+'%',
+                str(fn.numberInThousands(matured)),
                 ha='center', va='bottom', fontweight='bold')
+
+        # # This text is for percentage
+        ax.text(bar.get_x() + bar.get_width() / 2, height * .2,
+                str("%.2f" % all_matured) + '%',
+                ha='center', va='bottom', color='white')
 
     # # Set Non Mature Data Point
     regular = [anwar_regular, kamrul_regular, atik_regular, nurul_regular, hafizur_regular]
     for bar, regular, all_regular in zip(bar2, regular, all_regular):
         height = bar.get_height()
         ax.text(bar.get_x() + bar.get_width() / 2, height * .8,
-                str(fn.numberInThousands(regular)) + '\n' + str("%.2f" % all_regular) + '%',
+                str(fn.numberInThousands(regular)),
                 ha='center', va='bottom', fontweight='bold')
+
+        # # This text is for percentage
+        ax.text(bar.get_x() + bar.get_width() / 2, height * .7,
+                str("%.2f" % all_regular) + '%',
+                ha='center', va='bottom', color='white')
 
     # Custom x axis
     lib.plt.xticks(r, names)

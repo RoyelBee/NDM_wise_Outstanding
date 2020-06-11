@@ -3,7 +3,8 @@ import Functions.all_library as lib
 
 def top5_delivery_persons_return():
     try:
-        delivery_man_wise_return_df = lib.pd.read_sql_query("""select top 5 TWO.ShortName as DPNAME,left(Two.AUDTORG,
+        delivery_man_wise_return_df = lib.pd.read_sql_query("""
+        select top 5 TWO.ShortName as DPNAME,left(Two.AUDTORG,
         3) as BranchName, Sales.ReturnAmount from
                     (select  DPID, AUDTORG,ISNULL(sum(case when TRANSTYPE<>1 then INVNETH *-1 end), 0) /ISNULL(sum(case when TRANSTYPE=1 then INVNETH end), 0)*100 as ReturnAmount from OESalesSummery
                     where

@@ -18,9 +18,10 @@ def totalOutstanding():
     total = cash + credit
     total = 'Total \n' + fn.numberInThousands(total)
 
-    colors = ['#fffd00', '#ffa800']
-    legend_element = [lib.Patch(facecolor='#fffd00', label='Cash'),
-                      lib.Patch(facecolor='#ffa800', label='Credit')]
+    colors = ['#f9ff00', '#ff8600']
+
+    legend_element = [lib.Patch(facecolor='#f9ff00', label='Cash'),
+                      lib.Patch(facecolor='#ff8600', label='Credit')]
 
     data_label = [fn.numberInThousands(cash), fn.numberInThousands(credit)]
 

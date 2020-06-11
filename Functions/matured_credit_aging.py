@@ -81,8 +81,10 @@ def matured_credit():
         height = bar.get_height()
         ax.text(bar.get_x() + bar.get_width() / 2, height,
                 str(int(height)) + 'K', ha='center', va='bottom', fontweight='bold')
+
+        # # This text is for percentage
         ax.text(bar.get_x() + bar.get_width() / 2, height * .5,
-                str('%.2f' % percent) + '%', ha='center', va='bottom', fontweight='bold')
+                str('%.2f' % percent) + '%', ha='center', va='bottom', color='white')
 
     # Custom x axis
     lib.plt.xticks(serial, names)

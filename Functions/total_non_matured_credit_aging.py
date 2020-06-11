@@ -65,7 +65,7 @@ def total_non_matured_credit_aging():
     for bar, percentage in zip(bar1, data_point):
         height = bar.get_height()
         ax.text(bar.get_x() + bar.get_width() / 2, height * .4, str('%.2f' % percentage) + '%', ha='center',
-                va='bottom', fontweight='bold')
+                va='bottom')
 
     # Custom x axis
     lib.plt.xticks(serial, names)
