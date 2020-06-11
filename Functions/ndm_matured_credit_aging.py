@@ -361,7 +361,7 @@ def ndm_matured_credit_aging():
     hafizur = [hafizur_0_3, hafizur_4_10, hafizur_11_15, hafizur_16_30, hafizur_31_90, hafizur_91_201, hafizur_202_more]
     hafizur = [i * 100 / sum(hafizur) for i, j, in zip(hafizur, hafizur)]
 
-    fig, ax = lib.plt.subplots(figsize=(12.81, 4.8))
+    fig, ax = lib.plt.subplots(figsize=(12.8, 4.8))
     barWidth = .12
     x = lib.np.arange(7)
 
@@ -381,27 +381,27 @@ def ndm_matured_credit_aging():
     # # ------------ Add label in the top of the bar --------------------------
     for bar, anwar in zip(anwar_bar, anwar):
         height = bar.get_height()
-        ax.text(bar.get_x() + bar.get_width() / 2, height * .9, str('%.1f' % height) + '%',
+        ax.text(bar.get_x() + bar.get_width() / 2, height * .92, str('%.1f' % height) + '%',
                 ha='center', va='bottom', fontweight='bold', rotation=90)
 
     for bar, kamrul in zip(kamrul_bar, kamrul):
         height = bar.get_height()
-        ax.text(bar.get_x() + bar.get_width() / 2, height * .9, str('%.1f' % height) + '%',
+        ax.text(bar.get_x() + bar.get_width() / 2, height * .92, str('%.1f' % height) + '%',
                 ha='center', va='bottom', fontweight='bold', rotation=90)
 
     for bar, atik in zip(atik_bar, atik):
         height = bar.get_height()
-        ax.text(bar.get_x() + bar.get_width() / 2, height * .9, str('%.1f' % height) + '%',
+        ax.text(bar.get_x() + bar.get_width() / 2, height * .92, str('%.1f' % height) + '%',
                 ha='center', va='bottom', fontweight='bold', rotation=90)
     #
     for bar, nurul in zip(nurul_bar, nurul):
         height = bar.get_height()
-        ax.text(bar.get_x() + bar.get_width() / 2, height * .9, str('%.1f' % height) + '%',
+        ax.text(bar.get_x() + bar.get_width() / 2, height * .92, str('%.1f' % height) + '%',
                 ha='center', va='bottom', fontweight='bold', rotation=90)
     #
     for bar, hafizur in zip(hafizur_bar, hafizur):
         height = bar.get_height()
-        ax.text(bar.get_x() + bar.get_width() / 2, height * .9, str('%.1f' % height) + '%',
+        ax.text(bar.get_x() + bar.get_width() / 2, height * .92, str('%.1f' % height) + '%',
                 ha='center', va='bottom', fontweight='bold', rotation=90)
 
     # ------ Add legend elements -------------------

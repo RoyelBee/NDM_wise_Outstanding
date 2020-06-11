@@ -72,7 +72,7 @@ def matured_credit():
     barWidth = 0.80
     names = ('A- 0 to 3 Days', 'B- 4 to 10 Days', 'C- 11 to 15 Days', 'D- 16 to 30 Days', 'E- 31 to 90 Days',
              'F- 91 to 201 Days', 'G- 202+ Days')
-    fig, ax = lib.plt.subplots(figsize=(12.81, 4.8))
+    fig, ax = lib.plt.subplots(figsize=(12.8, 4.8))
     # Create green Bars
     bar1 = lib.plt.bar(serial, all, color='#b35e00', label='Matured', edgecolor='white', width=barWidth)
 

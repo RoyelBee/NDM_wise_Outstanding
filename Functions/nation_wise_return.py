@@ -3,13 +3,16 @@ import Functions.all_library as lib
 
 
 def nation_wide_return():
-    average_branch_return_df = lib.pd.read_sql_query("""select AUDTORG as Branch_name,ISNULL(sum(case when TRANSTYPE<>1 
-                    then INVNETH *-1 end), 0) /ISNULL(sum(case when TRANSTYPE=1 then INVNETH end), 0)*100 as ReturnAmount from OESalesSummery
+    average_branch_return_df = lib.pd.read_sql_query("""
+                    select AUDTORG as Branch_name,ISNULL(sum(case when TRANSTYPE<>1 
+                    then INVNETH *-1 end), 0) /ISNULL(sum(case when TRANSTYPE=1 then INVNETH end), 0)*100 as ReturnPercent from OESalesSummery
                     where
-                    left(TRANSDATE,6)=convert(varchar(6),getdate(),112)
+                    left(TRANSDATE,6)<convert(varchar(6),getdate(),112)
                     group by AUDTORG
-    				order by ReturnAmount DESC""", fn.conn)
-    average_branch_return_information = average_branch_return_df['ReturnAmount'].tolist()
+                    order by ReturnPercent DESC
+                    """, fn.conn)
+
+    average_branch_return_information = average_branch_return_df['ReturnPercent'].tolist()
     Total_amount_of_return = sum(average_branch_return_information)
     Total_no_of_branches = len(average_branch_return_information)
     average_branch_return_amount = Total_amount_of_return / Total_no_of_branches

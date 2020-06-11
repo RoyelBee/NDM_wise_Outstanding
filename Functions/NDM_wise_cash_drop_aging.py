@@ -204,13 +204,15 @@ def ndm_cash_drop():
     N = 4
     y_pos = lib.np.arange(N)
     # print(y_pos)
-    width = .12
-    fig, ax = lib.plt.subplots(figsize=(12.81, 4.8))
-    rects1 = lib.plt.bar(y_pos - width, bar_one_lebel_array, width=.12, align='center', alpha=0.9, color='#1a58c5')
-    rects2 = lib.plt.bar(y_pos - width, bar_two_lebel_array, width=.12, align='center', alpha=0.9, color='#be4748')
-    rects3 = lib.plt.bar(y_pos, bar_three_lebel_array, width=.12, align='center', alpha=0.9, color='#c5871a')
-    rects4 = lib.plt.bar(y_pos + width, bar_four_lebel_array, width=.12, align='center', alpha=0.9, color='#58c51a')
-    rects5 = lib.plt.bar(y_pos + width + width, bar_five_lebel_array, width=.12, align='center', alpha=0.9,
+    bar_width = .12
+    fig, ax = lib.plt.subplots(figsize=(12.8, 4.8))
+    rects1 = lib.plt.bar(y_pos + 0.00, bar_one_lebel_array, width=bar_width, align='center', alpha=0.9, color='#1a58c5')
+    rects2 = lib.plt.bar(y_pos + 0.12, bar_two_lebel_array, width=bar_width, align='center', alpha=0.9, color='#be4748')
+    rects3 = lib.plt.bar(y_pos + 0.24, bar_three_lebel_array, width=bar_width, align='center', alpha=0.9,
+                         color='#c5871a')
+    rects4 = lib.plt.bar(y_pos + 0.36, bar_four_lebel_array, width=bar_width, align='center', alpha=0.9,
+                         color='#58c51a')
+    rects5 = lib.plt.bar(y_pos + 0.48, bar_five_lebel_array, width=bar_width, align='center', alpha=0.9,
                          color='#fc0373')
 
     def autolabel1(rects):
@@ -219,7 +221,7 @@ def ndm_cash_drop():
             val = bar_one_lebel_array[q]
             h = rect.get_height()
             ax.text(rect.get_x() + rect.get_width() / 2., 1.01 * h, '%.2f' % val + '%',
-                    ha='center', va='bottom', rotation=90)
+                    ha='center', va='bottom', rotation=90,fontweight='bold')
             q = q + 1
 
     autolabel1(rects1)
@@ -230,7 +232,7 @@ def ndm_cash_drop():
             val = bar_two_lebel_array[q]
             h = rect.get_height()
             ax.text(rect.get_x() + rect.get_width() / 2., 1.01 * h, '%.2f' % val + '%',
-                    ha='center', va='bottom', rotation=90)
+                    ha='center', va='bottom', rotation=90,fontweight='bold')
             q = q + 1
 
     autolabel2(rects2)
@@ -241,7 +243,7 @@ def ndm_cash_drop():
             val = bar_three_lebel_array[q]
             h = rect.get_height()
             ax.text(rect.get_x() + rect.get_width() / 2., 1.01 * h, '%.2f' % val + '%',
-                    ha='center', va='bottom', rotation=90)
+                    ha='center', va='bottom', rotation=90,fontweight='bold')
             q = q + 1
 
     autolabel3(rects3)
@@ -252,7 +254,7 @@ def ndm_cash_drop():
             val = bar_four_lebel_array[q]
             h = rect.get_height()
             ax.text(rect.get_x() + rect.get_width() / 2., 1.01 * h, '%.2f' % val + '%',
-                    ha='center', va='bottom', rotation=90)
+                    ha='center', va='bottom', rotation=90,fontweight='bold')
             q = q + 1
 
     autolabel4(rects4)
@@ -263,7 +265,7 @@ def ndm_cash_drop():
             val = bar_five_lebel_array[q]
             h = rect.get_height()
             ax.text(rect.get_x() + rect.get_width() / 2., 1.01 * h, '%.2f' % val + '%',
-                    ha='center', va='bottom', rotation=90)
+                    ha='center', va='bottom', rotation=90,fontweight='bold')
             q = q + 1
 
     autolabel5(rects5)

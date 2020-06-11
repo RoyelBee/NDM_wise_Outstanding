@@ -110,7 +110,7 @@ def ndm_wise_outstanding():
     # print('all matured = ', all_matured)
 
     # plot
-    barWidth = 0.85
+    barWidth = 0.75
     names = ('Anwar', 'Kamrul', 'Atik', 'Nurul', 'Hafizur')
 
     fig, ax = lib.plt.subplots(figsize=(12.8, 4.8))

@@ -41,7 +41,7 @@ def branch_wise_cash_drop_aging():
     # plot
     barWidth = 0.85
     names = branch_cash_drop_df['Branch']
-    fig, ax = lib.plt.subplots(figsize=(12.81, 9))
+    fig, ax = lib.plt.subplots(figsize=(12.8, 9))
     # print(names)
     # labels = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30]
     labels = names.tolist()

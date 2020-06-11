@@ -35,7 +35,7 @@ def creditOutstanding():
     # Ad this labels=data_label, in next line to add data lebel
     wedges, labels, autopct = ax.pie(values, colors=colors, labels=data_label, autopct='%.1f%%', startangle=90,
                                      pctdistance=.7)
-    lib.plt.setp(autopct, fontsize=14, color='black', fontweight='bold')
+    lib.plt.setp(autopct, fontsize=14, color='blue', fontweight='bold')
     lib.plt.setp(labels, fontsize=14, fontweight='bold')
 
     # Next four lines is for donute chart

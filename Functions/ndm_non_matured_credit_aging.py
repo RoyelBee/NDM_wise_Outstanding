@@ -176,7 +176,7 @@ def ndm_non_matured_credit_aging():
     hafizur = [hafizur_0_3, hafizur_4_10, hafizur_11_15, hafizur_16_30, hafizur_31_90, hafizur_91_201, hafizur_202_more]
     hafizur = [i * 100 / sum(hafizur) for i, j, in zip(hafizur, hafizur)]
 
-    fig, ax = lib.plt.subplots(figsize=(12.81, 4.8))
+    fig, ax = lib.plt.subplots(figsize=(12.80, 4.8))
     barWidth = .12
     x = lib.np.arange(7)
 

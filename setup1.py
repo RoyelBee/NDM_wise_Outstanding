@@ -8,6 +8,7 @@ from PIL import Image, ImageDraw, ImageFont
 import Functions.all_library as lib
 
 import generate_all_kpi
+
 dirpath = os.path.dirname(os.path.realpath(__file__))
 
 # # ----- Join Images --------------------------------------------
@@ -15,20 +16,107 @@ imp1 = Image.open(dirpath + "./Images/1.total_outstanding.png")
 widthx, heightx = imp1.size
 imp2 = Image.open(dirpath + "./Images/2.category_wise_credit.png")
 
-imageSize = Image.new('RGB', (1283, 481))
-imageSize.paste(imp1, (1, 0))
-imageSize.paste(imp2, (widthx + 2, 0))
+imageSize = Image.new('RGB', (1283, 482))
+imageSize.paste(imp1, (1, 1))
+imageSize.paste(imp2, (widthx + 2, 1))
 imageSize.save(dirpath + "./Images/img1_2.png")
+
+# # -----------------
+img = Image.open(dirpath + "./Images/3.ndm_credit_outstanding.png")
+img3 = Image.new('RGB', (1282, 482))
+img3.paste(img, (1, 1))
+img3.save(dirpath + "./Images/3.ndm_credit_outstanding.png")
+print('Image 3 Generated')
+
+# # -----------------
+image4 = Image.open(dirpath + "./Images/4.matured_credit_aging.png")
+img4 = Image.new('RGB', (1282, 482))
+img4.paste(image4, (1, 1))
+img4.save(dirpath + "./Images/4.matured_credit_aging.png")
+print('Image 4 Generated')
+
+# # -----------------
+image5 = Image.open(dirpath + "./Images/5.ndm_matured_credit_aging.png")
+img5 = Image.new('RGB', (1282, 482))
+img5.paste(image5, (1, 1))
+img5.save(dirpath + "./Images/5.ndm_matured_credit_aging.png")
+print('Image 5 Generated')
+
+# # -----------------
+image6 = Image.open(dirpath + "./Images/6.Branch_wise_matured_credit_aging.png")
+img6 = Image.new('RGB', (1282, 902))
+img6.paste(image6, (1, 1))
+img6.save(dirpath + "./Images/6.Branch_wise_matured_credit_aging.png")
+print('Image 6 Generated')
+
+# # -----------------
+image7 = Image.open(dirpath + "./Images/7.non_matured_credit_aging.png")
+img7 = Image.new('RGB', (1282, 482))
+img7.paste(image7, (1, 1))
+img7.save(dirpath + "./Images/7.non_matured_credit_aging.png")
+print('Image 7 Generated')
+
+# # -----------------
+image8 = Image.open(dirpath + "./Images/8.ndm_non_matured_credit_aging.png")
+img8 = Image.new('RGB', (1282, 482))
+img8.paste(image8, (1, 1))
+img8.save(dirpath + "./Images/8.ndm_non_matured_credit_aging.png")
+print('Image 8 Generated')
+
+# # -----------------
+image9 = Image.open(dirpath + "./Images/9.branch_non_matured.png")
+img9 = Image.new('RGB', (1282, 902))
+img9.paste(image9, (1, 1))
+img9.save(dirpath + "./Images/9.branch_non_matured.png")
+print('Image 9 Generated')
+
+# # -----------------
+image10 = Image.open(dirpath + "./Images/10.cashdrop_aging.png")
+img10 = Image.new('RGB', (1282, 482))
+img10.paste(image10, (1, 1))
+img10.save(dirpath + "./Images/10.cashdrop_aging.png")
+print('Image 10 Generated')
+
+# # -----------------
+image11 = Image.open(dirpath + "./Images/11.ndm_cash_drop_aging.png")
+img11 = Image.new('RGB', (1282, 482))
+img11.paste(image11, (1, 1))
+img11.save(dirpath + "./Images/11.ndm_cash_drop_aging.png")
+print('Image 11 Generated')
+
+
+
+# # -----------------
+image12 = Image.open(dirpath + "./Images/12.branch_wise_cash_drop_aging.png")
+img12 = Image.new('RGB', (1282, 902))
+img12.paste(image12, (1, 1))
+img12.save(dirpath + "./Images/12.branch_wise_cash_drop_aging.png")
+print('Image 12 Generated')
 
 # # Join 13, 14
 imp13 = Image.open(dirpath + "./Images/13.Nation_wide_return.png")
 imp14 = Image.open(dirpath + "./Images/14.nation_vs_ndm_return.png")
 #
-imageSize = Image.new('RGB', (1283, 301))
-imageSize.paste(imp13, (1, 0))
-imageSize.paste(imp14, (200 + 2, 0))
+imageSize = Image.new('RGB', (1283, 302))
+imageSize.paste(imp13, (1, 1))
+imageSize.paste(imp14, (201, 1))
 imageSize.save(dirpath + "./Images/img13_14.png")
-print('Image joined ')
+print('13, 14 Image joined ')
+
+# # -----------------
+image15 = Image.open(dirpath + "./Images/15.top5_branch_return.png")
+img15 = Image.new('RGB', (1282, 482))
+img15.paste(image15, (1, 1))
+img15.save(dirpath + "./Images/15.top5_branch_return.png")
+print('Image 15 Generated')
+
+# # -----------------
+image16 = Image.open(dirpath + "./Images/16.top5_delivery_persons_return.png")
+img16 = Image.new('RGB', (1282, 482))
+img16.paste(image16, (1, 1))
+img16.save(dirpath + "./Images/16.top5_delivery_persons_return.png")
+print('Image 16 Generated')
+
 # -----------------------------------------------------------------
 # ------------ Email Section --------------------------------------
 # -----------------------------------------------------------------
@@ -36,8 +124,8 @@ print('Image joined ')
 # ------------ Group email ---------------------------------------
 msgRoot = MIMEMultipart('related')
 me = 'erp-bi.service@transcombd.com'
-to = ['rejaul.islam@transcombd.com', '']
-cc = ['', '']
+to = ['yakub@transcombd.com', 'rejaul.islam@transcombd.com']
+cc = ['fazle.rabby@transcombd.com', '']
 bcc = ['', '']
 
 recipient = to + cc + bcc
