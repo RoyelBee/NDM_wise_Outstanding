@@ -121,7 +121,7 @@ print('Image 16 Generated')
 # ------------ Email Section --------------------------------------
 # -----------------------------------------------------------------
 
-# ------------ Group email ---------------------------------------
+# ------------ Group email ----------------------------------------
 msgRoot = MIMEMultipart('related')
 me = 'erp-bi.service@transcombd.com'
 to = ['yakub@transcombd.com', 'rejaul.islam@transcombd.com']

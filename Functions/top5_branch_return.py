@@ -4,7 +4,7 @@ import Functions.all_library as lib
 
 def top5_branch_return():
         top_five_branch_return_df = lib.pd.read_sql_query("""
-                            select top 5 left(AUDTORG,3) as Branch_name,
+                            select top 10 left(AUDTORG,3) as Branch_name,
                             ISNULL(sum(case when TRANSTYPE<>1 then INVNETH *-1 end), 0) 
                             /ISNULL(sum(case when TRANSTYPE=1 then INVNETH end), 0)*100 as ReturnPercent 
                             from OESalesSummery
@@ -28,7 +28,7 @@ def top5_branch_return():
         average_branch_return_amount = Total_amount_of_return / Total_no_of_branches
         average_branch_amount_list = []
 
-        for i in range(0, 5):
+        for i in range(0, 10):
             average_branch_amount_list.append(average_branch_return_amount)
 
         Branch_name = top_five_branch_return_df['Branch_name'].values.tolist()
@@ -54,7 +54,7 @@ def top5_branch_return():
         lib.plt.xticks(y_pos, Branch_name, rotation='horizontal', fontsize='12')
         # lib.plt.yticks(lib.np.arange(0, round(max_amount) + (.6 * round(max_amount)), max_amount / 6), fontsize='12')
         lib.plt.yticks(lib.np.arange(0, 1.1, .1), fontsize=12)
-        lib.plt.title("15. Top 5 Branch Return % - MTD", fontsize=16, fontweight='bold', color='#3e0a75')
+        lib.plt.title("15. Top 10 Branch Return % - MTD", fontsize=16, fontweight='bold', color='#3e0a75')
         lib.plt.legend(['National Return %', 'Branch Return %'], loc='upper center', bbox_to_anchor=(0.5, -0.085),
                        fancybox=True, shadow=True, ncol=4)
         lib.plt.tight_layout()
