@@ -176,46 +176,47 @@ def ndm_non_matured_credit_aging():
     hafizur = [hafizur_0_3, hafizur_4_10, hafizur_11_15, hafizur_16_30, hafizur_31_90, hafizur_91_201, hafizur_202_more]
     hafizur = [i * 100 / sum(hafizur) for i, j, in zip(hafizur, hafizur)]
 
-    fig, ax = lib.plt.subplots(figsize=(12.81, 4.8))
+    fig, ax = lib.plt.subplots(figsize=(12.80, 4.8))
     barWidth = .12
     x = lib.np.arange(7)
 
-    legend_element = [lib.Patch(facecolor='#0093e6', label='Mr. Anwar'),
-                      lib.Patch(facecolor='#e6a700', label='Mr. Kamrul'),
-                      lib.Patch(facecolor='#dadde6', label='Mr. Atik'),
-                      lib.Patch(facecolor='#f7ef03', label='Mr. Nurul'),
-                      lib.Patch(facecolor='#85f703', label='Mr. Hafizur')
-                      ]
-    anwar_bar = lib.plt.bar(x + 0.00, anwar, color='#0093e6', label='Matured', edgecolor='white', width=barWidth)
-    kamrul_bar = lib.plt.bar(x + 0.12, kamrul, color='#e6a700', label='Matured', edgecolor='white', width=barWidth)
-    atik_bar = lib.plt.bar(x + 0.24, atik, color='#dadde6', label='Matured', edgecolor='white', width=barWidth)
-    nurul_bar = lib.plt.bar(x + 0.36, nurul, color='#f7ef03', label='Matured', edgecolor='white', width=barWidth)
-    hafizur_bar = lib.plt.bar(x + 0.48, hafizur, color='#85f703', label='Matured', edgecolor='white', width=barWidth)
+    legend_element = [
+        lib.Patch(facecolor='#1a58c5', label='Mr. Anwar')
+        , lib.Patch(facecolor='#be4748', label='Mr. Kamrul')
+        , lib.Patch(facecolor='#c5871a', label='Mr. Atik')
+        , lib.Patch(facecolor='#58c51a', label='Mr. Nurul')
+        , lib.Patch(facecolor='#fc0373', label='Mr. Hafizur')]
+
+    anwar_bar = lib.plt.bar(x + 0.00, anwar, color='#1a58c5', label='Matured', edgecolor='white', width=barWidth)
+    kamrul_bar = lib.plt.bar(x + 0.12, kamrul, color='#be4748', label='Matured', edgecolor='white', width=barWidth)
+    atik_bar = lib.plt.bar(x + 0.24, atik, color='#c5871a', label='Matured', edgecolor='white', width=barWidth)
+    nurul_bar = lib.plt.bar(x + 0.36, nurul, color='#58c51a', label='Matured', edgecolor='white', width=barWidth)
+    hafizur_bar = lib.plt.bar(x + 0.48, hafizur, color='#fc0373', label='Matured', edgecolor='white', width=barWidth)
 
     # # ------------ Add label in the top of the bar --------------------------
     for bar, anwar in zip(anwar_bar, anwar):
         height = bar.get_height()
-        ax.text(bar.get_x() + bar.get_width() / 2, height*.9, str('%.1f' % height) + '%',
+        ax.text(bar.get_x() + bar.get_width() / 2, height * .9, str('%.1f' % height) + '%',
                 ha='center', va='bottom', fontweight='bold', rotation=90)
 
     for bar, kamrul in zip(kamrul_bar, kamrul):
         height = bar.get_height()
-        ax.text(bar.get_x() + bar.get_width() / 2, height*.9,  str('%.1f' % height) + '%',
+        ax.text(bar.get_x() + bar.get_width() / 2, height * .9, str('%.1f' % height) + '%',
                 ha='center', va='bottom', fontweight='bold', rotation=90)
 
     for bar, atik in zip(atik_bar, atik):
         height = bar.get_height()
-        ax.text(bar.get_x() + bar.get_width() / 2, height*.9,  str('%.1f' % height) + '%',
+        ax.text(bar.get_x() + bar.get_width() / 2, height * .9, str('%.1f' % height) + '%',
                 ha='center', va='bottom', fontweight='bold', rotation=90)
     #
     for bar, nurul in zip(nurul_bar, nurul):
         height = bar.get_height()
-        ax.text(bar.get_x() + bar.get_width() / 2, height*.9, str('%.1f' % height) + '%',
+        ax.text(bar.get_x() + bar.get_width() / 2, height * .9, str('%.1f' % height) + '%',
                 ha='center', va='bottom', fontweight='bold', rotation=90)
     #
     for bar, hafizur in zip(hafizur_bar, hafizur):
         height = bar.get_height()
-        ax.text(bar.get_x() + bar.get_width() / 2, height*.9, str('%.1f' % height) + '%',
+        ax.text(bar.get_x() + bar.get_width() / 2, height * .9, str('%.1f' % height) + '%',
                 ha='center', va='bottom', fontweight='bold', rotation=90)
 
     # ------ Add legend elements -------------------

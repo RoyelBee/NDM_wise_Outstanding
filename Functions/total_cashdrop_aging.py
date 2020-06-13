@@ -53,19 +53,20 @@ def cashdrop_aging():
     # plot
     barWidth = 0.80
     names = ('0 to 3 Days', '4 to 10 Days', '11 to 15 Days', '16+ Days')
-    fig, ax = lib.plt.subplots(figsize=(12.81, 4.8))
+    fig, ax = lib.plt.subplots(figsize=(12.8, 4.8))
     # Create green Bars
     bar1 = lib.plt.bar(serial, all, color='#31c377', label='Matured', edgecolor='white', width=barWidth)
 
     # Create orange Bars
     for bar in bar1:
         height = bar.get_height()
-        ax.text(bar.get_x() + bar.get_width() / 2, height, str(int(height)) + 'K', ha='center', va='bottom', fontweight='bold')
+        ax.text(bar.get_x() + bar.get_width() / 2, height, str(int(height)) + 'K',
+                ha='center', va='bottom', fontweight='bold')
 
     for bar, Amount in zip(bar1, Amount):
         height = bar.get_height()
-        ax.text(bar.get_x() + bar.get_width() / 2, height * .5, str("%.2f" % round(Amount, 2)) + '%', ha='center', va='bottom',
-                fontweight='bold')
+        ax.text(bar.get_x() + bar.get_width() / 2, height * .5, str("%.2f" % round(Amount, 2)) + '%',
+                ha='center', va='bottom')
 
     # Custom x axis
     lib.plt.xticks(serial, names)

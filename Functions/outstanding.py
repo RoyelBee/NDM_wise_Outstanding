@@ -18,17 +18,19 @@ def totalOutstanding():
     total = cash + credit
     total = 'Total \n' + fn.numberInThousands(total)
 
-    colors = ['#fffd00', '#ffa800']
-    legend_element = [lib.Patch(facecolor='#fffd00', label='Cash'),
-                      lib.Patch(facecolor='#ffa800', label='Credit')]
+    colors = ['#f9ff00', '#ff8600']
+
+    legend_element = [lib.Patch(facecolor='#f9ff00', label='Cash'),
+                      lib.Patch(facecolor='#ff8600', label='Credit')]
 
     data_label = [fn.numberInThousands(cash), fn.numberInThousands(credit)]
 
     fig1, ax = lib.plt.subplots()
     # Add this next line to show data
-    wedges, labels, autopct = ax.pie(data, labels=data_label, colors=colors, autopct='%.1f%%', startangle=90,
-                                     pctdistance=.7)
-    lib.plt.setp(autopct, fontsize=14, color='black', fontweight='bold')
+    wedges, labels, autopct = ax.pie(data, labels=data_label, colors=colors, autopct='%.1f%%', textprops={
+        'color':"Black"},startangle=90,pctdistance=.7)
+
+    lib.plt.setp(autopct, fontsize=14, color='blue', fontweight='bold')
     lib.plt.setp(labels, fontsize=14, fontweight='bold')
 
     # To make a Donate chart uncomment next 4 lines ------------
