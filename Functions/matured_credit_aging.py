@@ -63,6 +63,7 @@ def matured_credit():
             order by SERIAL
                       """, fn.conn)
 
+    aging_mature_df.to_csv(r'./Data/matured_credit_aging.csv', index=False, header=True)
     serial = [0, 1, 2, 3, 4, 5, 6]
     all = [i for i in aging_mature_df['Amount']]
     total = sum(all)
@@ -89,7 +90,7 @@ def matured_credit():
     # Custom x axis
     lib.plt.xticks(serial, names)
     # lib.plt.yticks(lib.np.arange(0, 101, 10))
-    #lib.plt.xlabel('Aging Days', color='black', fontsize=14, fontweight='bold')
+    # lib.plt.xlabel('Aging Days', color='black', fontsize=14, fontweight='bold')
     lib.plt.ylabel('Percentage %', color='black', fontsize=14, fontweight='bold')
     lib.plt.title('4. Matured Credit Age', fontsize=16, fontweight='bold', color='#3e0a75')
     lib.plt.tight_layout()

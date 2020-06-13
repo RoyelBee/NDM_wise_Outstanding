@@ -36,6 +36,8 @@ def branch_wise_non_matured_credit():
             order by TblCredit.AUDTORG
                     """, fn.conn)
 
+    data.to_csv(r'./Data/branch_wise_non_matured_credit_aging.csv', index=False, header=True)
+
     # # --------------------- Creating fig-----------------------------------------
 
     # Data

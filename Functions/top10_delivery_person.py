@@ -2,10 +2,10 @@ import Functions.all_function as fn
 import Functions.all_library as lib
 
 
-def top5_delivery_persons_return():
+def top10_delivery_persons_return():
     try:
         delivery_man_wise_return_df = lib.pd.read_sql_query("""
-                    select top 10  left(Sales.AUDTORG,3) + '-' +TWO.ShortName as DPNAME ,Sales.ReturnAmount as 
+                    select left(Sales.AUDTORG,3) + '-' +TWO.ShortName as DPNAME ,Sales.ReturnAmount as 
                     ReturnAmount from
                     (select  DPID, AUDTORG,
                     ISNULL(sum(case when TRANSTYPE<>1 then INVNETH *-1 end), 0) /ISNULL(sum(case when TRANSTYPE=1 then INVNETH end), 0)*100 as ReturnAmount
@@ -19,7 +19,11 @@ def top5_delivery_persons_return():
                     and Sales.AUDTORG=TWO.AUDTORG
                     where TWO.ShortName is not null
                     and Sales.ReturnAmount>0
-                    order by ReturnAmount DESC""", fn.conn)
+                    order by ReturnAmount DESC """, fn.conn)
+
+        delivery_man_wise_return_df.to_csv(r'./Data/All_Delivery_Persons_Return.csv', index=False, header=True)
+        delivery_man_wise_return_df = delivery_man_wise_return_df.head(10)
+
         average_delivery_man_wise_return_df = lib.pd.read_sql_query("""
                  select Sales.ReturnAmount from
                 (select  DPID, AUDTORG,

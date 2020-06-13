@@ -1,13 +1,13 @@
 #
-# # # --------- 1. Total Outstanding ----------------------------------
+# # # --------- 1. Total Outstanding -------------------------------
 import Functions.outstanding as out
 out.totalOutstanding()
 
-# # ------- 2. Credit Outstanding ---------------------------------
+# # ------- 2. Credit Outstanding -----------------------------------
 import Functions.credit_outstanding as credit
 credit.creditOutstanding()
 
-# ---. 3. NDM wise credit outstanding -----------------------------
+# ---. 3. NDM wise credit outstanding -------------------------------
 import Functions.ndm_outstanding as ndm_out
 ndm_out.ndm_wise_outstanding()
 #
@@ -56,10 +56,10 @@ import Functions.national_vs_ndm_return as nation_vs_ndm
 nation_vs_ndm.national_vs_ndm_return()
 
 # # -------15. Top 5 Branch Return -------------------------------
-import Functions.top5_branch_return as top5_branch
-top5_branch.top5_branch_return()
+import Functions.top10_branch_return as top5_branch
+top5_branch.top10_branch_return()
 
 # # ----  16.Top 5 Delivery Persons Return Amount ----------------
-import Functions.top5_delivery_person as delivery_persons_return
-delivery_persons_return.top5_delivery_persons_return()
+import Functions.top10_delivery_person as delivery_persons_return
+delivery_persons_return.top10_delivery_persons_return()
 #

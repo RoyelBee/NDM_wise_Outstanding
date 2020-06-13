@@ -1,11 +1,16 @@
 import smtplib
 import os
 
+
 from email.mime.image import MIMEImage
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from PIL import Image, ImageDraw, ImageFont
 import Functions.all_library as lib
+
+#--------------new added---------
+from email.mime.base import MIMEBase
+from email import encoders
 
 import generate_all_kpi
 
@@ -124,8 +129,8 @@ print('Image 16 Generated')
 # ------------ Group email ----------------------------------------
 msgRoot = MIMEMultipart('related')
 me = 'erp-bi.service@transcombd.com'
-to = ['yakub@transcombd.com', 'rejaul.islam@transcombd.com']
-cc = ['fazle.rabby@transcombd.com', '']
+to = ['rejaul.islam@transcombd.com', '']
+cc = ['', '']
 bcc = ['', '']
 
 recipient = to + cc + bcc
@@ -287,6 +292,87 @@ fp.close()
 
 top5_delivery_persons_return.add_header('Content-ID', '<top5_delivery_persons_return>')
 msgRoot.attach(top5_delivery_persons_return)
+
+# # ---------------------------4.matured_credit_aging.csv files-----------------------
+part = MIMEBase('application', "octet-stream")
+file_location = dirpath + './Data/matured_credit_aging.csv'
+# Create the attachment file (only do it once)
+filename = os.path.basename(file_location)
+attachment = open(file_location, "rb")
+part = MIMEBase('application', 'octet-stream')
+part.set_payload(attachment.read())
+encoders.encode_base64(part)
+part.add_header('Content-Disposition', "attachment; filename= %s" % filename)
+msgRoot.attach(part)
+attachment.close()
+
+# #---------------------------6.branch_wise_matured_credit_aging.csv files---------------
+part = MIMEBase('application', "octet-stream")
+file_location = dirpath + './Data/branch_wise_matured_credit_aging.csv'
+# Create the attachment file (only do it once)
+filename = os.path.basename(file_location)
+attachment = open(file_location, "rb")
+part = MIMEBase('application', 'octet-stream')
+part.set_payload(attachment.read())
+encoders.encode_base64(part)
+part.add_header('Content-Disposition', "attachment; filename= %s" % filename)
+msgRoot.attach(part)
+attachment.close()
+
+# #----------------------- 9.branch_wise_non_matured_credit_aging.csv files------------------
+part = MIMEBase('application', "octet-stream")
+file_location = dirpath + './Data/branch_wise_non_matured_credit_aging.csv'
+# Create the attachment file (only do it once)
+filename = os.path.basename(file_location)
+attachment = open(file_location, "rb")
+part = MIMEBase('application', 'octet-stream')
+part.set_payload(attachment.read())
+encoders.encode_base64(part)
+part.add_header('Content-Disposition', "attachment; filename= %s" % filename)
+msgRoot.attach(part)
+attachment.close()
+
+
+# #--------------------------- 12.branch_wise_cash_drop_aging.csv files ----------
+part = MIMEBase('application', "octet-stream")
+file_location = dirpath + './Data/branch_wise_cash_drop_aging.csv'
+# Create the attachment file (only do it once)
+filename = os.path.basename(file_location)
+attachment = open(file_location, "rb")
+part = MIMEBase('application', 'octet-stream')
+part.set_payload(attachment.read())
+encoders.encode_base64(part)
+part.add_header('Content-Disposition', "attachment; filename= %s" % filename)
+msgRoot.attach(part)
+attachment.close()
+
+
+# # --------15.  Attached All Return File ---------------------------------------
+part = MIMEBase('application', "octet-stream")
+file_location = dirpath + './Data/All_Branch_Return.csv'
+# Create the attachment file (only do it once)
+filename = os.path.basename(file_location)
+attachment = open(file_location, "rb")
+part = MIMEBase('application', 'octet-stream')
+part.set_payload(attachment.read())
+encoders.encode_base64(part)
+part.add_header('Content-Disposition', "attachment; filename= %s" % filename)
+msgRoot.attach(part)
+attachment.close()
+
+
+# # --------16.  Attached All Delivery Persons Return File --------------------
+part = MIMEBase('application', "octet-stream")
+file_location = dirpath + './Data/All_Delivery_Persons_Return.csv'
+# Create the attachment file (only do it once)
+filename = os.path.basename(file_location)
+attachment = open(file_location, "rb")
+part = MIMEBase('application', 'octet-stream')
+part.set_payload(attachment.read())
+encoders.encode_base64(part)
+part.add_header('Content-Disposition', "attachment; filename= %s" % filename)
+msgRoot.attach(part)
+attachment.close()
 
 
 # # ----------- Finally send mail and close server connection ---

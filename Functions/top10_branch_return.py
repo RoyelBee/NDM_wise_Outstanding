@@ -1,10 +1,11 @@
 import Functions.all_function as fn
 import Functions.all_library as lib
+dirpath = lib.os.path.dirname(lib.os.path.realpath(__file__))
 
 
-def top5_branch_return():
-        top_five_branch_return_df = lib.pd.read_sql_query("""
-                            select top 10 left(AUDTORG,3) as Branch_name,
+def top10_branch_return():
+        top_ten_branch_return_df = lib.pd.read_sql_query("""
+                            select left(AUDTORG,3) as Branch_name,
                             ISNULL(sum(case when TRANSTYPE<>1 then INVNETH *-1 end), 0) 
                             /ISNULL(sum(case when TRANSTYPE=1 then INVNETH end), 0)*100 as ReturnPercent 
                             from OESalesSummery
@@ -14,6 +15,10 @@ def top5_branch_return():
                             order by ReturnPercent desc
 
                                     """, fn.conn)
+
+        top_ten_branch_return_df.to_csv(r'./Data/All_Branch_Return.csv', index=False, header=True)
+
+        top_ten_branch_return_df = top_ten_branch_return_df.head(10)
 
         average_branch_return_df = lib.pd.read_sql_query("""select AUDTORG as Branch_name,ISNULL(sum(case when TRANSTYPE<>1 then INVNETH *-1 end), 0) 
                         /ISNULL(sum(case when TRANSTYPE=1 then INVNETH end), 0)*100 as ReturnPercent from OESalesSummery
@@ -31,9 +36,9 @@ def top5_branch_return():
         for i in range(0, 10):
             average_branch_amount_list.append(average_branch_return_amount)
 
-        Branch_name = top_five_branch_return_df['Branch_name'].values.tolist()
+        Branch_name = top_ten_branch_return_df['Branch_name'].values.tolist()
         y_pos = lib.np.arange(len(Branch_name))
-        ReturnAmount = abs(top_five_branch_return_df['ReturnPercent'])
+        ReturnAmount = abs(top_ten_branch_return_df['ReturnPercent'])
         ReturnAmount = ReturnAmount.values.tolist()
         max_amount = max(ReturnAmount)
         color = '#418af2'

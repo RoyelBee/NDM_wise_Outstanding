@@ -19,6 +19,8 @@ def branch_wise_cash_drop_aging():
             order by TblCredit.AUDTORG  
                             """, fn.conn)
 
+    branch_cash_drop_df.to_csv(r'./Data/branch_wise_cash_drop_aging.csv', index=False, header=True)
+
     # # --------------------- Creating fig-----------------------------------------
 
     # Data
