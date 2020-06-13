@@ -1,4 +1,4 @@
-### National District Manage(NDM) wise Outstanding Reports  <br> <br> <hr>
+### National District Manage(NDM) wise Outstanding Reports  <br> <hr><hr>
 ![alt text](https://github.com/RoyelBee/NDM_wise_Outstanding/blob/master/Images/img1_2.png)
 ![alt text](https://github.com/RoyelBee/NDM_wise_Outstanding/blob/master/Images/3.ndm_credit_outstanding.png)
 ![alt text](https://github.com/RoyelBee/NDM_wise_Outstanding/blob/master/Images/4.matured_credit_aging.png)
