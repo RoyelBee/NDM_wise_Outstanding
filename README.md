@@ -1,2 +1,17 @@
-# National District Manage(NDM) wise Outstanding Reports 
+### National District Manage(NDM) wise Outstanding Reports  <br> <br> <hr>
 ![alt text](https://github.com/RoyelBee/NDM_wise_Outstanding/blob/master/Images/img1_2.png)
+![alt text](https://github.com/RoyelBee/NDM_wise_Outstanding/blob/master/Images/3.ndm_credit_outstanding.png)
+![alt text](https://github.com/RoyelBee/NDM_wise_Outstanding/blob/master/Images/4.matured_credit_aging.png)
+![alt text](https://github.com/RoyelBee/NDM_wise_Outstanding/blob/master/Images/3.ndm_credit_outstanding.png)
+![alt text](https://github.com/RoyelBee/NDM_wise_Outstanding/blob/master/Images/4.matured_credit_aging.png)
+![alt text](https://github.com/RoyelBee/NDM_wise_Outstanding/blob/master/Images/5.ndm_matured_credit_aging.png)
+![alt text](https://github.com/RoyelBee/NDM_wise_Outstanding/blob/master/Images/6.Branch_wise_matured_credit_aging.png)
+![alt text](https://github.com/RoyelBee/NDM_wise_Outstanding/blob/master/Images/7.non_matured_credit_aging.png)
+![alt text](https://github.com/RoyelBee/NDM_wise_Outstanding/blob/master/Images/8.ndm_non_matured_credit_aging.png)
+![alt text](https://github.com/RoyelBee/NDM_wise_Outstanding/blob/master/Images/9.branch_non_matured.png)
+![alt text](https://github.com/RoyelBee/NDM_wise_Outstanding/blob/master/Images/10.cashdrop_aging.png)
+![alt text](https://github.com/RoyelBee/NDM_wise_Outstanding/blob/master/Images/11.ndm_cash_drop_aging.png)
+![alt text](https://github.com/RoyelBee/NDM_wise_Outstanding/blob/master/Images/12.branch_wise_cash_drop_aging.png)
+![alt text](https://github.com/RoyelBee/NDM_wise_Outstanding/blob/master/Images/img13_14.png)
+![alt text](https://github.com/RoyelBee/NDM_wise_Outstanding/blob/master/Images/15.top5_branch_return.png)
+![alt text](https://github.com/RoyelBee/NDM_wise_Outstanding/blob/master/Images/16.top5_delivery_persons_return.png)
