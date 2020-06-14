@@ -2,8 +2,6 @@
 ![alt text](https://github.com/RoyelBee/NDM_wise_Outstanding/blob/master/Images/img1_2.png)
 ![alt text](https://github.com/RoyelBee/NDM_wise_Outstanding/blob/master/Images/3.ndm_credit_outstanding.png)
 ![alt text](https://github.com/RoyelBee/NDM_wise_Outstanding/blob/master/Images/4.matured_credit_aging.png)
-![alt text](https://github.com/RoyelBee/NDM_wise_Outstanding/blob/master/Images/3.ndm_credit_outstanding.png)
-![alt text](https://github.com/RoyelBee/NDM_wise_Outstanding/blob/master/Images/4.matured_credit_aging.png)
 ![alt text](https://github.com/RoyelBee/NDM_wise_Outstanding/blob/master/Images/5.ndm_matured_credit_aging.png)
 ![alt text](https://github.com/RoyelBee/NDM_wise_Outstanding/blob/master/Images/6.Branch_wise_matured_credit_aging.png)
 ![alt text](https://github.com/RoyelBee/NDM_wise_Outstanding/blob/master/Images/7.non_matured_credit_aging.png)
