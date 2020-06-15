@@ -3,58 +3,20 @@ import Functions.all_library as lib
 
 def national_vs_ndm_return():
     try:
-        ndm_anwar_df = lib.pd.read_sql_query("""
-                    select ISNULL(sum(case when TRANSTYPE<>1 then INVNETH *-1 end), 0) /ISNULL(sum(
-                    case when TRANSTYPE=1 then INVNETH end), 0)*100 as ReturnPercent from OESalesSummery
-                    where
-                    left(TRANSDATE,6)<convert(varchar(6),getdate(),112) 
-                    and AUDTORG IN ('BOGSKF','MYMSKF', 'FRDSKF', 'TGLSKF', 'RAJSKF', 'SAVSKF')
-                    order by ReturnPercent DESC 
-                             """, fn.conn)
-        anwar_return = ndm_anwar_df['ReturnPercent'].tolist()
+        ndm_all_df = lib.pd.read_sql_query("""
+                    select 
+NDM.SHORTNAME as 'NDM Name',
+ISNULL(sum(case when TRANSTYPE<>1 then INVNETH *-1 end), 0) 
+/ISNULL(sum(case when TRANSTYPE=1 then INVNETH end), 0)*100 as ReturnPercent from OESalesSummery
 
-        ndm_kamrul_df = lib.pd.read_sql_query("""
-                select ISNULL(sum(case when TRANSTYPE<>1 then INVNETH *-1 end), 0)
-                /ISNULL(sum(case when TRANSTYPE=1 then INVNETH end), 0)*100 as ReturnPercent from OESalesSummery
-                where
-                left(TRANSDATE,6)<convert(varchar(6),getdate(),112) 
-                and AUDTORG IN ('BSLSKF','COMSKF','JESSKF','KHLSKF','MIRSKF','PATSKF')
-                order by ReturnPercent DESC
-                        """, fn.conn)
-        kamrul_return = ndm_kamrul_df['ReturnPercent'].tolist()
-
-        ndm_atik_df = lib.pd.read_sql_query("""
-                select ISNULL(sum(case when TRANSTYPE<>1 then INVNETH *-1 end), 
-                0) /ISNULL(sum(case when TRANSTYPE=1 then INVNETH end), 0)*100 as ReturnPercent from OESalesSummery
-                where
-                left(TRANSDATE,6)<convert(varchar(6),getdate(),112) 
-                and AUDTORG IN ('DNJSKF','GZPSKF','HZJSKF','KRNSKF','KSGSKF','MOTSKF','RNGSKF')
-                order by ReturnPercent DESC
-                         
-                         """, fn.conn)
-        atik_return = ndm_atik_df['ReturnPercent'].tolist()
-
-        ndm_nurul_df = lib.pd.read_sql_query("""
-                    select ISNULL(sum(case when TRANSTYPE<>1 then INVNETH *-1 end), 0) 
-                    /ISNULL(sum(case when TRANSTYPE=1 then INVNETH end), 0)*100 as ReturnPercent from OESalesSummery
-                    where
-                    left(TRANSDATE,6)<convert(varchar(6),getdate(),112)
-                    and AUDTORG IN ('FENSKF','MHKSKF','MLVSKF','NOKSKF','SYLSKF','VRBSKF')
-                    order by ReturnPercent DESC
-                            
-                            """, fn.conn)
-        nurul_return = ndm_nurul_df['ReturnPercent'].tolist()
-
-        ndm_hafizur_df = lib.pd.read_sql_query("""
-                        select ISNULL(sum(case when TRANSTYPE<>1 then INVNETH *-1 end), 0) 
-                        /ISNULL(sum(case when TRANSTYPE=1 then INVNETH end), 0)*100 as ReturnPercent from OESalesSummery
-                        where
-                        left(TRANSDATE,6)<convert(varchar(6),getdate(),112)
-                        and AUDTORG IN ('COXSKF','CTGSKF','CTNSKF','KUSSKF','NAJSKF','PBNSKF')
-                        order by ReturnPercent DESC
-                                
-                                """, fn.conn)
-        hafizur_return = ndm_hafizur_df['ReturnPercent'].tolist()
+left join NDM
+on OESalesSummery.AUDTORG= NDM.BRANCH
+where
+left(TRANSDATE,6)<convert(varchar(6),getdate(),112)
+group by SHORTNAME
+order by ReturnPercent DESC
+""", fn.conn)
+        all_person_return = ndm_all_df['ReturnPercent'].tolist()
 
         average_branch_return_df = lib.pd.read_sql_query("""
                         select AUDTORG as Branch_name,ISNULL(sum(case when TRANSTYPE<>1 then INVNETH *-1 end), 0) 
@@ -68,12 +30,12 @@ def national_vs_ndm_return():
         Total_amount_of_return = sum(average_branch_return_information)
         Total_no_of_branches = len(average_branch_return_information)
         average_branch_return_amount = Total_amount_of_return / Total_no_of_branches
-        array_of_ndm_return = [anwar_return[0], kamrul_return[0], atik_return[0], nurul_return[0], hafizur_return[0]]
+        array_of_ndm_return = all_person_return
         average_branch_amount_list = []
         for i in range(0, 5):
             average_branch_amount_list.append(average_branch_return_amount)
 
-        name_of_ndms = ['Mr. Anwar', 'Mr. Kamrul', 'Mr. Atik', 'Mr. Nurul', 'Mr. Hafizur']
+        name_of_ndms = ndm_all_df['NDM Name'].tolist()
         y_pos = lib.np.arange(len(array_of_ndm_return))
         max_amount = max(array_of_ndm_return)
         color = '#418af2'

@@ -7,11 +7,11 @@ out.totalOutstanding()
 import Functions.credit_outstanding as credit
 credit.creditOutstanding()
 
-# ---. 3. NDM wise credit outstanding -------------------------------
+# #---. 3. NDM wise credit outstanding -------------------------------
 import Functions.updated_ndm_outstanding as ndm_out
 ndm_out.ndm_wise_outstanding()
-#
-# # # ---- 4. matured credit aging ----------------------------------
+
+# # ---- 4. matured credit aging ----------------------------------
 import Functions.matured_credit_aging as ndm_matured
 ndm_matured.matured_credit()
 # #
