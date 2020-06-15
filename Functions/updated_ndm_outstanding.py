@@ -161,7 +161,7 @@ def ndm_wise_outstanding():
     lib.plt.xticks(r, names)
     max_total = max(totals)/1000
 
-    lib.plt.yticks(lib.np.arange(0, int(max_total) + max_total/10, int(max_total/10)))
+    lib.plt.yticks(lib.np.arange(0, int(max_total) + max_total/10, 10000))
     lib.plt.ylabel("Amount in Thousands", fontweight='bold', fontsize=12)
     lib.plt.title('3. NDM wise Credit', fontsize=16, fontweight='bold', color='#3e0a75')
     lib.plt.legend(loc='upper center', bbox_to_anchor=(0.5, -0.065),
