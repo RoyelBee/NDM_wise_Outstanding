@@ -98,15 +98,14 @@ def branch_wise_cash_drop_aging():
             lib.plt.grid()
 
         if show_values:
-            i = 0
+            i=0
             for axis in axes:
                 for bar in axis:
                     w, h = bar.get_width(), bar.get_height()
                     lib.plt.text(bar.get_x() + w / 2, bar.get_y() + h / 2,
                                  value_format.format(float(main_label[i])), ha="center",
-                                 va="center", rotation=90, fontsize=7)
-                    i = i + 1
-
+                                 va="center", rotation=90,fontsize=7)
+                    i=i+1
     # lib.plt.figure(figsize=(12.81, 9))
 
     series_labels = ['0 - 3 days', '4 - 10 days', '11 - 15 days', '16+ days']
@@ -129,7 +128,7 @@ def branch_wise_cash_drop_aging():
     lib.plt.title('12. Branch Wise Cash Drop', fontsize=16, fontweight='bold', color='#3e0a75')
     lib.plt.legend(loc='upper center', bbox_to_anchor=(0.5, -0.085),
                    fancybox=True, shadow=True, ncol=7)
-    lib.plt.show()
+    #lib.plt.show()
     # lib.plt.close()
-    # lib.plt.savefig('./Images/12.branch_wise_cash_drop_aging.png')
-    print('12.	Branch wise Cash Drop Aging')
+    lib.plt.savefig('./Images/12.branch_wise_cash_drop_aging.png')
+    print('12. Updated Branch wise Cash Drop Aging')

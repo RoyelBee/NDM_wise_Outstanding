@@ -81,7 +81,7 @@ def matured_credit():
     for bar, percent in zip(bar1, percent):
         height = bar.get_height()
         ax.text(bar.get_x() + bar.get_width() / 2, height,
-                str(int(height)) + 'K', ha='center', va='bottom', fontweight='bold')
+                str(fn.numberInComma(height)) + 'K', ha='center', va='bottom', fontweight='bold')
 
         # # This text is for percentage
         ax.text(bar.get_x() + bar.get_width() / 2, height * .5,
@@ -91,7 +91,7 @@ def matured_credit():
     lib.plt.xticks(serial, names)
     # lib.plt.yticks(lib.np.arange(0, 101, 10))
     # lib.plt.xlabel('Aging Days', color='black', fontsize=14, fontweight='bold')
-    lib.plt.ylabel('Percentage %', color='black', fontsize=14, fontweight='bold')
+    lib.plt.ylabel('Amount (In Thousands)', color='black', fontsize=14, fontweight='bold')
     lib.plt.title('4. Matured Credit Age', fontsize=16, fontweight='bold', color='#3e0a75')
     lib.plt.tight_layout()
     # lib.plt.show()

@@ -60,7 +60,7 @@ def cashdrop_aging():
     # Create orange Bars
     for bar in bar1:
         height = bar.get_height()
-        ax.text(bar.get_x() + bar.get_width() / 2, height, str(int(height)) + 'K',
+        ax.text(bar.get_x() + bar.get_width() / 2, height, str(fn.numberInComma(height)) + 'K',
                 ha='center', va='bottom', fontweight='bold')
 
     for bar, Amount in zip(bar1, Amount):

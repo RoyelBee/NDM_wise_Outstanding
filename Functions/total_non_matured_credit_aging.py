@@ -4,13 +4,13 @@ import Functions.all_function as fn
 def total_non_matured_credit_aging():
     data = lib.pd.read_sql_query("""
             SELECT  
-            isnull(SUM(case when TblCredit.Days_Diff between '-3' and '0'  THEN OUT_NET end), 0)  as '0 - 3 days',
-            isnull(sum(case when TblCredit.Days_Diff between '-10' and '-4'  THEN OUT_NET end), 0) as  '4 - 10 days', 
-            isnull(sum( case when TblCredit.Days_Diff between '-15' and '-11'  THEN OUT_NET end), 0) as '11 - 15 days', 
-            isnull(sum(case when TblCredit.Days_Diff between '-30' and '-16'  THEN OUT_NET end), 0) as '16 - 30 days', 
-            isnull(sum(case when TblCredit.Days_Diff between '-90' and '-31'  THEN OUT_NET end), 0) as '31 - 90 days', 
-            isnull(sum( case when TblCredit.Days_Diff between '-201' and '-91'  THEN OUT_NET end), 0) as '90 - 201 days', 
-            isnull(sum( case when TblCredit.Days_Diff <= '-202'  THEN OUT_NET end), 0) as '202+ days'
+            isnull(SUM(case when TblCredit.Days_Diff between '-3' and '0'  THEN OUT_NET end), 0)/1000  as '0 - 3 days',
+            isnull(sum(case when TblCredit.Days_Diff between '-10' and '-4'  THEN OUT_NET end), 0)/1000 as  '4 - 10 days', 
+            isnull(sum( case when TblCredit.Days_Diff between '-15' and '-11'  THEN OUT_NET end), 0)/1000 as '11 - 15 days', 
+            isnull(sum(case when TblCredit.Days_Diff between '-30' and '-16'  THEN OUT_NET end), 0)/1000 as '16 - 30 days', 
+            isnull(sum(case when TblCredit.Days_Diff between '-90' and '-31'  THEN OUT_NET end), 0)/1000 as '31 - 90 days', 
+            isnull(sum( case when TblCredit.Days_Diff between '-201' and '-91'  THEN OUT_NET end), 0)/1000 as '90 - 201 days', 
+            isnull(sum( case when TblCredit.Days_Diff <= '-202'  THEN OUT_NET end), 0)/1000 as '202+ days'
             from
             (select CUSTNAME, INVNUMBER,INVDATE,
             CUSTOMER,TERMS,MAINCUSTYPE,
@@ -57,7 +57,7 @@ def total_non_matured_credit_aging():
     # Create orange Bars
     for bar in bar1:
         height = bar.get_height()
-        ax.text(bar.get_x() + bar.get_width() / 2, height, str(fn.numberInThousands(height)),
+        ax.text(bar.get_x() + bar.get_width() / 2, height, str(fn.numberInComma(height))+'K',
                 ha='center',
                 va='bottom',
                 fontweight='bold')
@@ -71,7 +71,7 @@ def total_non_matured_credit_aging():
     lib.plt.xticks(serial, names)
     # lib.plt.yticks(lib.np.arange(0, 101, 10))
     #lib.plt.xlabel('Aging Days', color='black', fontsize=14, fontweight='bold')
-    lib.plt.ylabel('Amount & Percentage %', color='black', fontsize=14, fontweight='bold')
+    lib.plt.ylabel('Amount (In Thousands)', color='black', fontsize=14, fontweight='bold')
     lib.plt.title('7. Non-Matured Credit Ageing', color='#3e0a75', fontweight='bold', fontsize=16)
     lib.plt.tight_layout()
     # lib.plt.show()

@@ -11,3 +11,8 @@ def numberInThousands(number):
     number = format(number, ',')
     number = number + 'K'
     return number
+
+def numberInComma(number):
+    number=int(number)
+    number = format(number,',')
+    return number
