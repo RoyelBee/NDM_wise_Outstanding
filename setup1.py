@@ -129,7 +129,7 @@ print('Image 16 Generated')
 # ------------ Group email ----------------------------------------
 msgRoot = MIMEMultipart('related')
 me = 'erp-bi.service@transcombd.com'
-to = ['rejaul.islam@transcombd.com', '']
+to = ['yakub@transcombd.com', 'rejaul.islam@transcombd.com', '']
 cc = ['', '']
 bcc = ['', '']
 
