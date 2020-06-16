@@ -63,7 +63,7 @@ def matured_credit():
             order by SERIAL
                       """, fn.conn)
 
-    aging_mature_df.to_csv(r'./Data/matured_credit_aging.csv', index=False, header=True)
+    #aging_mature_df.to_csv(r'./Data/matured_credit_aging.csv', index=False, header=True)
     serial = [0, 1, 2, 3, 4, 5, 6]
     all = [i for i in aging_mature_df['Amount']]
     total = sum(all)

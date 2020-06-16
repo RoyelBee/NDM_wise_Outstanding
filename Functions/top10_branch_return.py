@@ -16,7 +16,7 @@ def top10_branch_return():
 
                                     """, fn.conn)
 
-        top_ten_branch_return_df.to_csv(r'./Data/All_Branch_Return.csv', index=False, header=True)
+        #top_ten_branch_return_df.to_csv(r'./Data/All_Branch_Return.csv', index=False, header=True)
 
         top_ten_branch_return_df = top_ten_branch_return_df.head(10)
 

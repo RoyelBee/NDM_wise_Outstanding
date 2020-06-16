@@ -306,18 +306,7 @@ part.add_header('Content-Disposition', "attachment; filename= %s" % filename)
 msgRoot.attach(part)
 attachment.close()
 
-# #---------------------------6.branch_wise_matured_credit_aging.csv files---------------
-part = MIMEBase('application', "octet-stream")
-file_location = dirpath + './Data/branch_wise_matured_credit_aging.csv'
-# Create the attachment file (only do it once)
-filename = os.path.basename(file_location)
-attachment = open(file_location, "rb")
-part = MIMEBase('application', 'octet-stream')
-part.set_payload(attachment.read())
-encoders.encode_base64(part)
-part.add_header('Content-Disposition', "attachment; filename= %s" % filename)
-msgRoot.attach(part)
-attachment.close()
+
 
 # #----------------------- 9.branch_wise_non_matured_credit_aging.csv files------------------
 part = MIMEBase('application', "octet-stream")
@@ -349,7 +338,7 @@ attachment.close()
 
 # # --------15.  Attached All Return File ---------------------------------------
 part = MIMEBase('application', "octet-stream")
-file_location = dirpath + './Data/All_Branch_Return.csv'
+file_location = dirpath + './Data/all_return.csv'
 # Create the attachment file (only do it once)
 filename = os.path.basename(file_location)
 attachment = open(file_location, "rb")
@@ -360,19 +349,6 @@ part.add_header('Content-Disposition', "attachment; filename= %s" % filename)
 msgRoot.attach(part)
 attachment.close()
 
-
-# # --------16.  Attached All Delivery Persons Return File --------------------
-part = MIMEBase('application', "octet-stream")
-file_location = dirpath + './Data/All_Delivery_Persons_Return.csv'
-# Create the attachment file (only do it once)
-filename = os.path.basename(file_location)
-attachment = open(file_location, "rb")
-part = MIMEBase('application', 'octet-stream')
-part.set_payload(attachment.read())
-encoders.encode_base64(part)
-part.add_header('Content-Disposition', "attachment; filename= %s" % filename)
-msgRoot.attach(part)
-attachment.close()
 
 
 # # ----------- Finally send mail and close server connection ---

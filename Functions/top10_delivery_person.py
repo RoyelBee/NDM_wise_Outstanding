@@ -21,7 +21,7 @@ def top10_delivery_persons_return():
                     and Sales.ReturnAmount>0
                     order by ReturnAmount DESC """, fn.conn)
 
-        delivery_man_wise_return_df.to_csv(r'./Data/All_Delivery_Persons_Return.csv', index=False, header=True)
+        #delivery_man_wise_return_df.to_csv(r'./Data/All_Delivery_Persons_Return.csv', index=False, header=True)
         delivery_man_wise_return_df = delivery_man_wise_return_df.head(10)
 
         average_delivery_man_wise_return_df = lib.pd.read_sql_query("""

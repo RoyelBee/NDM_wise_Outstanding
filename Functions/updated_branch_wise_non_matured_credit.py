@@ -35,7 +35,7 @@ def branch_wise_non_matured_credit():
             order by sum(OUT_NET) desc
                     """, fn.conn)
 
-    data.to_csv(r'./Data/branch_wise_non_matured_credit_aging.csv', index=False, header=True)
+    #data.to_csv(r'./Data/branch_wise_non_matured_credit_aging.csv', index=False, header=True)
 
     # # --------------------- Creating fig-----------------------------------------
     zeroTothree = data['0 - 3 days'].values.tolist()
