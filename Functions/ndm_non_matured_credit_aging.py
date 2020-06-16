@@ -227,6 +227,8 @@ def ndm_non_matured_credit_aging():
 
     lib.plt.title('8. NDM wise Non-Matured Credit Aging', fontsize=16, fontweight='bold', color='#3e0a75')
     lib.plt.legend(handles=legend_element, loc='best', fontsize=11)
+
+    lib.plt.tight_layout()
     # return lib.plt.show()
     print('8. NDM non-matured credit Aging')
     return lib.plt.savefig('./Images/8.ndm_non_matured_credit_aging.png')

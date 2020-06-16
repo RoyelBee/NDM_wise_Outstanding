@@ -8,41 +8,38 @@ import Functions.all_function as fn
 def branch_wise_matured_credit():
     data = pd.read_sql_query("""
         SELECT left(TblCredit.AUDTORG, 3) as Branch,
-isnull(SUM(case when Days_Diff between '0' and '3'  then OUT_NET end),0.1)/1000  as '0 - 3 days',
-isnull(SUM(case when Days_Diff between '4' and '10' then OUT_NET end),0.1)/1000  as '4 - 10 days',
-isnull(SUM(case when Days_Diff between '11' and '15' then OUT_NET end),0.1)/1000  as '11 - 15 days',
-isnull(SUM(case when Days_Diff >= '16'  then OUT_NET end),0.1)/1000  as '16+ days', 
-sum(OUT_NET) as 'All'
-from
-(
-select [CUST_OUT].INVNUMBER,
-[CUST_OUT].INVDATE,
-[CUST_OUT].CUSTOMER,
-[CUST_OUT].TERMS,MAINCUSTYPE,
-OesalesDetails.AUDTORG,
-CustomerInformation.CREDIT_LIMIT_DAYS,
-datediff([dd] , CONVERT (DATETIME , LTRIM(cust_out.INVDATE) , 102) , GETDATE())+1-CREDIT_LIMIT_DAYS as Days_Diff,
-OUT_NET from [ARCOUT].dbo.[CUST_OUT]
-join ARCHIVESKF.dbo.CustomerInformation
-on [CUST_OUT].CUSTOMER = CustomerInformation.IDCUST
-join ARCHIVESKF.dbo.OESalesDetails on  OesalesDetails.CUSTOMER = CustomerInformation.IDCUST
-where [CUST_OUT].TERMS<>'Cash' and OUT_NET>0 and datediff([dd] , CONVERT (DATETIME , LTRIM(cust_out.INVDATE) , 102) , GETDATE())+1-CREDIT_LIMIT_DAYS>0
-group by [CUST_OUT].INVNUMBER,[CUST_OUT].INVDATE,[CUST_OUT].CUSTOMER, [CUST_OUT].TERMS,MAINCUSTYPE, OesalesDetails.AUDTORG,
-CustomerInformation.CREDIT_LIMIT_DAYS, OUT_NET
-) as TblCredit
-group by  TblCredit.AUDTORG
-order by sum(OUT_NET) desc
-                            """, fn.conn)
+        isnull(SUM(case when Days_Diff between '0' and '3'  then OUT_NET end),0.1)/1000  as '0 - 3 days',
+        isnull(SUM(case when Days_Diff between '4' and '10' then OUT_NET end),0.1)/1000  as '4 - 10 days',
+        isnull(SUM(case when Days_Diff between '11' and '15' then OUT_NET end),0.1)/1000  as '11 - 15 days',
+        isnull(SUM(case when Days_Diff >= '16'  then OUT_NET end),0.1)/1000  as '16+ days', 
+        sum(OUT_NET) as 'All'
+        from
+        (
+        select [CUST_OUT].INVNUMBER,
+        [CUST_OUT].INVDATE,
+        [CUST_OUT].CUSTOMER,
+        [CUST_OUT].TERMS,MAINCUSTYPE,
+        OesalesDetails.AUDTORG,
+        CustomerInformation.CREDIT_LIMIT_DAYS,
+        datediff([dd] , CONVERT (DATETIME , LTRIM(cust_out.INVDATE) , 102) , GETDATE())+1-CREDIT_LIMIT_DAYS as Days_Diff,
+        OUT_NET from [ARCOUT].dbo.[CUST_OUT]
+        join ARCHIVESKF.dbo.CustomerInformation
+        on [CUST_OUT].CUSTOMER = CustomerInformation.IDCUST
+        join ARCHIVESKF.dbo.OESalesDetails on  OesalesDetails.CUSTOMER = CustomerInformation.IDCUST
+        where [CUST_OUT].TERMS<>'Cash' and OUT_NET>0 and datediff([dd] , CONVERT (DATETIME , LTRIM(cust_out.INVDATE) , 102) , GETDATE())+1-CREDIT_LIMIT_DAYS>0
+        group by [CUST_OUT].INVNUMBER,[CUST_OUT].INVDATE,[CUST_OUT].CUSTOMER, [CUST_OUT].TERMS,MAINCUSTYPE, OesalesDetails.AUDTORG,
+        CustomerInformation.CREDIT_LIMIT_DAYS, OUT_NET
+        ) as TblCredit
+        group by  TblCredit.AUDTORG
+        order by sum(OUT_NET) desc
+                                    """, fn.conn)
     data.to_csv(r'./Data/branch_wise_matured_credit_aging.csv', index=False, header=True)
     # # --------------------- Creating fig-----------------------------------------
     zeroTothree = data['0 - 3 days'].values.tolist()
     fourToten = data['4 - 10 days'].values.tolist()
     elevenTofifteen = data['11 - 15 days'].values.tolist()
     sixteenplus = data['16+ days'].values.tolist()
-    #print(zeroTothree)
-    #print(fourToten)
-    #print(elevenTofifteen)
-    #print(sixteenplus)
+
     # Data
     r = np.arange(0, 31, 1)
     # print(r)
@@ -52,6 +49,7 @@ order by sum(OUT_NET) desc
                                     data['4 - 10 days'],
                                     data['11 - 15 days'],
                                     data['16+ days'])]
+
     all_zero_seven = [i / j * 100 for i, j in zip(data['0 - 3 days'], totals)]
     all_eight_fourteen = [i / j * 100 for i, j in zip(data['4 - 10 days'], totals)]
     all_fifteen_twentyone = [i / j * 100 for i, j in zip(data['11 - 15 days'], totals)]
@@ -124,6 +122,7 @@ order by sum(OUT_NET) desc
     lib.plt.title('6. Branch Wise Matured Credit', fontsize=16, fontweight='bold', color='#3E0A75')
     lib.plt.legend(loc='upper center', bbox_to_anchor=(0.5, -0.085),
                    fancybox=True, shadow=True, ncol=7)
+    lib.plt.tight_layout()
     # lib.plt.show()
     # plt.close()
     lib.plt.savefig('./Images/6.Branch_wise_matured_credit_aging.png')
