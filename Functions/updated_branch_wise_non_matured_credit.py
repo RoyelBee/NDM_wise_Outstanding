@@ -136,7 +136,7 @@ def branch_wise_non_matured_credit():
     lib.plt.title('9. Branch Wise Non-Matured Credit', fontsize=16, fontweight='bold', color='#3e0a75')
     lib.plt.legend(loc='upper center', bbox_to_anchor=(0.5, -0.085),
                    fancybox=True, shadow=True, ncol=7)
-
+    lib.plt.tight_layout()
     #lib.plt.show()
     lib.plt.savefig('./Images/9.branch_non_matured.png')
     print('9. Updated Branch wise non-matured credit')
