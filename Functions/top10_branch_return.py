@@ -10,7 +10,7 @@ def top10_branch_return():
                             /ISNULL(sum(case when TRANSTYPE=1 then INVNETH end), 0)*100 as ReturnPercent 
                             from OESalesSummery
                             where
-                            left(TRANSDATE,6)<convert(varchar(6),getdate(),112) 
+                            left(TRANSDATE,6)=convert(varchar(6),getdate(),112) 
                             group by AUDTORG
                             order by ReturnPercent desc
 
@@ -23,7 +23,7 @@ def top10_branch_return():
         average_branch_return_df = lib.pd.read_sql_query("""select AUDTORG as Branch_name,ISNULL(sum(case when TRANSTYPE<>1 then INVNETH *-1 end), 0) 
                         /ISNULL(sum(case when TRANSTYPE=1 then INVNETH end), 0)*100 as ReturnPercent from OESalesSummery
                         where
-                        left(TRANSDATE,6)<convert(varchar(6),getdate(),112)
+                        left(TRANSDATE,6)=convert(varchar(6),getdate(),112)
                         group by AUDTORG
                         order by ReturnPercent DESC """, fn.conn)
 
@@ -58,7 +58,7 @@ def top10_branch_return():
         autolabel(rects1)
         lib.plt.xticks(y_pos, Branch_name, rotation='horizontal', fontsize='12')
         # lib.plt.yticks(lib.np.arange(0, round(max_amount) + (.6 * round(max_amount)), max_amount / 6), fontsize='12')
-        lib.plt.yticks(lib.np.arange(0, 1.1, .1), fontsize=12)
+        lib.plt.yticks(lib.np.arange(0, 5.1, 1), fontsize=12)
         lib.plt.title("15. Top 10 Branch Return % - MTD", fontsize=16, fontweight='bold', color='#3e0a75')
         lib.plt.legend(['National Return %', 'Branch Return %'], loc='upper center', bbox_to_anchor=(0.5, -0.085),
                        fancybox=True, shadow=True, ncol=4)

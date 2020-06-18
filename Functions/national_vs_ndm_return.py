@@ -12,7 +12,7 @@ ISNULL(sum(case when TRANSTYPE<>1 then INVNETH *-1 end), 0)
 left join NDM
 on OESalesSummery.AUDTORG= NDM.BRANCH
 where
-left(TRANSDATE,6)<convert(varchar(6),getdate(),112)
+left(TRANSDATE,6)=convert(varchar(6),getdate(),112)
 group by SHORTNAME
 order by ReturnPercent DESC
 """, fn.conn)
@@ -23,7 +23,7 @@ order by ReturnPercent DESC
                         /ISNULL(sum(case when TRANSTYPE=1 then INVNETH end), 0)*100 as AVGReturnPercent from 
                         OESalesSummery
                         where
-                        left(TRANSDATE,6)<convert(varchar(6),getdate(),112)
+                        left(TRANSDATE,6)=convert(varchar(6),getdate(),112)
                         group by AUDTORG
                         order by AVGReturnPercent DESC """, fn.conn)
         average_branch_return_information = average_branch_return_df['AVGReturnPercent'].tolist()
@@ -55,7 +55,7 @@ order by ReturnPercent DESC
         autolabel(rects1)
         lib.plt.xticks(y_pos, name_of_ndms, rotation='horizontal', fontsize='12')
         # lib.plt.yticks(lib.np.arange(0, round(max_amount) + (.6 * round(max_amount)), max_amount / 6), fontsize='12')
-        lib.plt.yticks(lib.np.arange(0, 1.1, .1), fontsize=12)
+        lib.plt.yticks(lib.np.arange(0, 5.1, 1), fontsize=12)
         lib.plt.title("14. NDM Wise Return % - MTD", fontsize=16, fontweight='bold', color='#3e0a75')
         lib.plt.legend(['National Return %', 'NDM Return %'], loc='upper center', bbox_to_anchor=(0.5, -0.085),
                    fancybox=True, shadow=True, ncol=4)

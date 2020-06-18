@@ -92,22 +92,22 @@ def All_csv_generator():
 
     all_return_df = lib.pd.read_sql_query("""
                 select AUDTORG, sales.DPID, DPNAME.DPNAME, 
-                ISNULL(SUM(case when TRANSTYPE=1 then EXTINVMISC END),0) as SalesValus
-                ,ISNULL(SUM(case when TRANSTYPE=2 then EXTINVMISC END)*-1,0) as ReturnValus
-                , ((ISNULL(SUM(case when TRANSTYPE=2 then EXTINVMISC END)*-1,0))/ISNULL((SUM(case when TRANSTYPE=1 then EXTINVMISC END)),0))*100 as ReturnPer
+                SUM(case when TRANSTYPE=1 then EXTINVMISC END) as SalesValus
+                ,SUM(case when TRANSTYPE=2 then EXTINVMISC END)*-1 as ReturnValus
+                , ((SUM(case when TRANSTYPE=2 then EXTINVMISC END)*-1)/SUM(case when TRANSTYPE=1 then EXTINVMISC END))*100 as ReturnPer
                 --sum(EXTINVMISC)*-1 as ReturnValue 
                 from (
                 select AUDTORG, DPID, TRANSTYPE, EXTINVMISC from OESalesDetails
-                where left(TRANSDATE,6)=CONVERT(varchar(6), dateAdd(day,0,getdate()), 112) ) as Sales
+                where left(TRANSDATE,6)>=convert(varchar(6),getdate(),112)) as Sales
                 left join
                 (select DPID, DPNAME from DP_ShortName) as DPNAME
                 on sales.DPID=DPNAME.DPID
+                where DPNAME.DPNAME is not null
                 group by AUDTORG, sales.DPID, DPNAME.DPNAME
-                Having ISNULL(SUM(case when TRANSTYPE=1 then EXTINVMISC END),0) <>0
-                order by ReturnPer desc
-                                """, fn.conn)
+                Having ISNULL(SUM(case when TRANSTYPE=1 then EXTINVMISC END),0) <>0 
+                order by ReturnPer desc""", fn.conn)
 
-    all_return = all_return_df.dropna(thresh=4)
+    all_return = all_return_df.dropna()
     # print(branch_wise_non_matured_credit_aging)
     all_return.to_csv(r'./Data/all_return.csv', index=False, header=True)
 

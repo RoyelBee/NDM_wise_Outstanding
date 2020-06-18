@@ -11,7 +11,7 @@ def top10_delivery_persons_return():
                     ISNULL(sum(case when TRANSTYPE<>1 then INVNETH *-1 end), 0) /ISNULL(sum(case when TRANSTYPE=1 then INVNETH end), 0)*100 as ReturnAmount
                     from OESalesSummery
                     where
-                    left(TRANSDATE,6)<convert(varchar(6),getdate(),112)
+                    left(TRANSDATE,6)>=convert(varchar(6),getdate(),112)
                     group by DPID,AUDTORG) as Sales
                     left join
                     (select   distinct AUDTORG,ShortName,DPID from DP_ShortName) as TWO
@@ -30,7 +30,7 @@ def top10_delivery_persons_return():
                 ISNULL(sum(case when TRANSTYPE<>1 then INVNETH *-1 end), 0) /ISNULL(sum(case when TRANSTYPE=1 then INVNETH end), 0)*100 as ReturnAmount
                 from OESalesSummery
                 where
-                left(TRANSDATE,6)<convert(varchar(6),getdate(),112)
+                left(TRANSDATE,6)=convert(varchar(6),getdate(),112)
                 group by DPID,AUDTORG) as Sales
                 left join
                 (select   distinct AUDTORG,ShortName,DPID from DP_ShortName) as TWO
