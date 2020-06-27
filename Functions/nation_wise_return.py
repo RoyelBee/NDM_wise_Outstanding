@@ -7,7 +7,7 @@ def nation_wide_return():
                     select AUDTORG as Branch_name,ISNULL(sum(case when TRANSTYPE<>1 
                     then INVNETH *-1 end), 0) /ISNULL(sum(case when TRANSTYPE=1 then INVNETH end), 0)*100 as ReturnPercent from OESalesSummery
                     where
-                    left(TRANSDATE,6)<convert(varchar(6),getdate(),112)
+                    left(TRANSDATE,6)=convert(varchar(6),getdate(),112)
                     group by AUDTORG
                     order by ReturnPercent DESC
                     """, fn.conn)
