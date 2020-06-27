@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/NDM_wise_Outstanding.iml" filepath="$PROJECT_DIR$/.idea/NDM_wise_Outstanding.iml" />
       <module fileurl="file://$PROJECT_DIR$/../SKF_Outstanding_Report/.idea/SKF_Final_outstanding_report.iml" filepath="$PROJECT_DIR$/../SKF_Outstanding_Report/.idea/SKF_Final_outstanding_report.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../StockChartNDM5_AHD/.idea/StockChartNDM5_AHD.iml" filepath="$PROJECT_DIR$/../StockChartNDM5_AHD/.idea/StockChartNDM5_AHD.iml" />
       <module fileurl="file://$PROJECT_DIR$/../WhatsAppMSG/.idea/WhatsAppMSG.iml" filepath="$PROJECT_DIR$/../WhatsAppMSG/.idea/WhatsAppMSG.iml" />
     </modules>
   </component>

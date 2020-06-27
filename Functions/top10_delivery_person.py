@@ -8,7 +8,8 @@ def top10_delivery_persons_return():
                     select left(Sales.AUDTORG,3) + '-' +TWO.ShortName as DPNAME ,Sales.ReturnAmount as 
                     ReturnAmount from
                     (select  DPID, AUDTORG,
-                    ISNULL(sum(case when TRANSTYPE<>1 then INVNETH *-1 end), 0) /ISNULL(sum(case when TRANSTYPE=1 then INVNETH end), 0)*100 as ReturnAmount
+                    ISNULL(sum(case when TRANSTYPE<>1 then INVNETH *-1 end), 0) 
+                    /ISNULL(sum(case when TRANSTYPE=1 then INVNETH end), 0)*100 as ReturnAmount
                     from OESalesSummery
                     where
                     left(TRANSDATE,6)<convert(varchar(6),getdate(),112)

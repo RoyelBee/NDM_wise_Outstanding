@@ -47,7 +47,7 @@ ndm_cash_drop.ndm_cash_drop()
 import Functions.Updated_branch_wise_cash_drop_aging as branch_cash_drop
 branch_cash_drop.branch_wise_cash_drop_aging()
 
-# # ------ 13. Nation wide return ---------------------------------
+# # ------ 13. Nation wide return --------------------------------
 import Functions.nation_wise_return as nation_return
 nation_return.nation_wide_return()
 #
