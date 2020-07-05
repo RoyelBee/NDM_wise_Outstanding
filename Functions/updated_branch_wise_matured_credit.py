@@ -117,7 +117,7 @@ order by sum(OUT_NET) desc
         category_labels=labels,
         show_values=True,
         value_format='{:.0f}% ',
-        colors=['#31C377', '#F4B300', 'red', '#96FF00', '#0089FF', '#E500FF', '#00FFD8']
+        colors=['#31C377', '#F4B300', 'red', '#96FF00']
     )
     # lib.plt.xlabel("Branch Name", fontweight='bold', fontsize=12)
     lib.plt.ylabel("Amount (In Thousand)", fontweight='bold', fontsize=12)

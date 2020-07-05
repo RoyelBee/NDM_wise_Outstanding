@@ -110,14 +110,14 @@ print('13, 14 Image joined ')
 
 # # -----------------
 image15 = Image.open(dirpath + "./Images/15.top5_branch_return.png")
-img15 = Image.new('RGB', (1282, 482))
+img15 = Image.new('RGB', (1283, 482))
 img15.paste(image15, (1, 1))
 img15.save(dirpath + "./Images/15.top5_branch_return.png")
 print('Image 15 Generated')
 
 # # -----------------
 image16 = Image.open(dirpath + "./Images/16.top5_delivery_persons_return.png")
-img16 = Image.new('RGB', (1282, 482))
+img16 = Image.new('RGB', (1283, 482))
 img16.paste(image16, (1, 1))
 img16.save(dirpath + "./Images/16.top5_delivery_persons_return.png")
 print('Image 16 Generated')
@@ -160,13 +160,13 @@ msgText = MIMEText("""
                        <img src="cid:ndm_credit_outstanding" height='480', width='1280'><br>
                        <img src="cid:matured_credit_aging" height='480', width='1280'><br>
                        <img src="cid:ndm_matured_credit_aging" height='480', width='1280'><br>
-                       <img src="cid:Branch_wise_matured_credit_aging" height='550', width='1280'><br>
+                       <img src="cid:Branch_wise_matured_credit_aging" height='750', width='1280'><br>
                        <img src="cid:non_matured_credit_aging" height='550', width='1280'><br>
                        <img src="cid:ndm_non_matured_credit_aging" height='480', width='1280'><br>
-                       <img src="cid:branch_non_matured" height='600', width='1280'><br>
+                       <img src="cid:branch_non_matured" height='750', width='1280'><br>
                        <img src="cid:cashdrop_aging" height='480', width='1280'><br>
                        <img src="cid:ndm_cash_drop_aging" height='481', width='1281'><br>
-                       <img src="cid:branch_wise_cash_drop_aging" height='600', width='1281'><br>
+                       <img src="cid:branch_wise_cash_drop_aging" height='750', width='1281'><br>
                        <img src="cid:img13_14" height='300', width='1281'><br>
                        <img src="cid:top5_branch_return" height='481', width='1281'><br>
                        <img src="cid:top5_delivery_persons_return" height='481', width='1281'><br>
