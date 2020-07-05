@@ -16,6 +16,8 @@ import generate_all_kpi
 
 dirpath = os.path.dirname(os.path.realpath(__file__))
 
+# img_banner = Image.open(dirpath + "./Functions/banner_ai.png")
+
 # # ----- Join Images --------------------------------------------
 imp1 = Image.open(dirpath + "./Images/1.total_outstanding.png")
 widthx, heightx = imp1.size
@@ -110,14 +112,14 @@ print('13, 14 Image joined ')
 
 # # -----------------
 image15 = Image.open(dirpath + "./Images/15.top5_branch_return.png")
-img15 = Image.new('RGB', (1282, 482))
+img15 = Image.new('RGB', (1283, 482))
 img15.paste(image15, (1, 1))
 img15.save(dirpath + "./Images/15.top5_branch_return.png")
 print('Image 15 Generated')
 
 # # -----------------
 image16 = Image.open(dirpath + "./Images/16.top5_delivery_persons_return.png")
-img16 = Image.new('RGB', (1282, 482))
+img16 = Image.new('RGB', (1283, 482))
 img16.paste(image16, (1, 1))
 img16.save(dirpath + "./Images/16.top5_delivery_persons_return.png")
 print('Image 16 Generated')
@@ -128,11 +130,14 @@ print('Image 16 Generated')
 
 # ------------ Group email ----------------------------------------
 msgRoot = MIMEMultipart('related')
-me = 'erp-bi.service@transcombd.com'
-to = ['yakub@transcombd.com','']
-cc = ['rejaul.islam@transcombd.com', 'fazle.rabby@transcombd.com']
-bcc = ['', '']
+# me = 'erp-bi.service@transcombd.com'
+# to = ['hislam@skf.transcombd.com','muhammad.mainuddin@tdcl.transcombd.com']
+# cc = ['tdclndm@tdcl.transcombd.com', 'monowar@tdcl.transcombd.com']
+# bcc = ['tawhid@transcombd.com', 'yakub@transcombd.com','fazle.rabby@transcombd.com','aftab.uddin@transcombd.com','rejaul.islam@transcombd.com']
 
+to = ['fazle.rabby@transcombd.com','']
+cc = ['','']
+bcc = ['','']
 recipient = to + cc + bcc
 
 date = lib.datetime.today()
@@ -155,26 +160,41 @@ msgRoot.attach(msgAlternative)
 msgText = MIMEText('This is the alternative plain text message.')
 msgAlternative.attach(msgText)
 
-msgText = MIMEText("""
+msgText = MIMEText("""<img src="cid:imgban" height='300', width='1281'><br>
                        <img src="cid:img1_2" height='481', width='1281'><br>
                        <img src="cid:ndm_credit_outstanding" height='480', width='1280'><br>
                        <img src="cid:matured_credit_aging" height='480', width='1280'><br>
                        <img src="cid:ndm_matured_credit_aging" height='480', width='1280'><br>
-                       <img src="cid:Branch_wise_matured_credit_aging" height='550', width='1280'><br>
+                       <img src="cid:Branch_wise_matured_credit_aging" height='900', width='1280'><br>
                        <img src="cid:non_matured_credit_aging" height='550', width='1280'><br>
                        <img src="cid:ndm_non_matured_credit_aging" height='480', width='1280'><br>
-                       <img src="cid:branch_non_matured" height='600', width='1280'><br>
+                       <img src="cid:branch_non_matured" height='900', width='1280'><br>
                        <img src="cid:cashdrop_aging" height='480', width='1280'><br>
                        <img src="cid:ndm_cash_drop_aging" height='481', width='1281'><br>
-                       <img src="cid:branch_wise_cash_drop_aging" height='600', width='1281'><br>
+                       <img src="cid:branch_wise_cash_drop_aging" height='900', width='1281'><br>
                        <img src="cid:img13_14" height='300', width='1281'><br>
                        <img src="cid:top5_branch_return" height='481', width='1281'><br>
                        <img src="cid:top5_delivery_persons_return" height='481', width='1281'><br>
 
                         <br>
+                        <br>
+                       If there is any inconvenience, you are requested to communicate with the ERP BI Service:
+                       <br><b>(Mobile: 01713-389972, 01713-380499)</b><br><br>
+                       Regards<br><b>ERP BI Service</b><br>Information System Automation (ISA)<br><br>
+                       <i><font color="blue">****This is a system generated report ****</i></font>
                        """, 'html')
 
 msgAlternative.attach(msgText)
+
+#--------------------banner---------------------------------
+banne = open(dirpath + './Functions/banner_ai.png', 'rb')
+img_ban = MIMEImage(banne.read())
+banne.close()
+
+img_ban.add_header('Content-ID', '<imgban>')
+msgRoot.attach(img_ban)
+
+
 # --------- Set Credit image in mail   -----------------------
 fp = open(dirpath + './Images/img1_2.png', 'rb')
 img1_2 = MIMEImage(fp.read())

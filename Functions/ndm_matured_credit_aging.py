@@ -346,63 +346,73 @@ def ndm_matured_credit_aging():
     hafizur_202_more = int(hafizur_df.Amount.loc[6])
 
     # # Convert data into percentage
-    anwar = [anwar_0_3, anwar_4_10, anwar_11_15, anwar_16_30, anwar_31_90, anwar_91_201, anwar_202_more]
-    anwar = [i * 100 / sum(anwar) for i, j, in zip(anwar, anwar)]
-
-    kamrul = [kamrul_0_3, kamrul_4_10, kamrul_11_15, kamrul_16_30, kamrul_31_90, kamrul_91_201, kamrul_202_more]
-    kamrul = [i * 100 / sum(kamrul) for i, j, in zip(kamrul, kamrul)]
-
-    atik = [atik_0_3, atik_4_10, atik_11_15, atik_16_30, atik_31_90, atik_91_201, atik_202_more]
-    atik = [i * 100 / sum(atik) for i, j, in zip(atik, atik)]
-
-    nurul = [nurul_0_3, nurul_4_10, nurul_11_15, nurul_16_30, nurul_31_90, nurul_91_201, nurul_202_more]
-    nurul = [i * 100 / sum(nurul) for i, j, in zip(nurul, nurul)]
-
-    hafizur = [hafizur_0_3, hafizur_4_10, hafizur_11_15, hafizur_16_30, hafizur_31_90, hafizur_91_201, hafizur_202_more]
-    hafizur = [i * 100 / sum(hafizur) for i, j, in zip(hafizur, hafizur)]
+    anwar_array = [anwar_0_3, anwar_4_10, anwar_11_15, anwar_16_30, anwar_31_90, anwar_91_201, anwar_202_more]
+    anwar = [i * 100 / sum(anwar_array) for i, j, in zip(anwar_array, anwar_array)]
+    # print(anwar_array)
+    kamrul_array = [kamrul_0_3, kamrul_4_10, kamrul_11_15, kamrul_16_30, kamrul_31_90, kamrul_91_201, kamrul_202_more]
+    kamrul = [i * 100 / sum(kamrul_array) for i, j, in zip(kamrul_array, kamrul_array)]
+    # print(kamrul_array)
+    atik_array = [atik_0_3, atik_4_10, atik_11_15, atik_16_30, atik_31_90, atik_91_201, atik_202_more]
+    atik = [i * 100 / sum(atik_array) for i, j, in zip(atik_array, atik_array)]
+    # print(atik_array)
+    nurul_array = [nurul_0_3, nurul_4_10, nurul_11_15, nurul_16_30, nurul_31_90, nurul_91_201, nurul_202_more]
+    nurul = [i * 100 / sum(nurul_array) for i, j, in zip(nurul_array, nurul_array)]
+    # print(nurul_array)
+    hafizur_array = [hafizur_0_3, hafizur_4_10, hafizur_11_15, hafizur_16_30, hafizur_31_90, hafizur_91_201, hafizur_202_more]
+    hafizur = [i * 100 / sum(hafizur_array) for i, j, in zip(hafizur_array, hafizur_array)]
+    # print(hafizur_array)
 
     fig, ax = lib.plt.subplots(figsize=(12.8, 4.8))
     barWidth = .12
     x = lib.np.arange(7)
 
     legend_element = [
-        lib.Patch(facecolor='#1a58c5', label='Mr. Anwar')
-        , lib.Patch(facecolor='#be4748', label='Mr. Kamrul')
-        , lib.Patch(facecolor='#c5871a', label='Mr. Atik')
-        , lib.Patch(facecolor='#58c51a', label='Mr. Nurul')
-        , lib.Patch(facecolor='#fc0373', label='Mr. Hafizur')]
-
-    anwar_bar = lib.plt.bar(x + 0.00, anwar, color='#1a58c5', label='Matured', edgecolor='white', width=barWidth)
-    kamrul_bar = lib.plt.bar(x + 0.12, kamrul, color='#be4748', label='Matured', edgecolor='white', width=barWidth)
-    atik_bar = lib.plt.bar(x + 0.24, atik, color='#c5871a', label='Matured', edgecolor='white', width=barWidth)
-    nurul_bar = lib.plt.bar(x + 0.36, nurul, color='#58c51a', label='Matured', edgecolor='white', width=barWidth)
-    hafizur_bar = lib.plt.bar(x + 0.48, hafizur, color='#fc0373', label='Matured', edgecolor='white', width=barWidth)
+        lib.Patch(facecolor='#88aeef', label='Mr. Anwar')
+        , lib.Patch(facecolor='#cb6d6d', label='Mr. Kamrul')
+        , lib.Patch(facecolor='#dc961d', label='Mr. Atik')
+        , lib.Patch(facecolor='#70e32f', label='Mr. Nurul')
+        , lib.Patch(facecolor='#fd358f', label='Mr. Hafizur')]
+    #--------#1a58c5
+    anwar_bar = lib.plt.bar(x + 0.00, anwar, color='#88aeef', label='Matured', edgecolor='white', width=barWidth)
+    kamrul_bar = lib.plt.bar(x + 0.12, kamrul, color='#cb6d6d', label='Matured', edgecolor='white', width=barWidth)
+    atik_bar = lib.plt.bar(x + 0.24, atik, color='#dc961d', label='Matured', edgecolor='white', width=barWidth)
+    nurul_bar = lib.plt.bar(x + 0.36, nurul, color='#70e32f', label='Matured', edgecolor='white', width=barWidth)
+    hafizur_bar = lib.plt.bar(x + 0.48, hafizur, color='#fd358f', label='Matured', edgecolor='white', width=barWidth)
 
     # # ------------ Add label in the top of the bar --------------------------
-    for bar, anwar in zip(anwar_bar, anwar):
+    m=0
+    n=0
+    o=0
+    p=0
+    q=0
+    for bar, anwar,values in zip(anwar_bar, anwar,anwar_array):
         height = bar.get_height()
-        ax.text(bar.get_x() + bar.get_width() / 2, height * .92, str('%.1f' % height) + '%',
+        ax.text(bar.get_x() + bar.get_width() / 2, height * .5,format(int(anwar_array[m]),',')+'K ('+ str('%.1f' % height) + '%'+')',
                 ha='center', va='bottom', fontweight='bold', rotation=90)
-
+        m=m+1
     for bar, kamrul in zip(kamrul_bar, kamrul):
         height = bar.get_height()
-        ax.text(bar.get_x() + bar.get_width() / 2, height * .92, str('%.1f' % height) + '%',
+        ax.text(bar.get_x() + bar.get_width() / 2, height * .5,format(int(kamrul_array[n]),',')+'K ('+ str('%.1f' % height) + '%'+')',
                 ha='center', va='bottom', fontweight='bold', rotation=90)
+        n=n+1
 
     for bar, atik in zip(atik_bar, atik):
         height = bar.get_height()
-        ax.text(bar.get_x() + bar.get_width() / 2, height * .92, str('%.1f' % height) + '%',
+        ax.text(bar.get_x() + bar.get_width() / 2, height * .5, format(int(atik_array[o]),',')+'K ('+ str('%.1f' % height) + '%'+')',
                 ha='center', va='bottom', fontweight='bold', rotation=90)
+        o=o+1
     #
     for bar, nurul in zip(nurul_bar, nurul):
         height = bar.get_height()
-        ax.text(bar.get_x() + bar.get_width() / 2, height * .92, str('%.1f' % height) + '%',
+        ax.text(bar.get_x() + bar.get_width() / 2, height * .5, format(int(nurul_array[p]),',')+'K ('+ str('%.1f' % height) + '%'+')',
                 ha='center', va='bottom', fontweight='bold', rotation=90)
+        p=p+1
     #
     for bar, hafizur in zip(hafizur_bar, hafizur):
         height = bar.get_height()
-        ax.text(bar.get_x() + bar.get_width() / 2, height * .92, str('%.1f' % height) + '%',
+        ax.text(bar.get_x() + bar.get_width() / 2, height * .5, format(int(hafizur_array[q]),',')+'K ('+ str('%.1f' % height) + '%'+')',
                 ha='center', va='bottom', fontweight='bold', rotation=90)
+        q=q+1
 
     # ------ Add legend elements -------------------
 
@@ -413,7 +423,7 @@ def ndm_matured_credit_aging():
     lib.plt.title('5. NDM wise Matured Credit Aging', fontsize=16, fontweight='bold', color='#3e0a75')
     lib.plt.legend(handles=legend_element, loc='best', fontsize=11)
     lib.plt.tight_layout()
-    # return lib.plt.show()
+    # lib.plt.show()
 
     print('5. NDM matured credit Aging')
-    return lib.plt.savefig('./Images/5.ndm_matured_credit_aging.png')
+    lib.plt.savefig('./Images/5.ndm_matured_credit_aging.png')

@@ -40,6 +40,8 @@ order by SUM(OUT_NET) desc
     all_regular_p = [i / j * 100 for i, j in zip(df['all_regular'], totals)]
 
     total = []
+    # print(totals)
+
     for x in range(len(totals)):
         a = int(totals[x]/1000)
         total.append(a)
@@ -64,17 +66,21 @@ order by SUM(OUT_NET) desc
 
     # # Set Matured Data Point
     matured = all_ndm_matured_credit
-    for bar, matured, all_matured in zip(bar1, matured, all_matured_p):
+    for bar, matured, all_matured,total_of_all in zip(bar1, matured, all_matured_p,totals):
         height = bar.get_height()
+        # print(height1)
         # # This text is for actual matured data label
         ax.text(bar.get_x() + bar.get_width() / 2, height * .6,
                 str(fn.numberInThousands(matured)),
                 ha='center', va='bottom', fontweight='bold')
 
+
         # # This text is for percentage
         ax.text(bar.get_x() + bar.get_width() / 2, height * .1,
                 str("%.2f" % all_matured) + '%',
                 ha='center', va='bottom', color='white')
+
+
 
     # # Set Non Mature Data Point
     regular = all_ndm_non_matured_credit
@@ -88,6 +94,16 @@ order by SUM(OUT_NET) desc
         ax.text(bar.get_x() + bar.get_width() / 2, height * .7,
                 str("%.2f" % all_regular) + '%',
                 ha='center', va='bottom', color='white')
+    loop_value = 0
+    for bar_value1, bar_value2, all_regular in zip(bar1, bar2, totals):
+
+        height1 = bar_value1.get_height()
+        height2 = bar_value2.get_height()
+        ax.text(bar_value1.get_x() + bar_value1.get_width() / 2, height1+height2,
+                str('Total: ')+str(fn.numberInThousands(totals[loop_value])),
+                ha='center', va='bottom', fontweight='bold')
+        loop_value=loop_value+1
+
 
     lib.plt.xticks(r, names)
     max_total = max(totals)/1000

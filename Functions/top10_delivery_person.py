@@ -78,9 +78,9 @@ def top10_delivery_persons_return():
         lib.plt.savefig('./Images/16.top5_delivery_persons_return.png')
         print('16. Top 5 Delivery persons return')
     except:
-        print('Sorry! no. 16 chart Top 5 Delivery persons return could not be generated')
+        print('Sorry! no. 16 chart Top 10 Delivery persons return could not be generated')
         lib.plt.subplots(figsize=(12.80, 4.8))
-        lib.plt.text(.3, 1, "16. Top 5 DP Return % - MTD", fontsize=16, fontweight='bold', color='#3e0a75')
+        lib.plt.text(.3, 1, "16. Top 10 DP Return % - MTD", fontsize=16, fontweight='bold', color='#3e0a75')
         lib.plt.text(.01, .5, 'Sorry! Due to data unavailability, the graph could not be generated.', fontsize=18,
                      color='red')
         lib.plt.axis('off')

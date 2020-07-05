@@ -1,70 +1,53 @@
-import Functions.all_library as lib
-import Functions.all_function as fn
+import smtplib
+from email.mime.image import MIMEImage
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 
-def All_csv_generator():
-    matured_credit_aging_df = lib.pd.read_sql_query("""
-            SELECT   AUDTORG as [Branch Name],
-INVNUMBER as [Invoice Number] , INVDATE as [Invoice Date], CUSTOMER as [Customer ID], 
-CUSTNAME as [Customer Name],TEXTSTRE1 as [Address],  
-SUM(case when Days_Diff between '0' and '3'  then OUT_NET end)  as '0 - 3 days'
-, SUM(case when Days_Diff between '4' and '10'  then OUT_NET end)  as '4 - 10 days'
-, SUM(case when Days_Diff between '11' and '15'  then OUT_NET end)  as '11 - 15 days'
-, SUM(case when Days_Diff between '16' and '30'  then OUT_NET end)  as '16 - 30 days'
-, SUM(case when Days_Diff between '31' and '90'  then OUT_NET end)  as '31 - 90 days'
-, SUM(case when Days_Diff between '91' and '201'  then OUT_NET end)  as '91 - 201 days'
-, SUM(case when Days_Diff >='202'  then OUT_NET end)  as '202+ days'
-from
-(select INVNUMBER,INVDATE,CustomerInformation.AUDTORG,
-CUSTOMER,CUSTNAME,TEXTSTRE1, TERMS,MAINCUSTYPE,
-CustomerInformation.CREDIT_LIMIT_DAYS,
-(datediff([dd] , CONVERT (DATETIME , LTRIM(cust_out.INVDATE) , 102) , GETDATE())+1-CREDIT_LIMIT_DAYS) as Days_Diff,
-OUT_NET from [ARCOUT].dbo.[CUST_OUT]
-join ARCHIVESKF.dbo.CustomerInformation
-on [CUST_OUT].CUSTOMER = CustomerInformation.IDCUST
-where TERMS<>'Cash' ) as TblCredit
---where  '0 - 3 days' IS NOT NULL
-group by INVNUMBER, INVDATE, CUSTOMER, CUSTNAME, TEXTSTRE1, AUDTORG
-ORDER BY INVDATE DESC, AUDTORG asc""", fn.conn)
+# ------------ Group email ----------------------------------------
+msgRoot = MIMEMultipart('related')
+me = 'erp-bi.service@transcombd.com'
+to = ['fazle.rabby@transcombd.com','']
+cc = ['', '']
+bcc = ['', '']
 
-    matured_credit_aging=matured_credit_aging_df.dropna(thresh=7)
-    #print(matured_credit_aging)
-    matured_credit_aging.to_csv(r'./Data/matured_credit_aging.csv', index=False, header=True)
+recipient = to + cc + bcc
 
-    branch_wise_non_matured_credit_aging_df = lib.pd.read_sql_query("""
-        SELECT
-        left(TblCredit.AUDTORG, 3) as [Branch Name],
-        INVNUMBER as [Invoice Number] , INVDATE as [Invoice Date], CUSTOMER as [Customer ID]
-        , NAMECUST
-        ,TEXTSTRE1 as [Address],
-        SUM(case when TblCredit.Days_Diff between '-3' and '0'  THEN OUT_NET end)  as '0 - 3 days',
-        sum(case when TblCredit.Days_Diff between '-10' and '-4'  THEN OUT_NET end) as  '4 - 10 days',
-        sum( case when TblCredit.Days_Diff between '-15' and '-11'  THEN OUT_NET end) as '11 - 15 days',
-        sum(case when TblCredit.Days_Diff <='-16' THEN OUT_NET end) as '16+ days'
-        from (
-        select [CUST_OUT].INVNUMBER,
-        [CUST_OUT].INVDATE,
-        [CUST_OUT].CUSTOMER,
-        CustomerInformation.NAMECUST,
-        CustomerInformation.TEXTSTRE1,
-        [CUST_OUT].TERMS,MAINCUSTYPE,
-        OesalesDetails.AUDTORG,
-        CustomerInformation.CREDIT_LIMIT_DAYS,
-        datediff([dd] , CONVERT (DATETIME , LTRIM(cust_out.INVDATE) , 102) , GETDATE())+1-CREDIT_LIMIT_DAYS as Days_Diff,
-        OUT_NET from [ARCOUT].dbo.[CUST_OUT]
-        join ARCHIVESKF.dbo.CustomerInformation
-        on [CUST_OUT].CUSTOMER = CustomerInformation.IDCUST
-        join ARCHIVESKF.dbo.OESalesDetails on  OesalesDetails.CUSTOMER = CustomerInformation.IDCUST
-        where [CUST_OUT].TERMS<>'Cash'
-        and OUT_NET>0
-        and datediff([dd] , CONVERT (DATETIME , LTRIM(cust_out.INVDATE) , 102)
-        , GETDATE())+1-CREDIT_LIMIT_DAYS<0
-        group by [CUST_OUT].INVNUMBER,[CUST_OUT].INVDATE,[CUST_OUT].CUSTOMER, [CUST_OUT].TERMS,MAINCUSTYPE, OesalesDetails.AUDTORG,NAMECUST,
-        CustomerInformation.CREDIT_LIMIT_DAYS, OUT_NET , TEXTSTRE1
-        ) as TblCredit
-        group by  TblCredit.AUDTORG, INVNUMBER, INVDATE , CUSTOMER,NAMECUST, TEXTSTRE1
-        order by TblCredit.AUDTORG
-            """, fn.conn)
+subject = "Test Report"
 
-    branch_wise_non_matured_credit_aging = branch_wise_non_matured_credit_aging_df.dropna(thresh=4)
-    #print(branch_wise_non_matured_credit_aging)
-    branch_wise_non_matured_credit_aging.to_csv(r'./Data/branch_wise_non_matured_credit_aging.csv', index=False, header=True)
+email_server_host = 'mail.transcombd.com'
+port = 25
+
+msgRoot['From'] = me
+
+msgRoot['To'] = ', '.join(to)
+msgRoot['Cc'] = ', '.join(cc)
+msgRoot['Bcc'] = ', '.join(bcc)
+msgRoot['Subject'] = subject
+
+msgAlternative = MIMEMultipart('alternative')
+msgRoot.attach(msgAlternative)
+
+# msgText = MIMEText('This is the alternative plain text message.')
+# msgAlternative.attach(msgText)
+
+msgText = MIMEText("""
+                       <img src="cid:img1_2" height='481', width='1281'><br>
+                        <br>
+                       """, 'html')
+
+msgAlternative.attach(msgText)
+
+# --------- Set Credit image in mail   -----------------------
+fp = open('F:/test_picture/img1_2.png', 'rb')
+img1_2 = MIMEImage(fp.read())
+fp.close()
+
+img1_2.add_header('Content-ID', '<img1_2>')
+msgRoot.attach(img1_2)
+
+
+# # ----------- Finally send mail and close server connection ---
+server = smtplib.SMTP(email_server_host, port)
+server.ehlo()
+server.sendmail(me, recipient, msgRoot.as_string())
+server.close()
