@@ -13,6 +13,7 @@ def nation_wide_return():
                     """, fn.conn)
 
     average_branch_return_information = average_branch_return_df['ReturnPercent'].tolist()
+    print(average_branch_return_information)
     Total_amount_of_return = sum(average_branch_return_information)
     Total_no_of_branches = len(average_branch_return_information)
     average_branch_return_amount = Total_amount_of_return / Total_no_of_branches

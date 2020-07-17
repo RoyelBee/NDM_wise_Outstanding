@@ -2,13 +2,12 @@
 <module type="PYTHON_MODULE" version="4">
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$" />
-    <orderEntry type="jdk" jdkName="Python 3.7 (Env_Files)" jdkType="Python SDK" />
+    <orderEntry type="jdk" jdkName="Python 3.7 (environment)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="SKF_Final_outstanding_report" />
     <orderEntry type="module" module-name="SKF_Final_outstanding_report" />
     <orderEntry type="module" module-name="SKF_Final_outstanding_report" />
     <orderEntry type="module" module-name="gmp_report_with_functions" />
-    <orderEntry type="module" module-name="StockChartNDM5_AHD" />
   </component>
   <component name="PyDocumentationSettings">
     <option name="renderExternalDocumentation" value="true" />
