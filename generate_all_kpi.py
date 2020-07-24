@@ -36,7 +36,7 @@ non_matured_credit.total_non_matured_credit_aging()
 # branch_non_matured.branch_wise_non_matured_credit()
 #
 # # # ---10. Total Cash Drop Aging ----------------------------------
-# import Functions.updated_total_cashdrop_aging as cash_drop
+import Functions.updated_total_cashdrop_aging as cash_drop
 # cash_drop.cashdrop_aging()
 #
 # # # ------------11. NDM wise cash drop aging ----------------------

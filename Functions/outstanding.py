@@ -28,7 +28,7 @@ def totalOutstanding():
     fig1, ax = lib.plt.subplots()
     # Add this next line to show data
     wedges, labels, autopct = ax.pie(data, labels=data_label, colors=colors, autopct='%.1f%%', textprops={
-        'color':"Black"},startangle=90,pctdistance=.7)
+        'color': "Black"}, startangle=90, pctdistance=.7)
 
     lib.plt.setp(autopct, fontsize=14, color='blue', fontweight='bold')
     lib.plt.setp(labels, fontsize=14, fontweight='bold')

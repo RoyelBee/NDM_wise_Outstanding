@@ -1,14 +1,13 @@
 import smtplib
 import os
 
-
 from email.mime.image import MIMEImage
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from PIL import Image, ImageDraw, ImageFont
 import Functions.all_library as lib
 
-#--------------new added---------
+# --------------new added---------
 from email.mime.base import MIMEBase
 from email import encoders
 
@@ -89,8 +88,6 @@ img11.paste(image11, (1, 1))
 img11.save(dirpath + "./Images/11.ndm_cash_drop_aging.png")
 print('Image 11 Generated')
 
-
-
 # # -----------------
 image12 = Image.open(dirpath + "./Images/12.branch_wise_cash_drop_aging.png")
 img12 = Image.new('RGB', (1282, 902))
@@ -129,7 +126,7 @@ print('Image 16 Generated')
 # ------------ Group email ----------------------------------------
 msgRoot = MIMEMultipart('related')
 me = 'erp-bi.service@transcombd.com'
-to = ['yakub@transcombd.com','']
+to = ['yakub@transcombd.com', '']
 cc = ['rejaul.islam@transcombd.com', 'fazle.rabby@transcombd.com']
 bcc = ['', '']
 
@@ -191,7 +188,6 @@ fp.close()
 ndm_credit_outstanding.add_header('Content-ID', '<ndm_credit_outstanding>')
 msgRoot.attach(ndm_credit_outstanding)
 
-
 # # --------------------------------------------------------
 fp = open(dirpath + './Images/4.matured_credit_aging.png', 'rb')
 matured_credit_aging = MIMEImage(fp.read())
@@ -215,7 +211,6 @@ fp.close()
 
 Branch_wise_matured_credit_aging.add_header('Content-ID', '<Branch_wise_matured_credit_aging>')
 msgRoot.attach(Branch_wise_matured_credit_aging)
-
 
 # # --------------------------------------------------------
 fp = open(dirpath + './Images/7.non_matured_credit_aging.png', 'rb')
@@ -249,7 +244,6 @@ fp.close()
 cashdrop_aging.add_header('Content-ID', '<cashdrop_aging>')
 msgRoot.attach(cashdrop_aging)
 
-
 # # --------------------------------------------------------
 fp = open(dirpath + './Images/11.ndm_cash_drop_aging.png', 'rb')
 ndm_cash_drop_aging = MIMEImage(fp.read())
@@ -257,7 +251,6 @@ fp.close()
 
 ndm_cash_drop_aging.add_header('Content-ID', '<ndm_cash_drop_aging>')
 msgRoot.attach(ndm_cash_drop_aging)
-
 
 # # --------------------------------------------------------
 fp = open(dirpath + './Images/12.branch_wise_cash_drop_aging.png', 'rb')
@@ -275,7 +268,6 @@ fp.close()
 img13_14.add_header('Content-ID', '<img13_14>')
 msgRoot.attach(img13_14)
 
-
 # # --------------------------------------------------------
 fp = open(dirpath + './Images/15.top5_branch_return.png', 'rb')
 top5_branch_return = MIMEImage(fp.read())
@@ -283,7 +275,6 @@ fp.close()
 
 top5_branch_return.add_header('Content-ID', '<top5_branch_return>')
 msgRoot.attach(top5_branch_return)
-
 
 # # --------------------------------------------------------
 fp = open(dirpath + './Images/16.top5_delivery_persons_return.png', 'rb')
@@ -306,8 +297,6 @@ part.add_header('Content-Disposition', "attachment; filename= %s" % filename)
 msgRoot.attach(part)
 attachment.close()
 
-
-
 # #----------------------- 9.branch_wise_non_matured_credit_aging.csv files------------------
 part = MIMEBase('application', "octet-stream")
 file_location = dirpath + './Data/branch_wise_non_matured_credit_aging.csv'
@@ -320,7 +309,6 @@ encoders.encode_base64(part)
 part.add_header('Content-Disposition', "attachment; filename= %s" % filename)
 msgRoot.attach(part)
 attachment.close()
-
 
 # #--------------------------- 12.branch_wise_cash_drop_aging.csv files ----------
 part = MIMEBase('application', "octet-stream")
@@ -335,7 +323,6 @@ part.add_header('Content-Disposition', "attachment; filename= %s" % filename)
 msgRoot.attach(part)
 attachment.close()
 
-
 # # --------15.  Attached All Return File ---------------------------------------
 part = MIMEBase('application', "octet-stream")
 file_location = dirpath + './Data/all_return.csv'
@@ -348,8 +335,6 @@ encoders.encode_base64(part)
 part.add_header('Content-Disposition', "attachment; filename= %s" % filename)
 msgRoot.attach(part)
 attachment.close()
-
-
 
 # # ----------- Finally send mail and close server connection ---
 server = smtplib.SMTP(email_server_host, port)

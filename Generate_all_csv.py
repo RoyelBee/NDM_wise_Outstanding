@@ -105,7 +105,7 @@ def All_csv_generator():
                 where DPNAME.DPNAME is not null
                 group by AUDTORG, sales.DPID, DPNAME.DPNAME
                 Having ISNULL(SUM(case when TRANSTYPE=1 then EXTINVMISC END),0) <>0 
-                order by ReturnPer desc""", fn.conn)
+                order by ReturnPer desc """, fn.conn)
 
     all_return = all_return_df.dropna()
     # print(branch_wise_non_matured_credit_aging)
