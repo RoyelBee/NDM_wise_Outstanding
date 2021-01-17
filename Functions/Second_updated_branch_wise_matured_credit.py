@@ -95,7 +95,7 @@ def branch_wise_matured_credit():
             # r, g, b, _ = color
             text_color = 'black' #if r * g * b < 0.5 else 'darkgrey'
             for y, (x, c) in enumerate(zip(xcenters, main_width)):
-                ax.text(x, y, str(round(c,1))+'%', ha='center', va='center',fontsize=8,
+                ax.text(x, y, str(round(c,1))+'%', ha='center', va='center',fontsize=9,
                         color=text_color)
         # ax.legend(ncol=len(category_names), bbox_to_anchor=(0, 1),
         #           loc='lower center', fontsize='small')

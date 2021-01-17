@@ -96,4 +96,4 @@ def matured_credit():
     lib.plt.tight_layout()
     # lib.plt.show()
     print('4. Matured Credit Aging Created')
-    return lib.plt.savefig('./Images/4.matured_credit_aging.png')
+    lib.plt.savefig('./Images/4.matured_credit_aging.png')

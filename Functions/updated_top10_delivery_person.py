@@ -8,12 +8,13 @@ def top10_delivery_persons_return():
                     select left(Sales.AUDTORG,3) + '-' +TWO.ShortName as DPNAME ,Sales.ReturnAmount as 
                     ReturnAmount from
                     (select  DPID, AUDTORG,
-                    ISNULL(sum(case when TRANSTYPE<>1 then INVNETH *-1 end), 0) /ISNULL(sum(case when TRANSTYPE=1 then INVNETH end), 0)*100 as ReturnAmount
-                    from OESalesSummery
+                    ISNULL(sum(case when TRANSTYPE<>1 then EXTINVMISC  *-1 end), 0) 
+                    /ISNULL(sum(case when TRANSTYPE=1 then EXTINVMISC  end), 0)*100 as ReturnAmount
+                    from OESalesDetails
                     where
                     left(TRANSDATE,6)>=convert(varchar(6),getdate(),112)
                     group by DPID,AUDTORG
-                    having sum(case when TRANSTYPE=1 then INVNETH end)<>0) as Sales
+                    having sum(case when TRANSTYPE=1 then EXTINVMISC end)<>0) as Sales
                     left join
                     (select   distinct AUDTORG,ShortName,DPID from DP_ShortName) as TWO
                     on Sales.DPID = TWO.DPID
@@ -26,10 +27,11 @@ def top10_delivery_persons_return():
         delivery_man_wise_return_df = delivery_man_wise_return_df.head(10)
         #print(delivery_man_wise_return_df)
         average_delivery_man_wise_return_df = lib.pd.read_sql_query("""
-                 select ISNULL(sum(case when TRANSTYPE<>1 
-                    then INVNETH *-1 end), 0) /ISNULL(sum(case when TRANSTYPE=1 then INVNETH end), 0)*100 as ReturnPercent from OESalesSummery
-                    where
-                    left(TRANSDATE,6)=convert(varchar(6),getdate(),112)""", fn.conn)
+                 select 
+ISNULL(sum(case when TRANSTYPE<>1 then EXTINVMISC  *-1 end), 0) 
+/ISNULL(sum(case when TRANSTYPE=1 then EXTINVMISC  end), 0)*100 as ReturnPercent 
+from OESalesDetails
+where left(TRANSDATE,6)=convert(varchar(6),getdate(),112) """, fn.conn)
 
         average_delivery_information = average_delivery_man_wise_return_df['ReturnPercent'].tolist()
         average_delivery_amount = average_delivery_information[0]

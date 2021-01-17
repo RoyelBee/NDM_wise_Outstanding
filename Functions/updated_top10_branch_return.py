@@ -6,9 +6,9 @@ dirpath = lib.os.path.dirname(lib.os.path.realpath(__file__))
 def top10_branch_return():
         top_ten_branch_return_df = lib.pd.read_sql_query("""
                             select left(AUDTORG,3) as Branch_name,
-                            ISNULL(sum(case when TRANSTYPE<>1 then INVNETH *-1 end), 0) 
-                            /ISNULL(sum(case when TRANSTYPE=1 then INVNETH end), 0)*100 as ReturnPercent 
-                            from OESalesSummery
+                            ISNULL(sum(case when TRANSTYPE<>1 then EXTINVMISC  *-1 end), 0) 
+                            /ISNULL(sum(case when TRANSTYPE=1 then EXTINVMISC  end), 0)*100 as ReturnPercent 
+                            from OESalesDetails
                             where
                             left(TRANSDATE,6)=convert(varchar(6),getdate(),112) 
                             group by AUDTORG
@@ -20,10 +20,11 @@ def top10_branch_return():
 
         top_ten_branch_return_df = top_ten_branch_return_df.head(10)
 
-        average_branch_return_df = lib.pd.read_sql_query("""select ISNULL(sum(case when TRANSTYPE<>1 
-                    then INVNETH *-1 end), 0) /ISNULL(sum(case when TRANSTYPE=1 then INVNETH end), 0)*100 as ReturnPercent from OESalesSummery
-                    where
-                    left(TRANSDATE,6)=convert(varchar(6),getdate(),112)""", fn.conn)
+        average_branch_return_df = lib.pd.read_sql_query("""select 
+                            ISNULL(sum(case when TRANSTYPE<>1 then EXTINVMISC  *-1 end), 0) 
+                            /ISNULL(sum(case when TRANSTYPE=1 then EXTINVMISC  end), 0)*100 as ReturnPercent 
+                            from OESalesDetails
+                            where left(TRANSDATE,6)=convert(varchar(6),getdate(),112) """, fn.conn)
 
         average_branch_return_information = average_branch_return_df['ReturnPercent'].tolist()
         average_branch_return_amount = average_branch_return_information[0]

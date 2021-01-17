@@ -1,9 +1,9 @@
 import Functions.all_library as lib
 
 conn = lib.db.connect('DRIVER={SQL Server};'
-                        'SERVER=137.116.139.217;'
+                        'SERVER=---------;'
                         'DATABASE=ARCHIVESKF;'
-                        'UID=sa;PWD=erp@123')
+                        'UID=----;PWD=------')
 
 def numberInThousands(number):
     number = number / 1000

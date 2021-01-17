@@ -4,25 +4,27 @@ import Functions.all_library as lib
 def national_vs_ndm_return():
     try:
         ndm_all_df = lib.pd.read_sql_query("""
-                    select 
-NDM.SHORTNAME as 'NDM Name',
-ISNULL(sum(case when TRANSTYPE<>1 then INVNETH *-1 end), 0) 
-/ISNULL(sum(case when TRANSTYPE=1 then INVNETH end), 0)*100 as ReturnPercent from OESalesSummery
-
-left join NDM
-on OESalesSummery.AUDTORG= NDM.BRANCH
-where
-left(TRANSDATE,6)=convert(varchar(6),getdate(),112)
-group by SHORTNAME
-order by ReturnPercent DESC
+                                        select 
+                    NDM.SHORTNAME as 'NDM Name',
+                    ISNULL(sum(case when TRANSTYPE<>1 then EXTINVMISC  *-1 end), 0) 
+                    /ISNULL(sum(case when TRANSTYPE=1 then EXTINVMISC  end), 0)*100 as ReturnPercent 
+                    from OESalesDetails
+                    
+                    left join NDM
+                    on OESalesDetails.AUDTORG= NDM.BRANCH
+                    where
+                    left(TRANSDATE,6)=convert(varchar(6),getdate(),112)
+                    group by SHORTNAME
+                    order by ReturnPercent DESC
 """, fn.conn)
         all_person_return = ndm_all_df['ReturnPercent'].tolist()
 
         average_branch_return_df = lib.pd.read_sql_query("""
-                        select ISNULL(sum(case when TRANSTYPE<>1 
-                    then INVNETH *-1 end), 0) /ISNULL(sum(case when TRANSTYPE=1 then INVNETH end), 0)*100 as ReturnPercent from OESalesSummery
-                    where
-                    left(TRANSDATE,6)=convert(varchar(6),getdate(),112) """, fn.conn)
+                        select 
+                        ISNULL(sum(case when TRANSTYPE<>1 then EXTINVMISC  *-1 end), 0) 
+                        /ISNULL(sum(case when TRANSTYPE=1 then EXTINVMISC  end), 0)*100 as ReturnPercent 
+                        from OESalesDetails
+                        where left(TRANSDATE,6)=convert(varchar(6),getdate(),112) """, fn.conn)
         average_branch_return_information = average_branch_return_df['ReturnPercent'].tolist()
         average_branch_return_amount = average_branch_return_information[0]
         #print(average_branch_return_information[0])
